@@ -7,14 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/11b7GADIzZRFYPnBEKwxEoMUDQqCOnLk5
 """
 
-import sklearn
-
-sklearn.__version__
-
-!pip uninstall scikit-learn -y
-
-!pip install -U scikit-learn
-
 import numpy as np
 import pandas as pd
 from pandas import read_csv, concat

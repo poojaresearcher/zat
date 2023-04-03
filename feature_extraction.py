@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/11b7GADIzZRFYPnBEKwxEoMUDQqCOnLk5
 """
 
-pip install tldextract
-
 import sklearn
 
 sklearn.__version__

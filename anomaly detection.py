@@ -29,7 +29,7 @@ warnings.filterwarnings('ignore')
 
 
 alexa_dataframe = pd.read_csv(r'test_data/top-1m.csv', names=['rank','uri'])
-dga_dataframe = pd.read_csv(r'', names=['raw_domain'])
+dga_dataframe = pd.read_csv(r'test_data/dgaDomains.txt', names=['raw_domain'])
 
 
 # In[19]:

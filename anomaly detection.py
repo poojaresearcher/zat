@@ -485,7 +485,7 @@ if __name__ == '__main__':
         try:
             log_to_df = log_to_dataframe.LogToDataFrame()
             zeek_df = log_to_df.create_dataframe(args.zeek_log)
-            print(zeek_df.head())
+            zeek_df.head()
         except IOError:
             print('Could not open or parse the specified logfile: %s' % args.zeek_log)
             sys.exit(1)

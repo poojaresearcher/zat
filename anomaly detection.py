@@ -324,7 +324,7 @@ y = np.array(allDomains['class'].tolist()) # Yes, this is weird but it needs
 import sklearn.ensemble
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import cross_validate
+from sklearn.model_selection import cross_validation
 from sklearn.model_selection import train_test_split
 
 

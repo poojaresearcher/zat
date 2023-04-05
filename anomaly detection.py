@@ -491,7 +491,7 @@ try:
 except IOError:
     print('Could not open or parse the specified logfile: %s' % args.zeek_log)
     sys.exit(1)
-print('Read in {:d} Rows....'format(len(zeek_df)))
+print("Read in {:d} Rows....".format(len(zeek_df)))
 
 
 # In[ ]:

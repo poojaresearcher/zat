@@ -489,7 +489,7 @@ if __name__ == '__main__':
         except IOError:
             print('Could not open or parse the specified logfile: %s' % args.zeek_log)
             sys.exit(1)
-        
+        print('Read in {:d} Rows...'.format(len(zeek_df)))
 
         # Using Pandas we can easily and efficiently compute additional data metrics
         # Here we use the vectorized operations of Pandas/Numpy to compute query length
@@ -502,7 +502,7 @@ if __name__ == '__main__':
         # Use the zat DataframeToMatrix class
         to_matrix = dataframe_to_matrix.DataFrameToMatrix()
         zeek_matrix = to_matrix.fit_transform(zeek_df[features])
-        zeek_matrix.shape
+        print(zeek_matrix.shape)
 
         # Train/fit and Predict anomalous instances using the Isolation Forest model
         odd_clf = IsolationForest(contamination=0.2)  # Marking 20% as odd
@@ -517,7 +517,7 @@ if __name__ == '__main__':
         odd_matrix = to_matrix.fit_transform(odd_df)
         num_clusters = min(len(odd_df), 4)  # 4 clusters unless we have less than 4 observations
         display_df['cluster'] = KMeans(n_clusters=num_clusters).fit_predict(odd_matrix)
-        odd_matrix.shape
+        print(odd_matrix.shape)
 
         # Now group the dataframe by cluster
         if log_type == 'dns':

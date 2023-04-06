@@ -489,7 +489,7 @@ if __name__ == '__main__':
         except IOError:
             print('Could not open or parse the specified logfile: %s' % args.zeek_log)
             sys.exit(1)
-        print('Read in {:d} Rows...'.format(len(zeek_df)))
+        print("Read in {:d} Rows...".format(len(zeek_df)))
 
         # Using Pandas we can easily and efficiently compute additional data metrics
         # Here we use the vectorized operations of Pandas/Numpy to compute query length

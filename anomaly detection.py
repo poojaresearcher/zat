@@ -527,7 +527,7 @@ if __name__ == '__main__':
         cluster_groups = display_df[features+['cluster']].groupby('cluster')
 
         # Now print out the details for each cluster
-        print('<<< Outliers Detected! >>>')
+        print("<<< Outliers Detected! >>>")
         for key, group in cluster_groups:
             print('\nCluster {:d}: {:d} observations'.format(key, len(group)))
             print(group.head())

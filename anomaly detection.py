@@ -517,7 +517,7 @@ if __name__ == '__main__':
         odd_matrix = to_matrix.fit_transform(odd_df)
         num_clusters = min(len(odd_df), 4)  # 4 clusters unless we have less than 4 observations
         display_df['cluster'] = KMeans(n_clusters=num_clusters).fit_predict(odd_matrix)
-        print(odd_matrix.shape)
+        odd_matrix.shape
 
         # Now group the dataframe by cluster
         if log_type == 'dns':

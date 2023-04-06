@@ -20,27 +20,10 @@ from zat import log_to_dataframe
 from zat import dataframe_to_matrix
 
 
-
-
-
-    
-    
-    
-   
-
-    
-
-
-# In[65]:
-
-
 def entropy(string):
     """Compute entropy on the string"""
     p, lns = Counter(string), float(len(string))
     return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
-
-
-# In[69]:
 
 
 if __name__ == '__main__':
@@ -54,7 +37,7 @@ if __name__ == '__main__':
 
     # Check for unknown args
     if commands:
-        print = ('Unrecognized args: %s' % commands)
+        print('Unrecognized args: %s' % commands)
         sys.exit(1)
 
     # File may have a tilde in it
@@ -72,16 +55,15 @@ if __name__ == '__main__':
             print('This example only works with Zeek with http.log or dns.log files..')
             sys.exit(1)
 
-
-   # Create a Pandas dataframe from a Zeek log
+        # Create a Pandas dataframe from a Zeek log
         try:
             log_to_df = log_to_dataframe.LogToDataFrame()
             zeek_df = log_to_df.create_dataframe(args.zeek_log)
-            zeek_df.head()
+            print(zeek_df.head())
         except IOError:
             print('Could not open or parse the specified logfile: %s' % args.zeek_log)
             sys.exit(1)
-        print = ("Read in {:d} Rows...".format(len(zeek_df)))
+        print('Read in {:d} Rows...'.format(len(zeek_df)))
 
         # Using Pandas we can easily and efficiently compute additional data metrics
         # Here we use the vectorized operations of Pandas/Numpy to compute query length
@@ -94,7 +76,7 @@ if __name__ == '__main__':
         # Use the zat DataframeToMatrix class
         to_matrix = dataframe_to_matrix.DataFrameToMatrix()
         zeek_matrix = to_matrix.fit_transform(zeek_df[features])
-        print = (zeek_matrix.shape)
+        print(zeek_matrix.shape)
 
         # Train/fit and Predict anomalous instances using the Isolation Forest model
         odd_clf = IsolationForest(contamination=0.2)  # Marking 20% as odd
@@ -109,7 +91,7 @@ if __name__ == '__main__':
         odd_matrix = to_matrix.fit_transform(odd_df)
         num_clusters = min(len(odd_df), 4)  # 4 clusters unless we have less than 4 observations
         display_df['cluster'] = KMeans(n_clusters=num_clusters).fit_predict(odd_matrix)
-        print = (odd_matrix.shape)
+        print(odd_matrix.shape)
 
         # Now group the dataframe by cluster
         if log_type == 'dns':
@@ -119,10 +101,10 @@ if __name__ == '__main__':
         cluster_groups = display_df[features+['cluster']].groupby('cluster')
 
         # Now print out the details for each cluster
-        print = ('<<< Outliers Detected! >>>')
+        print('<<< Outliers Detected! >>>')
         for key, group in cluster_groups:
-            print = ('\nCluster {:d}: {:d} observations'.format(key, len(group)))
-            print = (group.head())
+            print('\nCluster {:d}: {:d} observations'.format(key, len(group)))
+            print(group.head())
 
 
 # In[17]:

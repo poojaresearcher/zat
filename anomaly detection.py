@@ -529,8 +529,8 @@ if __name__ == '__main__':
         # Now print out the details for each cluster
         print = ('<<< Outliers Detected! >>>')
         for key, group in cluster_groups:
-            print('\nCluster {:d}: {:d} observations'.format(key, len(group)))
-            print(group.head())
+            print = ('\nCluster {:d}: {:d} observations'.format(key, len(group)))
+            print = (group.head())
 
 
 

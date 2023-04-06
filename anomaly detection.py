@@ -502,7 +502,7 @@ if __name__ == '__main__':
         # Use the zat DataframeToMatrix class
         to_matrix = dataframe_to_matrix.DataFrameToMatrix()
         zeek_matrix = to_matrix.fit_transform(zeek_df[features])
-        print(zeek_matrix.shape)
+        zeek_matrix.shape
 
         # Train/fit and Predict anomalous instances using the Isolation Forest model
         odd_clf = IsolationForest(contamination=0.2)  # Marking 20% as odd

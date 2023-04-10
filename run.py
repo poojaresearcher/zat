@@ -107,7 +107,7 @@ X_test = zeek_matrix
 
 import matplotlib as plt
 
-new_model.predict(query)
+new_model.predict(zeek_matrix)
 
 from sklearn.model_selection import cross_val_predict
 

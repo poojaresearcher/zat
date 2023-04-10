@@ -179,15 +179,15 @@ print('AUC: %.3f%%' % roc_auc_score(y_test, probs))
 
 
         # Now group the dataframe by cluster
-        if log_type == 'dns':
-            features += ['query']
-        else:
-            features += ['host']
-        cluster_groups = display_df[features+['cluster']].groupby('cluster')
+if log_type == 'dns':
+    features += ['query']
+else:
+    features += ['host']
+cluster_groups = display_df[features+['cluster']].groupby('cluster')
 
         # Now print out the details for each cluster
-        print('<<< Outliers Detected! >>>')
-        for key, group in cluster_groups:
-            print('\nCluster {:d}: {:d} observations'.format(key, len(group)))
-            print(group.head())
+print('<<< Outliers Detected! >>>')
+for key, group in cluster_groups:
+    print('\nCluster {:d}: {:d} observations'.format(key, len(group)))
+    print(group.head())
 

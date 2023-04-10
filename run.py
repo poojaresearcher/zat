@@ -103,7 +103,6 @@ if __name__ == '__main__':
         zeek_matrix = to_matrix.fit_transform(zeek_df[features])
         print(zeek_matrix.shape)
         
-test_data = pd.read_csv('/home/logs/current/dns.log')
         
 X,y = zeek_df['tld'], zeek_df['label']
 

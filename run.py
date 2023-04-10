@@ -111,12 +111,14 @@ import matplotlib as plt
 predictions = new_model.predict(zeek_matrix)
 
 predictions = odd_clf.predict(zeek_matrix)
-        zeek1_df = zeek_df[features][predictions == 1]
-        display_df = zeek_df[predictions == 1].copy()
-        if: 
-            predictions == 0
+zeek1_df = zeek_df[features][predictions == 1]
+display_df = zeek_df[predictions == 1].copy()
+        
+    
+if:
+    predictions == 0
             print('legit')
-        else
+else
             print('dga')
      
 

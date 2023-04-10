@@ -103,6 +103,8 @@ if __name__ == '__main__':
         zeek_matrix = to_matrix.fit_transform(zeek_df[features])
         print(zeek_matrix.shape)
         
+zeek_df['label'] = 0
+zeek_df['label'] = 1        
         
 X,y = zeek_matrix, zeek_df['label']
 

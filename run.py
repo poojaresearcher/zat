@@ -106,7 +106,7 @@ if __name__ == '__main__':
 zeek_df['label'] = 0
 zeek_df['label'] = 1        
         
-X,y = zeek_matrix, zeek_df['label']
+X,y = zeek_df['tld'], zeek_df['label']
 
 validChars = { x: idx + 1 for idx, x in enumerate(set(''.join(X)))}
 maxFeatures = len(validChars) + 1

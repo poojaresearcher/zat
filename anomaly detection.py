@@ -372,6 +372,7 @@ if log_type == 'dns':
     zeek_df['query_length'] = zeek_df['query'].str.len()
     zeek_df['answer_length'] = zeek_df['answers'].str.len()
     zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
+    zeek_df['tld'] = zeek_df[tldextract.extract(d).domain for d in zeek_df['domain']]
 
 to_matrix = dataframe_to_matrix.DataFrameToMatrix()
 zeek_matrix = to_matrix.fit_transform(zeek_df[features])

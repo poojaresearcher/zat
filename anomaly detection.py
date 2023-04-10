@@ -66,7 +66,7 @@ if __name__ == '__main__':
         print('Read in {:d} Rows...'.format(len(zeek_df)))
 
         
-        import numpy as np
+import numpy as np
 import pandas as pd
 from pandas import read_csv, concat
 from sklearn.model_selection import train_test_split
@@ -367,46 +367,43 @@ high_entropy_domains[high_entropy_domains['class']=='dga'].head()
 # In[54]:
         
         
-        # Using Pandas we can easily and efficiently compute additional data metrics
-        # Here we use the vectorized operations of Pandas/Numpy to compute query length
-        # We'll also compute entropy of the query
-        if log_type == 'dns':
-            zeek_df['query_length'] = zeek_df['query'].str.len()
-            zeek_df['answer_length'] = zeek_df['answers'].str.len()
-            zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
+        
+if log_type == 'dns':
+    zeek_df['query_length'] = zeek_df['query'].str.len()
+    zeek_df['answer_length'] = zeek_df['answers'].str.len()
+    zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
 
-        # Use the zat DataframeToMatrix class
-        to_matrix = dataframe_to_matrix.DataFrameToMatrix()
-        zeek_matrix = to_matrix.fit_transform(zeek_df[features])
-        print(zeek_matrix.shape)
+to_matrix = dataframe_to_matrix.DataFrameToMatrix()
+zeek_matrix = to_matrix.fit_transform(zeek_df[features])
+print(zeek_matrix.shape)
 
         # Train/fit and Predict anomalous instances using the Isolation Forest model
-        odd_clf = IsolationForest(contamination=0.2)  # Marking 20% as odd
-        odd_clf.fit(zeek_matrix)
+odd_clf = IsolationForest(contamination=0.2)  # Marking 20% as odd
+odd_clf.fit(zeek_matrix)
 
         # Now we create a new dataframe using the prediction from our classifier
-        predictions = odd_clf.predict(zeek_matrix)
-        odd_df = zeek_df[features][predictions == 1]
-        display_df = zeek_df[predictions == 1].copy()
+predictions = odd_clf.predict(zeek_matrix)
+odd_df = zeek_df[features][predictions == 1]
+display_df = zeek_df[predictions == 1].copy()
 
         # Now we're going to explore our odd observations with help from KMeans
-        odd_matrix = to_matrix.fit_transform(odd_df)
-        num_clusters = min(len(odd_df), 4)  # 4 clusters unless we have less than 4 observations
-        display_df['cluster'] = KMeans(n_clusters=num_clusters).fit_predict(odd_matrix)
-        print(odd_matrix.shape)
+odd_matrix = to_matrix.fit_transform(odd_df)
+num_clusters = min(len(odd_df), 4)  # 4 clusters unless we have less than 4 observations
+display_df['cluster'] = KMeans(n_clusters=num_clusters).fit_predict(odd_matrix)
+print(odd_matrix.shape)
 
-        # Now group the dataframe by cluster
-        if log_type == 'dns':
-            features += ['query']
-        else:
-            features += ['host']
-        cluster_groups = display_df[features+['cluster']].groupby('cluster')
+        # Now group the dataframe by cluste
+if log_type == 'dns':
+    features += ['query']
+else:
+    features += ['host']
+cluster_groups = display_df[features+['cluster']].groupby('cluster')
 
         # Now print out the details for each cluster
-        print('<<< dga domains Detected! >>>')
-        for key, group in cluster_groups:
-            print('\nCluster {:d}: {:d} observations'.format(key, len(group)))
-            print(group.head())
+print('<<< dga domains Detected! >>>')
+for key, group in cluster_groups:
+    print('\nCluster {:d}: {:d} observations'.format(key, len(group)))
+    print(group.head())
 
 
 

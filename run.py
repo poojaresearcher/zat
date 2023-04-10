@@ -37,7 +37,10 @@ from keras.layers import LSTM
 import warnings
 warnings.filterwarnings('ignore')
 
+new_model = tf.keras.models.load_model('dgadetection.h5')
 
+# Check its architecture
+new_model.summary()
 
 
 def entropy(string):

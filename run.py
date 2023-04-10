@@ -108,6 +108,7 @@ zeek_df['label'] = 1
         
 X,y = zeek_matrix, zeek_df['label']
 
+
 import matplotlib as plt
 
 predictions = new_model.predict(zeek_matrix)
@@ -121,6 +122,8 @@ else:
     display_Df = zeek_df[predictions == 1].copy()
     print('dga domains')
 
+loss, acc = new_model.evaluate(test_images, test_labels, verbose=2)
+print('Restored model, accuracy: {:5.2f}%'.format(100 * acc))
 
 from sklearn.model_selection import cross_val_predict
 

@@ -111,17 +111,17 @@ X,y = zeek_matrix, zeek_df['label']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-model = Sequential_2()
-model.add(Embedding(maxFeatures, 128, input_length=maxlen))
+new_model = Sequential_2()
+new_model.add(Embedding(maxFeatures, 128, input_length=maxlen))
 
-model.add(LSTM(128))
-model.add(Dropout(0.5))
-model.add(Dense(1))
-model.add(Activation('sigmoid'))
-model.compile(loss='binary_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
+new_model.add(LSTM(128))
+new_model.add(Dropout(0.5))
+new_model.add(Dense(1))
+new_model.add(Activation('sigmoid'))
+new_model.compile(loss='binary_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
 
 for i in range(5):
-    model.fit(X_train, y_train, batch_size=16, epochs=3, test_split=0.2)
+new_model.fit(X_train, y_train, batch_size=16, epochs=3, test_split=0.2)
 
 import matplotlib as plt
 

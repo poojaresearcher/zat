@@ -76,7 +76,7 @@ if __name__ == '__main__':
             features = ['Z', 'proto', 'query', 'qtype_name', 'query_length', 'answer_length', 'entropy']
         else:
             print('This example only works with Zeek with http.log or dns.log files..')
-            sys.exit(1)
+            sys.exit(1)   
 
         # Create a Pandas dataframe from a Zeek log
         try:
@@ -109,18 +109,18 @@ X,y = zeek_matrix, zeek_df['label']
 import matplotlib as plt
 
 predictions = new_model.predict(zeek_matrix)
-
-predictions = odd_clf.predict(zeek_matrix)
 zeek1_df = zeek_df[features][predictions == 1]
 display_df = zeek_df[predictions == 1].copy()
         
-    
-if
-    predictions == 0
-            print('legit')
-else
-            print('dga')
-     
+    if 
+        zeek_df[features][predictions == 0]
+        display_Df = zeek_df[predictions == 0].copy()
+        print('legit domains')
+    else:
+        zeek_df[features][predictions == 1]
+        display_Df = zeek_df[predictions == 1].copy()
+        print('dga domains')
+
 
 from sklearn.model_selection import cross_val_predict
 

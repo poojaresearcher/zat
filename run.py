@@ -95,7 +95,7 @@ if __name__ == '__main__':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
-            zeek_df['tld'] = [tldextract.extract(d).query for d in zeek_df['query']]
+            zeek_df['tld'] = [tldextract.extract(d).domain for d in zeek_df['query']]
             zeek_df['query']
 
         # Use the zat DataframeToMatrix class

@@ -73,7 +73,7 @@ if __name__ == '__main__':
             features = ['id.resp_p', 'method', 'resp_mime_types', 'request_body_len']
         elif 'dns' in args.zeek_log:
             log_type = 'dns'
-            features = ['Z', 'proto', 'qtype_name', 'query_length', 'answer_length', 'entropy']
+            features = ['Z', 'proto', 'query', 'qtype_name', 'query_length', 'answer_length', 'entropy']
         else:
             print('This example only works with Zeek with http.log or dns.log files..')
             sys.exit(1)
@@ -96,7 +96,7 @@ if __name__ == '__main__':
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['tld'] = [tldextract.extract(d).query for d in zeek_df['query']]
-            
+            zeek_df['query']
 
         # Use the zat DataframeToMatrix class
         to_matrix = dataframe_to_matrix.DataFrameToMatrix()

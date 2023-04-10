@@ -121,7 +121,7 @@ new_model.add(Activation('sigmoid'))
 new_model.compile(loss='binary_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
 
 for i in range(5):
-new_model.fit(X_train, y_train, batch_size=16, epochs=3, test_split=0.2)
+    new_model.fit(X_train, y_train, batch_size=16, epochs=3, test_split=0.2)
 
 import matplotlib as plt
 

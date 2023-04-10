@@ -104,11 +104,21 @@ if __name__ == '__main__':
         print(zeek_matrix.shape)
         
         
-X,y = zeek_df['tld'], zeek_df['label']
+X,y = zeek_matrix, zeek_df['label']
 
 import matplotlib as plt
 
-new_model.predict(zeek_matrix)
+predictions = new_model.predict(zeek_matrix)
+
+predictions = odd_clf.predict(zeek_matrix)
+        zeek1_df = zeek_df[features][predictions == 1]
+        display_df = zeek_df[predictions == 1].copy()
+        if: 
+            predictions == 0
+            print('legit')
+        else
+            print('dga')
+     
 
 from sklearn.model_selection import cross_val_predict
 

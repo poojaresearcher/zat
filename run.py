@@ -111,7 +111,7 @@ X,y = zeek_matrix, zeek_df['label']
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-new_model = Sequential_2()
+new_model = Sequential()
 new_model.add(Embedding(maxFeatures, 128, input_length=maxlen))
 
 new_model.add(LSTM(128))

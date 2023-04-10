@@ -25,8 +25,8 @@ from keras.layers import LSTM
 import warnings
 warnings.filterwarnings('ignore')
 
-legitDomains = pd.read_csv('top-1m.csv', names=['domain'])
-dgaDomains = pd.read_csv('dgaDomains.txt', names=['domain'])
+legitDomains = pd.read_csv('test_data/top-1m.csv', names=['domain'])
+dgaDomains = pd.read_csv('test_data/dgaDomains.txt', names=['domain'])
 
 legitDomains.head()
 

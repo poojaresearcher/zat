@@ -108,10 +108,6 @@ zeek_df['label'] = 1
         
 X,y = zeek_matrix, zeek_df['label']
 
-validChars = { x: idx + 1 for idx, x in enumerate(set(''.join(X)))}
-maxFeatures = len(validChars) + 1
-maxlen = np.max([len(x) for x in X ])
-
 X = [[validChars[y] for y in x] for x in X]
 X = pad_sequences(X, maxlen=maxlen)
 

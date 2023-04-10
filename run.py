@@ -95,15 +95,17 @@ if __name__ == '__main__':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
-            zeek_df['tld'] = [tldextract.extract(d).domain for d in zeek_df['query']]
+            zeek_df['tld'] = [tldextract.extract(d).query for d in zeek_df['query']]
             
 
         # Use the zat DataframeToMatrix class
         to_matrix = dataframe_to_matrix.DataFrameToMatrix()
         zeek_matrix = to_matrix.fit_transform(zeek_df[features])
         print(zeek_matrix.shape)
-
-X,y = zeek_matrix['tld'], zeek_matrix['label']
+        
+test_data = pd.read_csv('/home/logs/current/dns.log')
+        
+X,y = zeek_df['tld'], zeek_df['label']
 
 import matplotlib as plt
 

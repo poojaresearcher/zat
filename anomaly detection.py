@@ -375,7 +375,7 @@ if log_type == 'dns':
 
 to_matrix = dataframe_to_matrix.DataFrameToMatrix()
 zeek_matrix = to_matrix.fit_transform(zeek_df[features])
-print('shape of matrix :', zeek_matrix.shape)
+print(zeek_matrix.shape)
 
         # Train/fit and Predict anomalous instances using the Isolation Forest model
 odd_clf = IsolationForest(contamination=0.2)  # Marking 20% as odd

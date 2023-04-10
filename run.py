@@ -112,14 +112,14 @@ predictions = new_model.predict(zeek_matrix)
 zeek1_df = zeek_df[features][predictions == 1]
 display_df = zeek_df[predictions == 1].copy()
         
-    if 
-        zeek_df[features][predictions == 0]
-        display_Df = zeek_df[predictions == 0].copy()
-        print('legit domains')
-    else:
-        zeek_df[features][predictions == 1]
-        display_Df = zeek_df[predictions == 1].copy()
-        print('dga domains')
+if 
+    zeek_df[features][predictions == 0]
+    display_Df = zeek_df[predictions == 0].copy()
+    print('legit domains')
+else:
+    zeek_df[features][predictions == 1]
+    display_Df = zeek_df[predictions == 1].copy()
+    print('dga domains')
 
 
 from sklearn.model_selection import cross_val_predict

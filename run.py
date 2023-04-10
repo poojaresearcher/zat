@@ -103,9 +103,7 @@ if __name__ == '__main__':
         zeek_matrix = to_matrix.fit_transform(zeek_df[features])
         print(zeek_matrix.shape)
 
-          
-x_test = zeek_matrix
-y_test = zeek_df['class']
+X,y = allDomains['tld'], allDomains['label']
 
 import matplotlib as plt
 

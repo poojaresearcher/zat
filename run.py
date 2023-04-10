@@ -108,6 +108,26 @@ zeek_df['label'] = 1
         
 X,y = zeek_matrix, zeek_df['label']
 
+validChars = { x: idx + 1 for idx, x in enumerate(set(''.join(X)))}
+maxFeatures = len(validChars) + 1
+maxlen = np.max([len(x) for x in X ])
+
+X = [[validChars[y] for y in x] for x in X]
+X = pad_sequences(X, maxlen=maxlen)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+model = Sequential_2()
+model.add(Embedding(maxFeatures, 128, input_length=maxlen))
+
+model.add(LSTM(128))
+model.add(Dropout(0.5))
+model.add(Dense(1))
+model.add(Activation('sigmoid'))
+model.compile(loss='binary_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
+
+for i in range(5):
+    model.fit(X_train, y_train, batch_size=16, epochs=3, test_split=0.2)
 
 import matplotlib as plt
 

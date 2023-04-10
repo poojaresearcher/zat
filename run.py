@@ -108,8 +108,6 @@ zeek_df['label'] = 1
         
 X,y = zeek_matrix, zeek_df['label']
 
-X = [[validChars[y] for y in x] for x in X]
-X = pad_sequences(X, maxlen=maxlen)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 

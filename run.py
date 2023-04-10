@@ -115,7 +115,7 @@ zeek1_df = zeek_df[features][predictions == 1]
 display_df = zeek_df[predictions == 1].copy()
         
     
-if:
+if
     predictions == 0
             print('legit')
 else

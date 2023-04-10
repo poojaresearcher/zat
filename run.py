@@ -107,13 +107,13 @@ X_test = zeek_matrix
 
 import matplotlib as plt
 
-model.predict(query)
+dgadetection.predict(query)
 
 from sklearn.model_selection import cross_val_predict
 
 proba = cross_val_predict
 
-probs = model.predict(X_test)
+probs = dgadetection.predict(x_test)
 
 tn, fp, fn, tp = confusion_matrix(y_test, probs > 0.5).ravel()
 

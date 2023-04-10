@@ -18,7 +18,7 @@ from sklearn.metrics import confusion_matrix, roc_auc_score
 import tldextract
 import tensorflow as tf
 from tensorflow import keras
-from keras_preprocessing.sequence import pad_sequences
+from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential, load_model
 from keras.layers.core import Dense, Dropout, Activation,Embedding
 from keras.layers import LSTM

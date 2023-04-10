@@ -37,6 +37,9 @@ from keras.layers import LSTM
 import warnings
 warnings.filterwarnings('ignore')
 
+
+
+
 def entropy(string):
     """Compute entropy on the string"""
     p, lns = Counter(string), float(len(string))
@@ -89,69 +92,14 @@ if __name__ == '__main__':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
+            zeek_df['tld'] = [tldextract.extract(d).domain for d in zeek_df['query']]
 
         # Use the zat DataframeToMatrix class
         to_matrix = dataframe_to_matrix.DataFrameToMatrix()
         zeek_matrix = to_matrix.fit_transform(zeek_df[features])
         print(zeek_matrix.shape)
 
-        
-legitDomains = pd.read_csv('test_data/top-1m.csv', names=['domain'])
-dgaDomains = pd.read_csv('test_data/dgaDomains.txt', names=['domain'])
-
-
-legitDomains.head()
-
-dgaDomains.head()
-
-legitDomains['tld'] = [tldextract.extract(d).domain for d in legitDomains['domain']]
-dgaDomains['tld'] = [tldextract.extract(d).domain for d in dgaDomains['domain']]
-
-legitDomains = legitDomains[-legitDomains['tld'].str.contains('\`|\.')]
-dgaDomains = dgaDomains[-dgaDomains['tld'].str.contains('\`|\.')]
-
-legitDomains = legitDomains.drop_duplicates()
-dgaDomains = dgaDomains.drop_duplicates()
-
-legitDomains['label'] = 0
-dgaDomains['label'] = 1
-
-allDomains = concat([legitDomains, dgaDomains], ignore_index = True)
-allDomains = allDomains.sample(frac=1).reset_index(drop=True)
-
-X,y = allDomains['tld'], allDomains['label']
-
-allDomains.head()
-
-allDomains.tail()
-
-allDomains.info()
-
-allDomains.sample()
-
-allDomains.head()
-
-validChars = { x: idx + 1 for idx, x in enumerate(set(''.join(X)))}
-maxFeatures = len(validChars) + 1
-maxlen = np.max([len(x) for x in X ])
-
-X = [[validChars[y] for y in x] for x in X]
-X = pad_sequences(X, maxlen=maxlen)
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-
-model = Sequential()
-model.add(Embedding(maxFeatures, 128, input_length=maxlen))
-
-model.add(LSTM(128))
-model.add(Dropout(0.5))
-model.add(Dense(1))
-model.add(Activation('sigmoid'))
-model.compile(loss='binary_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
-
-for i in range(5):
-    model.fit(X_train, y_train, batch_size=16, epochs=3, validation_split=0.2)
-    
+          
 X_test = zeek_matrix
 
 import matplotlib as plt

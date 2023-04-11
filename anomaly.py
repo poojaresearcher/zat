@@ -4,6 +4,7 @@ import argparse
 import math
 from collections import Counter
 import pickle
+import re
 
 # Third Party Imports
 import pandas as pd

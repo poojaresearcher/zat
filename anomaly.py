@@ -22,6 +22,19 @@ def entropy(string):
     p, lns = Counter(string), float(len(string))
     return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
 
+def vowel_consonant_ratio (x):
+    # Calculate vowel to consonant ratio
+    x = x.lower()
+    vowels_pattern = re.compile('([aeiou])')
+    consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
+    vowels = re.findall(vowels_pattern, x)
+    consonants = re.findall(consonants_pattern, x)
+    try:
+        ratio = len(vowels) / len(consonants)
+    except: # catch zero devision exception 
+        ratio = 0  
+    return ratio
+
 
 if __name__ == '__main__':
     # Example to show the dataframe cache functionality on streaming data
@@ -69,6 +82,7 @@ if __name__ == '__main__':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
+            zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
 
         # Use the zat DataframeToMatrix class
         to_matrix = dataframe_to_matrix.DataFrameToMatrix()

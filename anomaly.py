@@ -6,9 +6,34 @@ from collections import Counter
 import pickle
 import re
 
+import numpy as np
+import pandas as pd
+from pandas import read_csv, concat
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, roc_auc_score 
+import sklearn.feature_extraction
+import matplotlib.pyplot as plt
+import seaborn as sns
+import re
+from sklearn import feature_extraction, tree, model_selection, metrics
+from yellowbrick.features import Rank2D
+from yellowbrick.features import RadViz
+from yellowbrick.features import ParallelCoordinates
+
+
+import tldextract
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from keras.models import Sequential, load_model
+from keras.layers.core import Dense, Dropout, Activation,Embedding
+from keras.layers import LSTM
+import warnings
+warnings.filterwarnings('ignore')
+
 # Third Party Imports
 import pandas as pd
-from sklearn.ensemble import IsolationForest
+from sklearn.ensemble import RandomForest
 from sklearn.cluster import KMeans
 
 # Local imports
@@ -61,7 +86,7 @@ if __name__ == '__main__':
             features = ['id.resp_p', 'method', 'resp_mime_types', 'request_body_len']
         elif 'dns' in args.zeek_log:
             log_type = 'dns'
-            features = ['Z', 'proto', 'qtype_name', 'query_length', 'answer_length', 'entropy']
+            features = ['Z','query', 'proto', 'qtype_name', 'query_length', 'answer_length', 'entropy']
         else:
             print('This example only works with Zeek with http.log or dns.log files..')
             sys.exit(1)
@@ -91,7 +116,7 @@ if __name__ == '__main__':
         print(zeek_matrix.shape)
 
         # Train/fit and Predict anomalous instances using the Isolation Forest model
-        odd_clf = IsolationForest(contamination=0.2)  # Marking 20% as odd
+        odd_clf = RandomForest(contamination=0.2)  # Marking 20% as odd
         odd_clf.fit(zeek_matrix)
 
         # Now we create a new dataframe using the prediction from our classifier

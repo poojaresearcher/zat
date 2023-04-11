@@ -129,8 +129,7 @@ def entropy(s):
     p, lns = Counter(s), float(len(s))
     return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
 
-allDomains['entropy'] = [entropy(x) for x in allDomains['domain']]
-
+allDomains['entropy'] = allDomains['query'].map(lambda x: entropy(x))
 allDomains.head()
 
 allDomains.tail()

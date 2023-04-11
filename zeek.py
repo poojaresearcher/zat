@@ -117,12 +117,8 @@ zeek_df['query']
 import math
 from collections import Counter
  
-def entropy(s):
-    p, lns = Counter(s), float(len(s))
-    return -sum( count/lns * math.log(count/lns, 2) for count in p.values())
 
-
-zeek_df['entropy'] = [entropy(x) for x in zeek_df['query']]
+zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
 
 zeek_df.head(10)
 

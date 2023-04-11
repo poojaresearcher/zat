@@ -122,7 +122,7 @@ if __name__ == '__main__':
         print(zeek_matrix.shape)
 
         # Train/fit and Predict anomalous instances using the Isolation Forest model
-        odd_clf = RandomForestClassifier(contamination=0.2)  # Marking 20% as odd
+        odd_clf = RandomForestClassifier(n_estimators=20)  # Marking 20% as odd
         odd_clf.fit(zeek_matrix)
 
         # Now we create a new dataframe using the prediction from our classifier

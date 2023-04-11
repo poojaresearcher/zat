@@ -20,6 +20,12 @@ from yellowbrick.features import Rank2D
 from yellowbrick.features import RadViz
 from yellowbrick.features import ParallelCoordinates
 
+import sklearn.ensemble
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import train_test_split
+
 
 import tldextract
 import tensorflow as tf
@@ -33,7 +39,7 @@ warnings.filterwarnings('ignore')
 
 # Third Party Imports
 import pandas as pd
-from sklearn.ensemble import RandomForest
+
 from sklearn.cluster import KMeans
 
 # Local imports
@@ -116,7 +122,7 @@ if __name__ == '__main__':
         print(zeek_matrix.shape)
 
         # Train/fit and Predict anomalous instances using the Isolation Forest model
-        odd_clf = RandomForest(contamination=0.2)  # Marking 20% as odd
+        odd_clf = RandomForestClassifier(contamination=0.2)  # Marking 20% as odd
         odd_clf.fit(zeek_matrix)
 
         # Now we create a new dataframe using the prediction from our classifier

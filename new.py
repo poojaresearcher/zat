@@ -118,12 +118,6 @@ allDomains['length'] = [len(x) for x in allDomains['domain']]
 
 allDomains.head()
 
-validChars = { x: idx + 1 for idx, x in enumerate(set(''.join(X)))}
-maxFeatures = len(validChars) + 1
-maxlen = np.max([len(x) for x in X ])
-
-X = [[validChars[y] for y in x] for x in X]
-X = pad_sequences(X, maxlen=maxlen)
 
 allDomains = allDomains[allDomains['length'] > 3]
 allDomains = allDomains[allDomains['length'] < 63]
@@ -603,11 +597,11 @@ def domain_extract(domain):
 test_data['domain'] = [ domain_extract(domain) for uri in test_data['domain']]
 test_data.head()
 
-df = allDomains
+df = test_data
 X= df[['length','entropy','alexa_grams','word_grams','diff','vowel-cons','digits']].to_numpy() 
   
 
 # Labels (scikit learn uses 'y' for classification labels)
-y = np.array(allDomains['class'].tolist()) # Yes, this is weird but it needs 
+y = np.array(df['class'].tolist()) # Yes, this is weird but it needs 
                                             # to be an np.array of strings
 

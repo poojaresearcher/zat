@@ -20,8 +20,8 @@ from keras.layers import LSTM
 import warnings
 warnings.filterwarnings('ignore')
 
-alexa_dataframe = pd.read_csv('/content/drive/MyDrive/top-1m.csv', names=['rank','uri'])
-dga_dataframe = pd.read_csv('/content/drive/MyDrive/domain_generation_algorithms-master/banjori/dgaDomains.txt', names=['raw_domain'])
+alexa_dataframe = pd.read_csv('test_data/top-1m.csv', names=['rank','uri'])
+dga_dataframe = pd.read_csv('', names=['raw_domain'])
 
 alexa_dataframe.head()
 

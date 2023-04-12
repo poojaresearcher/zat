@@ -133,7 +133,7 @@ def ngrams(word, n):
 #     print(l_ngrams)
     return l_ngrams
 
-def ngram_feature(domains, d, n):
+def ngram_feature(query, d, n):
     # Input is your domain string or list of domain strings
     # a dictionary object d that contains the count for most common english words
     # finally you n either as int list or simple int defining the ngram length
@@ -142,7 +142,7 @@ def ngram_feature(domains, d, n):
     # respective english dictionary counts for the respective domain ngram
     # sum is normalized
     
-    l_ngrams = ngrams(domain, n)
+    l_ngrams = ngrams(query, n)
 #     print(l_ngrams)
     count_sum=0
     for ngram in l_ngrams:

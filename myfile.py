@@ -117,4 +117,4 @@ if log_type == 'dns':
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
 
-print(zeek_df.head())
+print(zeek_df.head(50))

@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
 import tldextract
 
-def domain_extract(query):
+def tldextract(query):
     ext = tldextract.extract(query)
     if (not ext.suffix):
         return np.nan
@@ -120,6 +120,6 @@ def vowel_consonant_ratio (x):
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
-            zeek_df['domain'] = [ domain_extract(query) for query in zeek_df['query']]
+            zeek_df['domain'] = [ tldextract(query) for query in zeek_df['query']]
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)

@@ -123,7 +123,7 @@ print(zeek_df.head(50))
 filename = "dga_detection.pickle"
 loaded_model = pickle.load(open(filename, "rb"))
 
-x_test = zeek_df['query']
+x_test = zeek_df['domain']
 x_test.head(50)
 
 y_pred = loaded_model.predict(x_test)

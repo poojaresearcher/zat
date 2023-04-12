@@ -123,9 +123,7 @@ print(zeek_df.head(50))
 filename = "dga_detection.pickle"
 loaded_model = pickle.load(open(filename, "rb"))
 
-x_test = zeek_df
+x_test = zeek_df['query']
 x_test.head(50)
 
-tf.convert_to_tensor(x_test)
-                                                                                                   
-print(len(x_test))
+y_pred = loaded_model.predict(x_test)

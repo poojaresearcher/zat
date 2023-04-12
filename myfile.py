@@ -120,7 +120,7 @@ if log_type == 'dns':
             
 print(zeek_df.head(50))
 
-filename = "dga.pickle"
+filename = "dga_detection.pickle"
 loaded_model = pickle.load(open(filename, "rb"))
 
 x_test = zeek_df

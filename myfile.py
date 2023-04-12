@@ -109,7 +109,7 @@ def vowel_consonant_ratio (x):
 import tldextract
 
 tldextract.extract('http://forums.news.cnn.com/')
-ExtractResult()
+ExtractResult(subdomain='forums.news', domain='cnn', suffix='com')
 
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()

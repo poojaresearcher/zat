@@ -92,13 +92,7 @@ if __name__ == '__main__':
 
 import tldextract
 
-TLDio = TLDExtract(query)
-    for query in zeek_df['query']:
-        dnsplit= TLDio(query)
-         urldict.update({query : {
-            'domain' : dnsplit.domain,
-            'tld' : dnsplit.suffix,
-                
+
 def entropy(string):
     """Compute entropy on the string"""
     p, lns = Counter(string), float(len(string))
@@ -120,6 +114,5 @@ def vowel_consonant_ratio (x):
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
-            zeek_df['domain'] = [domain_extract(query) for query in zeek_df['query']]
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)

@@ -126,4 +126,4 @@ loaded_model = pickle.load(open(filename, "rb"))
 x_test = zeek_df
 x_test.head(50)
 
-print(x_test.shape)
+print(len(x_test)                                                                                                      

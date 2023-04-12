@@ -93,7 +93,7 @@ if __name__ == '__main__':
 import tldextract
 
 def domain_extract(query):
-    ext = tldextract.extract(domain)
+    ext = tldextract.extract(query)
     if (not ext.domain):
         return np.nan
     else:

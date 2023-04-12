@@ -118,6 +118,6 @@ if log_type == 'dns':
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
-            zeek_df['domain'] = zeek_df['query'].applymap(lambda x: x.split('.')[0].strip().lower())
+            zeek_df['domain'] = zeek_df['query'].map(lambda x: x.split('.')[0].strip().lower())
             
 print(zeek_df.head(50))

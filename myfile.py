@@ -106,10 +106,6 @@ def vowel_consonant_ratio (x):
         ratio = 0  
     return ratio
 
-import tldextract
-
-tldextract.extract('http://forums.news.cnn.com/')
-ext.domain
 
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()

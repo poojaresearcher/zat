@@ -113,7 +113,7 @@ def vowel_consonant_ratio (x):
 
 def extract_tld(query):
     ext = tldextract.extract(query)
-    ExtractResult(subdomain,domain,suffix)
+    ext.domain
     
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()

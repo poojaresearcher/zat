@@ -127,9 +127,6 @@ loaded_model = pickle.load(open(filename, "rb"))
 x_test = zeek_df['query']
 print(x_test.head(50))
 
-y_test = loaded_model.predict(x_test)
-print(y_test.head(20))
-
 print(loaded_model.summary())
       
       

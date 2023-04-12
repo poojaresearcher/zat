@@ -121,3 +121,6 @@ if log_type == 'dns':
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
             
 print(zeek_df.head(50))
+
+x_test = zeek_df
+x_test.head(50)

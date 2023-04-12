@@ -114,7 +114,7 @@ def vowel_consonant_ratio (x):
 zeek_df['query']=zeek_df['query'].apply(str)
 
 def extract_tld(query):
-    ext = tldextract.extract(zeek_df['query'])
+    ext = tldextract.extract(query)
     ext.domain
     
 if log_type == 'dns':
@@ -123,4 +123,4 @@ if log_type == 'dns':
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
             zeek_df['domain'] = [ extract_tld(query) for query in zeek_df['query']]
-print(zeek_df.head())
+print(zeek_df.head(50))

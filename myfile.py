@@ -93,20 +93,10 @@ if __name__ == '__main__':
 import tldextract
 
 TLDio = TLDExtract(query)
-        for dirty_url in related_urls:
-            # dirty_url because may contain ":"
-
-            if dirty_url.split(':') != -1:
-                url = dirty_url.split(':')[0]
-            else:
-                url = dirty_url
-
-            if urldict.has_key(url):
-                skipped +=1
-                continue
-
-            dnsplit= TLDio(url)
-            urldict.update({url : {
+        for query in zeek_df['query']:
+           
+            dnsplit= TLDio(query)
+            urldict.update({query : {
                     'domain' : dnsplit.domain,
                     'tld' : dnsplit.suffix,
                 

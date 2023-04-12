@@ -130,5 +130,6 @@ print(x_test.head(50))
 y_test = loaded_model.predict(x_test)
 print(y_test.head(20))
 
-
-
+loaded_model.summary()
+      
+      

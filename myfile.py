@@ -126,5 +126,4 @@ loaded_model = pickle.load(open(filename, "rb"))
 x_test = zeek_df['domain']
 x_test.head(50)
 
-y_pred = loaded_model.predict(x_test)
-y_pred
+

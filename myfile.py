@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
 import tldextract
 
- TLDio = TLDExtract(query)
+TLDio = TLDExtract(query)
         for dirty_url in related_urls:
             # dirty_url because may contain ":"
 

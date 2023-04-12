@@ -127,3 +127,4 @@ x_test = zeek_df
 x_test.head(50)
 
                                                                                                    
+print(len(x_test))

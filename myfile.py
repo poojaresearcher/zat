@@ -93,7 +93,7 @@ if __name__ == '__main__':
 import tldextract
 
 def domain_extract(query):
-    ext = tldextract.extract(query)
+    ext = tldextract.extract(query,url)
     return (ext.subdomain, ext.domain, ext.suffix)
 
 def entropy(string):

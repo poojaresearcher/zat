@@ -126,8 +126,4 @@ loaded_model = pickle.load(open(filename, "rb"))
 x_test = zeek_df
 x_test.head(50)
 
-model = RandomForestClassifier()
-model.fit(x,y)
-
-pred = model.predict(x_test)
-pred
+y_pred = loaded_model.predict(x_test)

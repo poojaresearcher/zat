@@ -47,8 +47,6 @@ from zat import log_to_dataframe
 from zat import dataframe_to_matrix
 
 
-filename = "dga_detection.pickle"
-loaded_model = pickle.load(open(filename, "rb"))
 
 
 if __name__ == '__main__':
@@ -121,6 +119,9 @@ if log_type == 'dns':
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
             
 print(zeek_df.head(50))
+
+filename = "dga_detection.pickle"
+loaded_model = pickle.load(open(filename, "rb"))
 
 x_test = zeek_df
 x_test.head(50)

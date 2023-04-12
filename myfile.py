@@ -111,7 +111,7 @@ def vowel_consonant_ratio (x):
         ratio = 0  
     return ratio
 
-zeeh_df['query']=zeek_df['query'].apply(str)
+zeek_df['query']=zeek_df['query'].apply(str)
 
 def extract_tld(query):
     ext = tldextract.extract(zeek_df['query'])

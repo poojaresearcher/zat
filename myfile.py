@@ -93,12 +93,11 @@ if __name__ == '__main__':
 import tldextract
 
 TLDio = TLDExtract(query)
-        for query in zeek_df['query']:
-           
-            dnsplit= TLDio(query)
-            urldict.update({query : {
-                    'domain' : dnsplit.domain,
-                    'tld' : dnsplit.suffix,
+    for query in zeek_df['query']:
+        dnsplit= TLDio(query)
+         urldict.update({query : {
+            'domain' : dnsplit.domain,
+            'tld' : dnsplit.suffix,
                 
 def entropy(string):
     """Compute entropy on the string"""

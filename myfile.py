@@ -124,3 +124,9 @@ print(zeek_df.head(50))
 
 x_test = zeek_df
 x_test.head(50)
+
+model = clf = RandomForestClassifier()
+model.fit(X,y)
+
+pred = model.predict(x_test)
+pred

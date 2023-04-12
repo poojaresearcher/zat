@@ -168,9 +168,9 @@ if log_type == 'dns':
             zeek_df['subdomain'] = zeek_df['query'].map(lambda x: x.split('.')[0].strip().lower())
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
             zeek_df['domains'] = zeek_df['query']
-            zeek_df['ngrams'] = zeek_df([average_ngram_feature(domain, d, 1), 
-                                        average_ngram_feature(domain, d, 2), 
-                                        average_ngram_feature(domain, d, 3)])
+            zeek_df['ngrams'] = zeek_df([average_ngram_feature(query, d, 1), 
+                                        average_ngram_feature(query, d, 2), 
+                                        average_ngram_feature(query, d, 3)])
             
 print(zeek_df.head(50))
 

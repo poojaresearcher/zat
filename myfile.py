@@ -88,9 +88,6 @@ if __name__ == '__main__':
         print('Read in {:d} Rows...'.format(len(zeek_df)))
 
 
-import tldextract
-
-
 def entropy(string):
     """Compute entropy on the string"""
     p, lns = Counter(string), float(len(string))
@@ -109,6 +106,10 @@ def vowel_consonant_ratio (x):
         ratio = 0  
     return ratio
 
+import tldextract
+
+tldextract.extract('http://forums.news.cnn.com/')
+ExtractResult()
 
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()

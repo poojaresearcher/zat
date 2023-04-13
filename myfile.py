@@ -149,3 +149,50 @@ if log_type == 'dns':
 print(zeek_df['domain'])
 
 print(zeek_df.head(50))
+
+
+zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
+
+# I'm SURE there's a better way to store all the counts but not sure...
+# At least the min_df parameters has already done some thresholding
+counts_matrix = zeek_vc.fit_transform(zeek_vc['domain'])
+zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
+ngrams_list = zeek_vc.get_feature_names_out()
+
+import operator
+_sorted_ngrams = sorted(zip(ngrams_list, zeek_counts), key=operator.itemgetter(1), reverse=True)
+print = (' NGrams: %d') % len(_sorted_ngrams)
+for ngram, count in _sorted_ngrams[:10]:
+    print = (ngram, count)
+
+# We're also going to throw in a bunch of dictionary words
+word_dataframe = pd.read_csv('/content/drive/MyDrive/words.txt', names=['word'], header=None, dtype={'word': np.str}, encoding='utf-8')
+
+# Cleanup words from dictionary
+word_dataframe = word_dataframe[word_dataframe['word'].map(lambda x: str(x).isalpha())]
+word_dataframe = word_dataframe.applymap(lambda x: str(x).strip().lower())
+word_dataframe = word_dataframe.dropna()
+word_dataframe = word_dataframe.drop_duplicates()
+word_dataframe.head(10)
+
+# Now compute NGrams on the dictionary words
+# Same logic as above...
+dict_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-5, max_df=1.0)
+counts_matrix = dict_vc.fit_transform(word_dataframe['word'])
+dict_counts = np.log10(counts_matrix.sum(axis=0).getA1())
+ngrams_list = dict_vc.get_feature_names_out()
+
+import operator
+_sorted_ngrams = sorted(zip(ngrams_list, dict_counts), key=operator.itemgetter(1), reverse=True)
+print = ('Word NGrams: %d') % len(_sorted_ngrams)
+for ngram, count in _sorted_ngrams[:10]:
+    print = ('ngrams, count')
+
+# We use the transform method of the CountVectorizer to form a vector
+# of ngrams contained in the domain, that vector is than multiplied
+# by the counts vector (which is a column sum of the count matrix).
+def ngram_count(google):
+    ngram_count = alexa_counts * alexa_vc.transform([google]).T  # Woot vector multiply and transpose Woo Hoo!
+    
+    print = ('%s Alexa match:%d ') % (google, ngram_count)
+

@@ -106,26 +106,6 @@ def vowel_consonant_ratio (x):
         ratio = 0  
     return ratio
 
-
-zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
-
-
-counts_matrix = zeek_vc.fit_transform(zeek_df['domain'])
-zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
-ngrams_list = zeek_vc.get_feature_names_out()
-
-import operator
-_sorted_ngrams = sorted(zip(ngrams_list, zeek_counts), key=operator.itemgetter(1), reverse=True)
-print = ('domain NGrams: %d') % len(_sorted_ngrams)
-for ngram, count in _sorted_ngrams[:10]:
-    print = (ngram, count)
-
-def ngram_count(google):
-    alexa_match = zeek_counts * zeek_vc.transform([google]).T  # Woot vector multiply and transpose Woo Hoo!
-    
-    print = ('%s domain match:%d') % (google, alexa_match, )
-
-
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
@@ -162,12 +142,29 @@ if log_type == 'dns':
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
-            zeek_df['domains'] = zeek_df['uri'].apply(domain_extract)           
+            zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
             
             
-print(zeek_df['domains'])
+print(zeek_df['domain'])
 
+zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
+
+
+counts_matrix = zeek_vc.fit_transform(zeek_df['domain'])
+zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
+ngrams_list = zeek_vc.get_feature_names_out()
+
+import operator
+_sorted_ngrams = sorted(zip(ngrams_list, zeek_counts), key=operator.itemgetter(1), reverse=True)
+print = ('domain NGrams: %d') % len(_sorted_ngrams)
+for ngram, count in _sorted_ngrams[:10]:
+    print = (ngram, count)
+
+def ngram_count(google):
+    alexa_match = zeek_counts * zeek_vc.transform([google]).T  # Woot vector multiply and transpose Woo Hoo!
+    
+    print = ('%s domain match:%d') % (google, alexa_match, )
             
 

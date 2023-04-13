@@ -164,5 +164,11 @@ _sorted_ngrams = sorted(zip(ngrams_list, zeek_counts), key=operator.itemgetter(1
 print = ('domain NGrams: %d') % len(_sorted_ngrams)
 for ngram, count in _sorted_ngrams[:10]:
     print = (ngram, count)
+    
+def ngram_count(google):
+    domain_match = zeek_counts * zeek_vc.transform([google]).T  # Woot vector multiply and transpose Woo Hoo!
+    
+    print = ('%s domain match:%d') % (google, domain_match)
+                
 
 

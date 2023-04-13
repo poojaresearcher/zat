@@ -167,7 +167,8 @@ if log_type == 'dns':
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
             
             
-print(zeek_df.head(50))            
+print(zeek_df['domain'])
+
             
 zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
 

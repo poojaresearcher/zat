@@ -179,6 +179,8 @@ if log_type == 'dns':
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
             
+print(zeek_df['domain'])
+            
             
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
@@ -186,14 +188,10 @@ if log_type == 'dns':
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
-            zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
             zeek_df['ngrams']= zeek_df['domain'].apply(lambda x: np.str_(x))            
-            
-print(zeek_df['domain'])
-            
-print(zeek_df['uri'])
+
           
 print(zeek_df['ngrams'])       
                      

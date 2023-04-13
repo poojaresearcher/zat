@@ -148,6 +148,8 @@ if log_type == 'dns':
             
             
 print(zeek_df['domain'])
+            
+print(zeek_df['uri'])
 
 zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
 

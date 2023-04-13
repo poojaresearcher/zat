@@ -151,7 +151,7 @@ print(zeek_df['domain'])
 zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
 
 
-counts_matrix = zeek_vc.fit_transform(zeek_df['domain'].astype('U').values)
+counts_matrix = zeek_vc.fit_transform(zeek_df['domain'].astype('str').values)
 zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
 ngrams_list = zeek_vc.get_feature_names_out()
 
@@ -163,7 +163,7 @@ for ngram, count in _sorted_ngrams[:10]:
     print = (ngram, count)
     
 def ngram_count(domain):    
-    domain_match = zeek_counts * zeek_vc.transform([domain].astype('U').values).T
+    domain_match = zeek_counts * zeek_vc.transform([domain].astype('str').values).T
    
     print = ('%s domain match:%d') % (domain, domain_match)
     

@@ -180,7 +180,7 @@ if log_type == 'dns':
             zeek_df['ngrams']= zeek_df['domain'].apply(lambda x: np.str_(x))
             
             
-print(zeek_df.head())          
+print(zeek_df['ngrams'])       
                      
             
            

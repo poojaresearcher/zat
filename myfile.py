@@ -159,4 +159,10 @@ zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
 ngrams_list = zeek_vc.get_feature_names_out()
 
 
+import operator
+_sorted_ngrams = sorted(zip(ngrams_list, zeek_counts), key=operator.itemgetter(1), reverse=True)
+print = ('domain NGrams: %d') % len(_sorted_ngrams)
+for ngram, count in _sorted_ngrams[:10]:
+    print = (ngram, count)
+
 

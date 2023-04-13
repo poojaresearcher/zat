@@ -107,19 +107,9 @@ def vowel_consonant_ratio (x):
     return ratio
 
 
-# Well our Mom told us we were still cool.. so with that encouragement we're
-# going to compute NGrams for every Alexa domain and see if we can use the
-# NGrams to help us better differentiate and mark DGA domains...
-
-# Scikit learn has a nice NGram generator that can generate either char NGrams or word NGrams (we're using char).
-# Parameters: 
-#       - ngram_range=(3,5)  # Give me all ngrams of length 3, 4, and 5
-#       - min_df=1e-4        # Minimumum document frequency. At 1e-4 we're saying give us NGrams that 
-#                            # happen in at least .1% of the domains (so for 100k... at least 100 domains)
 zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
 
-# I'm SURE there's a better way to store all the counts but not sure...
-# At least the min_df parameters has already done some thresholding
+
 counts_matrix = zeek_vc.fit_transform(zeek_df['domain'])
 zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
 ngrams_list = zeek_vc.get_feature_names_out()
@@ -130,23 +120,10 @@ print = ('domain NGrams: %d') % len(_sorted_ngrams)
 for ngram, count in _sorted_ngrams[:10]:
     print = (ngram, count)
 
-
-# We use the transform method of the CountVectorizer to form a vector
-# of ngrams contained in the domain, that vector is than multiplied
-# by the counts vector (which is a column sum of the count matrix).
 def ngram_count(google):
     alexa_match = zeek_counts * zeek_vc.transform([google]).T  # Woot vector multiply and transpose Woo Hoo!
     
     print = ('%s domain match:%d') % (google, alexa_match, )
-
-# Examples:
-ngram_count('google')
-ngram_count('facebook')
-ngram_count('1cb8a5f36f')
-ngram_count('pterodactylfarts')
-ngram_count('ptes9dro-dwacty2lfa5rrts')
-ngram_count('beyonce')
-ngram_count('bey666on4ce')
 
 
 if log_type == 'dns':
@@ -188,6 +165,25 @@ if log_type == 'dns':
             zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
+            
+zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
+
+
+counts_matrix = zeek_vc.fit_transform(zeek_df['domain'])
+zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
+ngrams_list = zeek_vc.get_feature_names_out()
+
+import operator
+_sorted_ngrams = sorted(zip(ngrams_list, zeek_counts), key=operator.itemgetter(1), reverse=True)
+print = ('domain NGrams: %d') % len(_sorted_ngrams)
+for ngram, count in _sorted_ngrams[:10]:
+    print = (ngram, count)
+
+def ngram_count(google):
+    alexa_match = zeek_counts * zeek_vc.transform([google]).T  # Woot vector multiply and transpose Woo Hoo!
+    
+    print = ('%s domain match:%d') % (google, alexa_match, )
+            
             
             
 print(zeek_df.head(50))

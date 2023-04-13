@@ -178,7 +178,7 @@ if log_type == 'dns':
             zeek_df['ngrams']= zeek_df['domain'].apply(lambda x: np.str_(x))
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract)
-            print(zeek_df)
+            print('Read in {:d} Rows...'.format(len(zeek_df)))
                      
             
            

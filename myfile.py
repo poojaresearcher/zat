@@ -182,7 +182,7 @@ if log_type == 'dns':
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract)
             
-print(zeek_df.head(20))           
+           
         
 
    

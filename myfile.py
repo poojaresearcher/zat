@@ -135,22 +135,23 @@ def subdomain_extract(uri):
         return np.nan
     else:
         return ext.subdomain     
+zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
 
-if log_type == 'dns':
-            zeek_df['query_length'] = zeek_df['query'].str.len()
-            zeek_df['answer_length'] = zeek_df['answers'].str.len()
-            zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
-            zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
-            zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
-            zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
-            zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
-            zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
-            
-            
-print(zeek_df['domain'])
-            
-print(zeek_df['uri'])
 
+counts_matrix = zeek_vc.fit_transform(zeek_df['domain'].values.astype('U'))
+zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
+ngrams_list = zeek_vc.get_feature_names_out()
+
+
+import operator
+_sorted_ngrams = sorted(zip(ngrams_list, zeek_counts), key=operator.itemgetter(1), reverse=True)
+print = ('domain NGrams: %d') % len(_sorted_ngrams)
+for ngram, count in _sorted_ngrams[:10]:
+    print = (ngram, count)
+    
+def ngram_count(string):
+    domain_match = zeek_counts * zeek_vc.transform([string]).T  # Woot vector multiply and transpose Woo Hoo!
+      
 zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
 
 
@@ -174,12 +175,16 @@ if log_type == 'dns':
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
-            zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)
+            zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
-            zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract)
+            zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
             zeek_df['ngrams']= zeek_df['domain'].apply(lambda x: np.str_(x))
             
             
+print(zeek_df['domain'])
+            
+print(zeek_df['uri'])
+          
 print(zeek_df['ngrams'])       
                      
             

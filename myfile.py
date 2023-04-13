@@ -125,6 +125,13 @@ def domain_extract(uri):
         return np.nan
     else:
         return ext.domain
+def TLD_extract(uri):
+    ext = tldextract.extract(uri)
+    if (not ext.suffix):
+        return np.nan
+    else:
+        return ext.suffix    
+    
 
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
@@ -134,7 +141,7 @@ if log_type == 'dns':
             zeek_df['subdomain'] = zeek_df['query'].map(lambda x: x.split('.')[0].strip().lower())
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
             zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
-            
+            zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             
 print(zeek_df.head(100))
 

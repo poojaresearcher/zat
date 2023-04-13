@@ -181,8 +181,10 @@ if log_type == 'dns':
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract)
             zeek_df['domain_grams']= zeek_counts * zeek_vc.transform(zeek['domain']).T
-            
-        print(zeek_df['domain_grams'])
+           
+        
+        
+print(zeek_df['domain_grams'])
    
                 
 

@@ -25,7 +25,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import train_test_split
-
+from sklearn.feature_extraction.text import CountVectorizer
 
 import tldextract
 import tensorflow as tf

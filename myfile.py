@@ -165,8 +165,8 @@ print = ('domain NGrams: %d') % len(_sorted_ngrams)
 for ngram, count in _sorted_ngrams[:10]:
     print = (ngram, count)
     
-def ngram_count(domain):
-    domain_match = zeek_counts * zeek_vc.transform([domain]).T  # Woot vector multiply and transpose Woo Hoo!
+def ngram_count(string):
+    domain_match = zeek_counts * zeek_vc.transform([string]).T  # Woot vector multiply and transpose Woo Hoo!
   
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
@@ -177,7 +177,7 @@ if log_type == 'dns':
             zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract)
-            zeek_df['ngrams']= zeek_df['domain'].apply(domain_match)
+            zeek_df['ngrams']= zeek_df['domain'].apply(ngram_count)
             
             
 print(zeek_df['ngrams'])       

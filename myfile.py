@@ -163,7 +163,7 @@ for ngram, count in _sorted_ngrams[:10]:
     print = (ngram, count)
     
 def ngram_count(domain):    
-    domain_match = zeek_counts * zeek_vc.transform([domain]).T  # Woot vector multiply and transpose Woo Hoo!
+    domain_match = zeek_counts * zeek_vc.transform([domain].astype('U').values)
    
     print = ('%s domain match:%d') % (domain, domain_match)
     

@@ -162,18 +162,18 @@ if log_type == 'dns':
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
-            zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
+            zeek_df['domains'] = zeek_df['uri'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
             
             
-print(zeek_df['domain'])
+print(zeek_df['domains'])
 
             
 zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
 
 
-counts_matrix = zeek_vc.fit_transform(zeek_df['domain'])
+counts_matrix = zeek_vc.fit_transform(zeek_df['domains'])
 zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
 ngrams_list = zeek_vc.get_feature_names_out()
 
@@ -188,9 +188,6 @@ def ngram_count(google):
     
     print = ('%s domain match:%d') % (google, domain_match, )
    
-
-print(zeek_df['subdomain'])
-print(zeek_df['domain'])
 
       
       

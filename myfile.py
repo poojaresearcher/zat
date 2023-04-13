@@ -154,7 +154,7 @@ print(zeek_df['uri'])
 zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
 
 
-counts_matrix = zeek_vc.fit_transform(zeek_df['domain'])
+counts_matrix = zeek_vc.fit_transform(zeek_df['domain'].values.astype('U'))
 zeek_counts = np.log10(counts_matrix.sum(axis=0).getA1())
 ngrams_list = zeek_vc.get_feature_names_out()
 

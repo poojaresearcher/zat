@@ -117,6 +117,25 @@ if log_type == 'dns':
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
             zeek_df['uri'] = zeek_df['query']
             
+import tldextract
+
+def domain_extract(uri):
+    ext = tldextract.extract(uri)
+    if (not ext.suffix):
+        return np.nan
+    else:
+        return ext.domain
+
+if log_type == 'dns':
+            zeek_df['query_length'] = zeek_df['query'].str.len()
+            zeek_df['answer_length'] = zeek_df['answers'].str.len()
+            zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
+            zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
+            zeek_df['subdomain'] = zeek_df['query'].map(lambda x: x.split('.')[0].strip().lower())
+            zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
+            zeek_df['domain'] = [ domain_extract(uri) for uri zeek_df['uri']]
+            
+            
 print(zeek_df.head(50))
 
 x_test = zeek_df['query']

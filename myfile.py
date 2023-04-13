@@ -152,7 +152,7 @@ if log_type == 'dns':
 print(zeek_df.head(50))
 
 
-print(zeek_df[['uri'],['suffix'],['subdomain'],['domain'])
+print(zeek_df[['uri'],['suffix'],['subdomain'],['domain']])
 
 
 

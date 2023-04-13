@@ -136,7 +136,7 @@ if log_type == 'dns':
             zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
             
             
-print(zeek_df.head(50))
+print(zeek_df.head(100))
 
 x_test = zeek_df['query']
 print(x_test.head(50))

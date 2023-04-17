@@ -34,7 +34,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential, load_model
 from keras.layers.core import Dense, Dropout, Activation,Embedding
 from keras.layers import LSTM
-from keras.utils.vis_utils import plot_model
+from tensorflow.keras.utils import plot_model
 import warnings
 warnings.filterwarnings('ignore')
 

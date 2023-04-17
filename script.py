@@ -79,18 +79,15 @@ if __name__ == '__main__':
             print('This example only works with Zeek with http.log or dns.log files..')
             sys.exit(1)
             
-import schedule
-import time
+from sys import argv
+from datetime import datetime, timedelta
 
-def read_key():
-    with open(zeek_log, 'r') as live_file_path
-        live_token = live_file_path.read()
-    print(live_token)
-
-schedule.every(30).minutes.do(read_key)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)            
-            
+with open('log_test.log', 'r') as f:
+    for line in f:
+        try:
+            e = line.index("Failed")
+        except:
+            pass
+        else:
+            print(line)
             

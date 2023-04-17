@@ -155,4 +155,8 @@ model = tf.keras.models.load_model('dgadetection.h5')
 
 model.summary()
 
+test_data = zeek_df
+
+model.predict(test_data)
+
 

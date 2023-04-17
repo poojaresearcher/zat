@@ -83,8 +83,8 @@ import schedule
 import time
 
 def read_key():
-    with open(zeek_log, 'r') as live_key_file_loc
-        live_token = live_key_file_loc.read()
+    with open(zeek_log, 'r') as live_file_path
+        live_token = live_file_path.read()
     print(live_token)
 
 schedule.every(30).minutes.do(read_key)

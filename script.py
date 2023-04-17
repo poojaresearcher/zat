@@ -72,7 +72,7 @@ if __name__ == '__main__':
         while(1):
          line = f.readline()
         if line.find("ONE") != -1:
-            print "Got it"
+            print ("Got it")
          
   
         # Sanity check either http or dns log

@@ -158,8 +158,6 @@ model.summary()
 X_test = zeek_df
 
 
-
-tf.convert_to_tensor(X_test,dtype=char)
 a = (model.predict(X_test))
 print(a)
 

@@ -64,19 +64,21 @@ if __name__ == '__main__':
         print('Unrecognized args: %s' % commands)
         sys.exit(1)                  
   
-f = open('/tmp/workfile', 'r')
+    # File may have a tilde in it
+    if args.zeek_log:
+        args.zeek_log = os.path.expanduser(args.zeek_log)
+        
+         f = open('zeek_log', 'r')
 while(1):
     line = f.readline()
     if line.find("ONE") != -1:
         print "Got it"
         
 f.write("One\n")
-f.close()
+f.close()    
+   
 
 
-    # File may have a tilde in it
-    if args.zeek_log:
-        args.zeek_log = os.path.expanduser(args.zeek_log)
 
         # Sanity check either http or dns log
         if 'http' in args.zeek_log:

@@ -64,6 +64,19 @@ if __name__ == '__main__':
         print('Unrecognized args: %s' % commands)
         sys.exit(1)
 
+from sys import argv
+from datetime import datetime, timedelta
+
+with open('zeek_log', 'r') as f:
+    for line in f:
+        try:
+            e = line.index("Failed")
+        except:
+            pass
+        else:
+            print(line)
+                    
+  
     # File may have a tilde in it
     if args.zeek_log:
         args.zeek_log = os.path.expanduser(args.zeek_log)
@@ -78,16 +91,4 @@ if __name__ == '__main__':
         else:
             print('This example only works with Zeek with http.log or dns.log files..')
             sys.exit(1)
-            
-from sys import argv
-from datetime import datetime, timedelta
-
-with open('/home/logs/current/dns.log', 'r') as f:
-    for line in f:
-        try:
-            e = line.index("Failed")
-        except:
-            pass
-        else:
-            print(line)
             

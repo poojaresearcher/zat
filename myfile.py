@@ -156,7 +156,7 @@ model = tf.keras.models.load_model('dgadetection.h5')
 
 model.summary()
 
-legitDomains = pd.read_csv('test_data/top-1m.csv'], names=['domains'])
+legitDomains = pd.read_csv('test_data/top-1m.csv', names=['domains'])
 dgaDomains = pd.read_csv('test_data/dgaDomains.txt', names=['domains'])
 
 legitDomains = legitDomains.drop_duplicates()

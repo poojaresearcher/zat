@@ -84,9 +84,8 @@ def reading_log_files(filename):
         data = f.read().splitlines()
     return data
 
-
 def log_generator(filename, period=1):
-    data = reading_log_files(dns.log)
+    data = reading_log_files(filename)
     while True:
         time.sleep(period)
         new_data = reading_log_files(filename)

@@ -153,6 +153,9 @@ print(zeek_df.head(50))
 
 zeek_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
 
+countVectorizer.__getitem__(self, key)
+
+
 # I'm SURE there's a better way to store all the counts but not sure...
 # At least the min_df parameters has already done some thresholding
 counts_matrix = zeek_vc.fit_transform(zeek_vc['domain'])

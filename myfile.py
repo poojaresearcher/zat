@@ -156,7 +156,7 @@ model = tf.keras.models.load_model('dgadetection.h5')
 model.summary()
 
 X_test = zeek_df
-tf.convert_to_tensor(X_test, dtype=tf.float32)
+tf.convert_to_tensor(X_test, dtype=tf.str)
 a = (model.predict(X_test))
 print(a)
 

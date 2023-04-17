@@ -94,6 +94,6 @@ def log_generator(filename, period=1):
         data = new_data
 
 if __name__ == '__main__':
-    x = log_generator(home/logs/current/dns.log)
+    x = log_generator('home/logs/current/dns.log')
     for lines in x:
         print(lines)

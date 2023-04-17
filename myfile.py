@@ -156,8 +156,47 @@ model = tf.keras.models.load_model('dgadetection.h5')
 
 model.summary()
 
-model.fit(x_train, y_train, epochs=5)
+legitDomains = pd.read_csv('test_data/top-1m.csv'], names=['domains'])
+dgaDomains = pd.read_csv('test_data/dgaDomains.txt', names=['domains'])
 
+legitDomains = legitDomains.drop_duplicates()
+dgaDomains = dgaDomains.drop_duplicates()
+
+legitDomains['label'] = 0
+dgaDomains['label'] = 1
+
+legitDomains['domain'] = [tldextract.extract(d).domain for d in legitDomains['domains']]
+dgaDomains['domain'] = [tldextract.extract(d).domain for d in dgaDomains['domains']]
+
+train_data = concat([legitDomains, dgaDomains], ignore_index = True)
+train_data = allDomains.sample(frac=1).reset_index(drop=True)
+
+X,y = train_data['domain'], train_data['label']
+
+validChars = { x: idx + 1 for idx, x in enumerate(set(''.join(X)))}
+maxFeatures = len(validChars) + 1
+maxlen = np.max([len(x) for x in X ])
+
+X = [[validChars[y] for y in x] for x in X]
+X = pad_sequences(X, maxlen=maxlen)
+
+test_data = zeek_df
+X_test = zeek_df['domain']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y)
+
+model = Sequential()
+model.add(Embedding(maxFeatures, 128, input_length=maxlen))
+
+model.add(LSTM(128))
+model.add(Dropout(0.5))
+model.add(Dense(1))
+model.add(Activation('sigmoid'))
+model.compile(loss='binary_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
+
+
+for i in range(5):
+    model.fit(X_train, y_train, batch_size=16, epochs=3)
 
 
 

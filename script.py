@@ -30,9 +30,7 @@ if __name__ == '__main__':
         reader = zeek_log_reader.ZeekLogReader(args.zeek_log, tail=args.tail, strict=True)
         for row in reader.readrows():
             pprint(row)
-            
-             import time
-
+           
     dnslog = '/home/logs/current/dns.log'
     sleep_time_in_seconds = 10
 

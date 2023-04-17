@@ -86,15 +86,14 @@ def reading_log_files(filename):
 
 
 def log_generator(filename, period=1):
-    data = reading_log_files(filename)
+    data = reading_log_files(dns.log)
     while True:
         time.sleep(period)
         new_data = reading_log_files(filename)
         yield new_data[len(data):]
         data = new_data
 
-
 if __name__ == '__main__':
-    x = log_generator(</path/to/log/file.log>)
+    x = log_generator(</home/logs/current/dns.log>)
     for lines in x:
         print(lines)

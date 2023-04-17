@@ -169,7 +169,7 @@ legitDomains['domain'] = [tldextract.extract(d).domain for d in legitDomains['do
 dgaDomains['domain'] = [tldextract.extract(d).domain for d in dgaDomains['domains']]
 
 train_data = concat([legitDomains, dgaDomains], ignore_index = True)
-train_data = allDomains.sample(frac=1).reset_index(drop=True)
+train_data = train_data.sample(frac=1).reset_index(drop=True)
 
 X,y = train_data['domain'], train_data['label']
 

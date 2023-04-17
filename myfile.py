@@ -195,8 +195,8 @@ model.add(Activation('sigmoid'))
 model.compile(loss='binary_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
 
 
-for i in range(5):
-    model.fit(X_train, y_train, batch_size=16, epochs=3)
+for i in range(2):
+    model.fit(X_train, y_train, batch_size=16, epochs=1)
 
 
 

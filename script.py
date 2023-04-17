@@ -67,13 +67,6 @@ if __name__ == '__main__':
     # File may have a tilde in it
     if args.zeek_log:
         args.zeek_log = os.path.expanduser(args.zeek_log)
-
-        f = open('args.zeek_log', 'r')
-        while(1):
-         line = f.readline()
-        if line.find("ONE") != -1:
-            print ("Got it")
-         
   
         # Sanity check either http or dns log
         if 'http' in args.zeek_log:
@@ -86,3 +79,22 @@ if __name__ == '__main__':
             print('This example only works with Zeek with http.log or dns.log files..')
             sys.exit(1)
             
+def reading_log_files(filename):
+    with open(filename, "r") as f:
+        data = f.read().splitlines()
+    return data
+
+
+def log_generator(filename, period=1):
+    data = reading_log_files(filename)
+    while True:
+        time.sleep(period)
+        new_data = reading_log_files(filename)
+        yield new_data[len(data):]
+        data = new_data
+
+
+if __name__ == '__main__':
+    x = log_generator(</path/to/log/file.log>)
+    for lines in x:
+        print(lines)

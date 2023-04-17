@@ -34,6 +34,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential, load_model
 from keras.layers.core import Dense, Dropout, Activation,Embedding
 from keras.layers import LSTM
+from keras.utils import plot_model
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -155,11 +156,14 @@ model = tf.keras.models.load_model('dgadetection.h5')
 
 model.summary()
 
-X_test = zeek_df
+tf.keras.utils.plot_model(model)
 
 
-a = (model.predict(X_test))
-print(a)
+
+
+
+
+
 
 
 

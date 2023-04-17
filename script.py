@@ -3,6 +3,7 @@ import os
 import sys
 import argparse
 from pprint import pprint
+import time
 
 # Local imports
 from zat import zeek_log_reader
@@ -29,4 +30,20 @@ if __name__ == '__main__':
         reader = zeek_log_reader.ZeekLogReader(args.zeek_log, tail=args.tail, strict=True)
         for row in reader.readrows():
             pprint(row)
+            
+             import time
+
+    dnslog = '/home/logs/current/dns.log'
+    sleep_time_in_seconds = 10
+
+    try:
+        with open(dnslog, 'r', errors='ignore') as f:
+            while True:
+                for line in f:
+                    if line:
+                        print(line.strip())
+                        # do whatever you want to do on the line
+                time.sleep(sleep_time_in_seconds)
+    except IOError as e:
+        print('Cannot open the file {}. Error: {}'.format(dnslog, e))
             

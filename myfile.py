@@ -156,6 +156,8 @@ model = tf.keras.models.load_model('dgadetection.h5')
 
 model.summary()
 
+model.fit(x_train, y_train, epochs=5)
+
 
 
 

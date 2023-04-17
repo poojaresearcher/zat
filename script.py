@@ -68,7 +68,7 @@ if __name__ == '__main__':
     if args.zeek_log:
         args.zeek_log = os.path.expanduser(args.zeek_log)
 
-        f = open('/tmp/workfile', 'r')
+        f = open('zeek_log', 'r')
         while(1):
          line = f.readline()
         if line.find("ONE") != -1:

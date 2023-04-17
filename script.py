@@ -82,7 +82,7 @@ if __name__ == '__main__':
 from sys import argv
 from datetime import datetime, timedelta
 
-with open('log_test.log', 'r') as f:
+with open('dns.log', 'r') as f:
     for line in f:
         try:
             e = line.index("Failed")

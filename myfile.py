@@ -151,4 +151,8 @@ print(zeek_df['domain'])
 print(zeek_df.head(50))
 
 
+model = tf.keras.models.load_model('dgadetection.h5')
+
+model.summary()
+
 

@@ -62,21 +62,18 @@ if __name__ == '__main__':
     # Check for unknown args
     if commands:
         print('Unrecognized args: %s' % commands)
-        sys.exit(1)
-
-from sys import argv
-from datetime import datetime, timedelta
-
-with open('zeek_log', 'r') as f:
-    for line in f:
-        try:
-            e = line.index("Failed")
-        except:
-            pass
-        else:
-            print(line)
-                    
+        sys.exit(1)                  
   
+f = open('/tmp/workfile', 'r')
+while(1):
+    line = f.readline()
+    if line.find("ONE") != -1:
+        print "Got it"
+        
+f.write("One\n")
+f.close()
+
+
     # File may have a tilde in it
     if args.zeek_log:
         args.zeek_log = os.path.expanduser(args.zeek_log)

@@ -121,30 +121,4 @@ if __name__ == '__main__':
         zeek_matrix = to_matrix.fit_transform(zeek_df[features])
         np.shape(zeek_matrix)
 
-        # Train/fit and Predict anomalous instances using the Isolation Forest model
-        odd_clf = RandomForestClassifier(n_estimators=20)  # Marking 20% as odd
-        odd_clf.fit(zeek_df)
-
-        # Now we create a new dataframe using the prediction from our classifier
-        predictions = odd_clf.predict(zeek_matrix)
-        odd_df = zeek_df[features][predictions == 0]
-        display_df = zeek_df[predictions == 0].copy()
-
-        # Now we're going to explore our odd observations with help from KMeans
-        odd_matrix = to_matrix.fit_transform(odd_df)
-        num_clusters = min(len(odd_df), 4)  # 4 clusters unless we have less than 4 observations
-        display_df['cluster'] = KMeans(n_clusters=num_clusters).fit_predict(odd_matrix)
-        print(odd_matrix.shape)
-
-        # Now group the dataframe by cluster
-        if log_type == 'dns':
-            features += ['query']
-        else:
-            features += ['host']
-        cluster_groups = display_df[features+['cluster']].groupby('cluster')
-
-        # Now print out the details for each cluster
-        print('<<< Outliers Detected! >>>')
-        for key, group in cluster_groups:
-            print('\nCluster {:d}: {:d} observations'.format(key, len(group)))
-            print(group.head())
+        

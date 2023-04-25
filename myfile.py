@@ -54,24 +54,37 @@ def entropy(string):
     p, lns = Counter(string), float(len(string))
     return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
                                     
-def domain_extract(uri):
-    ext = tldextract.extract(uri)
+def domain_extract(query):
+    ext = tldextract.extract(query)
     if (not ext.suffix):
         return np.nan
     else:
         return ext.domain
-def TLD_extract(uri):
-    ext = tldextract.extract(uri)
+def TLD_extract(query):
+    ext = tldextract.extract(query)
     if (not ext.suffix):
         return np.nan
     else:
         return ext.suffix    
-def subdomain_extract(uri):
-    ext = tldextract.extract(uri)
+def subdomain_extract(query):
+    ext = tldextract.extract(query)
     if (not ext.suffix):
         return np.nan
     else:
         return ext.subdomain 
+    
+ def vowel_consonant_ratio (x):
+    # Calculate vowel to consonant ratio
+    x = x.lower()
+    vowels_pattern = re.compile('([aeiou])')
+    consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
+    vowels = re.findall(vowels_pattern, x)
+    consonants = re.findall(consonants_pattern, x)
+    try:
+        ratio = len(vowels) / len(consonants)
+    except: # catch zero devision exception 
+        ratio = 0  
+    return ratio
 
 
 def compute_ngrams(word_list, S=3, T=3):
@@ -137,14 +150,17 @@ if __name__ == '__main__':
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
-            zeek_df['uri'] = zeek_df['query']
-            zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
-            zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
-            zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
+            zeek_df['domain'] = zeek_df['query'].apply(domain_extract)           
+            zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract) 
+            zeek_df['subdomain'] = zeek_df['query'].apply(subdomain_extract) 
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['domain'].map(vowel_consonant_ratio)
             zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
             zeek_df['ngrams'] = zeek_df['domain'].apply(compute_ngrams)
+                           
+                           
+
+                          
             
           
 print(zeek_df['domain'])

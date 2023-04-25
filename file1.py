@@ -1,4 +1,4 @@
-from pyzeek import dns_log
+import pyzeek
 
 # Define a function to handle DNS log data
 def handle_dns_log(data):

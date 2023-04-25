@@ -71,9 +71,9 @@ def subdomain_extract(query):
     if (not ext.suffix):
         return np.nan
     else:
-        return ext.subdomain 
+        return ext.subdomain
     
- def vowel_consonant_ratio(x):
+ def vowel_consonant_ratio (x):
     # Calculate vowel to consonant ratio
     x = x.lower()
     vowels_pattern = re.compile('([aeiou])')
@@ -85,7 +85,8 @@ def subdomain_extract(query):
     except: # catch zero devision exception 
         ratio = 0  
     return ratio
-
+    
+ 
 
 def compute_ngrams(word_list, S=3, T=3):
     """Compute NGrams in the word_list from [S-T)

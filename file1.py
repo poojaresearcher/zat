@@ -10,7 +10,7 @@ def handle_dns_log(data):
     # Process the data as needed (e.g. extract features, make predictions, etc.)
 
 # Capture and parse DNS log data in real-time using PyZeek
-for log in dns_log('/path/to/your/zeek/logs', tail=True):
+for log in dns_log('/home/logs/current/dns.log', tail=True):
     # Pass the DNS log data to your handling function
     handle_dns_log(log)
 

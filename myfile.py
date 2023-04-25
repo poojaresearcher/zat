@@ -174,11 +174,11 @@ if log_type == 'dns':
             zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
             zeek_df['ngrams'] = zeek_df['domain'].apply(compute_ngrams)
             
-            
-
-
-            
+          
 print(zeek_df['domain'])
+print(zeek_df['ngrams'])
+
+
 
 print(zeek_df.head(50))
 

@@ -1,6 +1,6 @@
 import pandas as pd
 import joblib
-from pyzeek import dns_log
+from pyzeek import dns.log
 
 # Load your trained model
 model = joblib.load('dga_detection.pickle')

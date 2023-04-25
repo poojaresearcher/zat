@@ -6,6 +6,7 @@ from collections import Counter
 import pickle
 import re
 import joblib
+import tldextract
 
 import numpy as np
 import pandas as pd
@@ -89,9 +90,6 @@ if __name__ == '__main__':
             sys.exit(1)
         print('Read in {:d} Rows...'.format(len(zeek_df)))
 
-
-import tldextract
-
 def domain_extract(uri):
     ext = tldextract.extract(uri)
     if (not ext.suffix):
@@ -148,20 +146,6 @@ def compute_ngrams(word_list, S=3, T=3):
 def ngram_count(word, ngrams):
     """Compute the number of matching NGrams in the given word"""
     return len(set(ngrams).intersection(compute_ngrams([word])))
-
-
-def test():
-    """Test the ngram methods"""
-    domains = ['google', 'facebook', 'apple']
-    compute_ngrams(domains, 2, 5)
-    ngrams = compute_ngrams(domains)
-    print('NGrams: {:s}'.format(str(list(ngrams))))
-    print(ngram_count('foogle', ngrams))
-    print(ngram_count('mybook', ngrams))
-
-
-if __name__ == '__main__':
-    test()
 
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()

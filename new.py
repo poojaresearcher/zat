@@ -139,7 +139,7 @@ if log_type == 'dns':
             zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract)
-            zeek_df['vowel-cons'] = zeek_df['domain'].map(vowel_consonant_ratio)
+            zeek_df['vowel-cons'] = zeek_df['domain'].map(lambda x: vowel_consonant_ratio(X))
             zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
             zeek_df['ngrams'] = zeek_df['domain'].apply(ngrams)
                         

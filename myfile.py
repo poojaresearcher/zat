@@ -50,48 +50,6 @@ from zat import log_to_dataframe
 from zat import dataframe_to_matrix
 
 
-
-
-if __name__ == '__main__':
-    # Example to show the dataframe cache functionality on streaming data
-    pd.set_option('display.width', 1000)
-
-    # Collect args from the command line
-    parser = argparse.ArgumentParser()
-    parser.add_argument('zeek_log', type=str, help='Specify a zeek log to run ZeekLogReader test on')
-    args, commands = parser.parse_known_args()
-
-    # Check for unknown args
-    if commands:
-        print('Unrecognized args: %s' % commands)
-        sys.exit(1)
-
-    # File may have a tilde in it
-    if args.zeek_log:
-        args.zeek_log = os.path.expanduser(args.zeek_log)
-
-        # Sanity check either http or dns log
-        if 'http' in args.zeek_log:
-            log_type = 'http'
-            features = ['id.resp_p', 'method', 'resp_mime_types', 'request_body_len']
-        elif 'dns' in args.zeek_log:
-            log_type = 'dns'
-            features = ['Z','query', 'proto', 'qtype_name', 'query_length', 'answer_length', 'entropy']
-        else:
-            print('This example only works with Zeek with http.log or dns.log files..')
-            sys.exit(1)
-            
-        try:
-            log_to_df = log_to_dataframe.LogToDataFrame()
-            zeek_df = log_to_df.create_dataframe(args.zeek_log)
-            print(zeek_df.head())
-        except IOError:
-            print('Could not open or parse the specified logfile: %s' % args.zeek_log)
-            sys.exit(1)
-        print('Read in {:d} Rows...'.format(len(zeek_df)))
-
-
-    
 def entropy(string):
     """Compute entropy on the string"""
     p, lns = Counter(string), float(len(string)
@@ -149,6 +107,46 @@ def compute_ngrams(word_list, S=3, T=3):
 def ngram_count(word, ngrams):
     """Compute the number of matching NGrams in the given word"""
     return len(set(ngrams).intersection(compute_ngrams([word])))
+
+
+if __name__ == '__main__':
+    # Example to show the dataframe cache functionality on streaming data
+    pd.set_option('display.width', 1000)
+
+    # Collect args from the command line
+    parser = argparse.ArgumentParser()
+    parser.add_argument('zeek_log', type=str, help='Specify a zeek log to run ZeekLogReader test on')
+    args, commands = parser.parse_known_args()
+
+    # Check for unknown args
+    if commands:
+        print('Unrecognized args: %s' % commands)
+        sys.exit(1)
+
+    # File may have a tilde in it
+    if args.zeek_log:
+        args.zeek_log = os.path.expanduser(args.zeek_log)
+
+        # Sanity check either http or dns log
+        if 'http' in args.zeek_log:
+            log_type = 'http'
+            features = ['id.resp_p', 'method', 'resp_mime_types', 'request_body_len']
+        elif 'dns' in args.zeek_log:
+            log_type = 'dns'
+            features = ['Z','query', 'proto', 'qtype_name', 'query_length', 'answer_length', 'entropy']
+        else:
+            print('This example only works with Zeek with http.log or dns.log files..')
+            sys.exit(1)
+            
+        try:
+            log_to_df = log_to_dataframe.LogToDataFrame()
+            zeek_df = log_to_df.create_dataframe(args.zeek_log)
+            print(zeek_df.head())
+        except IOError:
+            print('Could not open or parse the specified logfile: %s' % args.zeek_log)
+            sys.exit(1)
+        print('Read in {:d} Rows...'.format(len(zeek_df)))
+
 
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()

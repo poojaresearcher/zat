@@ -29,6 +29,6 @@ def predict(model, data):
 
 # Capture and parse DNS log data in real-time using PyZeek
 for log in dns_log('/home/logs/current/dns.logs', tail=True):
-    # Extract the relevant fields
+    print(dns.logs)
 
 

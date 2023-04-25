@@ -129,6 +129,6 @@ if __name__ == '__main__':
             zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract)
-            zeek_df['vowel-cons'] = zeek_df['domain'].applymap(vowel_consonant_ratio)
+            zeek_df['vowel-cons'] = zeek_df['domain'].map(vowel_consonant_ratio)
             
 print(zeek_df.head(50))

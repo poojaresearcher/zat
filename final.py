@@ -4,6 +4,8 @@ import argparse
 import time
 import math
 from collections import Counter
+import pickle
+import joblib
 
 # Third Party Imports
 import pandas as pd
@@ -12,6 +14,8 @@ import pandas as pd
 # Local imports
 from zat import zeek_log_reader, live_simulator
 from zat import dataframe_to_matrix, dataframe_cache
+
+classifier_model = joblib.load('dga_detection.pickle')
 
 
 def entropy(string):
@@ -79,7 +83,7 @@ if __name__ == '__main__':
                 zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
 
                 # Use the zat DataframeToMatrix class
-                features = ['Z', 'proto', 'qtype_name', 'query_length', 'answer_length', 'entropy', 'id.resp_p']
+                features = ['qtype_name', 'query_length', 'answer_length', 'entropy']
                 to_matrix = dataframe_to_matrix.DataFrameToMatrix()
                 zeek_matrix = to_matrix.fit_transform(zeek_df[features])
                 print(zeek_matrix.shape)

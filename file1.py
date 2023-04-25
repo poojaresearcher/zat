@@ -1,6 +1,6 @@
 import pandas as pd
 import joblib
-from pyzeek import dns.log
+from pyzeek import dns_log
 
 # Load your trained model
 model = joblib.load('dga_detection.pickle')
@@ -26,5 +26,9 @@ def predict(model, data):
     predictions = model.predict(data)
 
     return predictions
+
+# Capture and parse DNS log data in real-time using PyZeek
+for log in dns_log('/home/logs/current/dns.logs', tail=True):
+    # Extract the relevant fields
 
 

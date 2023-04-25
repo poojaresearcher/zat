@@ -140,7 +140,7 @@ def compute_ngrams(word_list, S=3, T=3):
         word_list = [word_list]
     for word in word_list:
         for n in range(S, T+1):
-            _ngrams += zip(*(word[i:] for i in range(n)))
+            _ngrams += zip(*(word[i:] for i in range(n))
     return [''.join(_ngram) for _ngram in _ngrams]
 
 

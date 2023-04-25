@@ -144,11 +144,12 @@ def compute_ngrams(word_list, S=3, T=3):
         for n in range(S, T+1):
             _ngrams += zip(*(word[i:] for i in range(n))
     return [''.join(_ngram) for _ngram in _ngrams]
-
-
+                           
 def ngram_count(word, ngrams):
     """Compute the number of matching NGrams in the given word"""
     return len(set(ngrams).intersection(compute_ngrams([word])))
+
+
                            
          if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()

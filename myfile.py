@@ -111,8 +111,9 @@ def subdomain_extract(uri):
     
 def entropy(string):
     """Compute entropy on the string"""
-    p, lns = Counter(string), 
+    p, lns = Counter(string), float(len(string)
     return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
+
 
 def vowel_consonant_ratio (x):
     # Calculate vowel to consonant ratio
@@ -154,7 +155,7 @@ if log_type == 'dns':
             zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
-            zeek_df['entropy'] = zeek_df['domain'].apply(entropy)
+            zeek_df['entropy'] = zeek_df['domain'].applymap(entropy)
             zeek_df['vowel-cons'] = zeek_df['domain'].apply(vowel_consonant_ratio)
             zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
             zeek_df['ngrams'] = zeek_df['domain'].apply(compute_ngrams)

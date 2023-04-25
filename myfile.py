@@ -115,7 +115,7 @@ def entropy(string):
     return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
 
 
-def vowel_consonant_ratio (x):
+def vowel_consonant_ratio(x):
     # Calculate vowel to consonant ratio
     x = x.lower()
     vowels_pattern = re.compile('([aeiou])')

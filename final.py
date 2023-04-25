@@ -87,6 +87,10 @@ if __name__ == '__main__':
                 to_matrix = dataframe_to_matrix.DataFrameToMatrix()
                 zeek_matrix = to_matrix.fit_transform(zeek_df[features])
                 print(zeek_matrix.shape)
+                
+              
+                
+            
 
                 # Print out the range of the daterange and some stats
                 print('DataFrame TimeRange: {:s} --> {:s}'.format(str(zeek_df['ts'].min()), str(zeek_df['ts'].max())))

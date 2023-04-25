@@ -7,8 +7,7 @@ from collections import Counter
 
 # Third Party Imports
 import pandas as pd
-from sklearn.ensemble import IsolationForest
-from sklearn.cluster import MiniBatchKMeans
+
 
 # Local imports
 from zat import zeek_log_reader, live_simulator

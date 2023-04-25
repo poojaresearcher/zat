@@ -64,6 +64,18 @@ def subdomain_extract(uri):
         return np.nan
     else:
         return ext.subdomain 
+def vowel_consonant_ratio(x):
+    # Calculate vowel to consonant ratio
+    x = x.lower()
+    vowels_pattern = re.compile('([aeiou])')
+    consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
+    vowels = re.findall(vowels_pattern, x)
+    consonants = re.findall(consonants_pattern, x)
+    try:
+        ratio = len(vowels) / len(consonants)
+    except: # catch zero devision exception 
+        ratio = 0  
+    return ratio
 
 
 if __name__ == '__main__':
@@ -115,6 +127,7 @@ if __name__ == '__main__':
             zeek_df['uri'] = zeek_df['query']
             zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
-            zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
+            zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract)
+            zeek_df['vowel-cons'] = zeek_df['domain'].apply(vowel_consonant_ratio)
             
 print(zeek_df.head(50))

@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.externals import joblib
+import joblib
 from zat import dns_log
 
 # Load your trained model

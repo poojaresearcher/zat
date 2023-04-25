@@ -73,7 +73,7 @@ def subdomain_extract(query):
     else:
         return ext.subdomain 
     
- def vowel_consonant_ratio (x):
+ def vowel_consonant_ratio(x):
     # Calculate vowel to consonant ratio
     x = x.lower()
     vowels_pattern = re.compile('([aeiou])')

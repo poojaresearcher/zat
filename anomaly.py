@@ -54,20 +54,20 @@ def entropy(string):
     p, lns = Counter(string), float(len(string))
     return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
 
-def domain_extract(uri):
-    ext = tldextract.extract(uri)
+def domain_extract(query):
+    ext = tldextract.extract(query)
     if (not ext.suffix):
         return np.nan
     else:
         return ext.domain
-def TLD_extract(uri):
-    ext = tldextract.extract(uri)
+def TLD_extract(query):
+    ext = tldextract.extract(query)
     if (not ext.suffix):
         return np.nan
     else:
         return ext.suffix    
-def subdomain_extract(uri):
-    ext = tldextract.extract(uri)
+def subdomain_extract(query):
+    ext = tldextract.extract(query)
     if (not ext.suffix):
         return np.nan
     else:
@@ -133,9 +133,9 @@ if __name__ == '__main__':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
-            zeek_df['domain'] = zeek_df['uri'].apply(domain_extract)           
-            zeek_df['suffix'] = zeek_df['uri'].apply(TLD_extract) 
-            zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract) 
+            zeek_df['domain'] = zeek_df['query'].apply(domain_extract)           
+            zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract) 
+            zeek_df['subdomain'] = zeek_df['query'].apply(subdomain_extract) 
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
             
             print(zeek_df.head(50))

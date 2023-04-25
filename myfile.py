@@ -90,24 +90,6 @@ if __name__ == '__main__':
         print('Read in {:d} Rows...'.format(len(zeek_df)))
 
 
-def entropy(string):
-    """Compute entropy on the string"""
-    p, lns = Counter(string), float(len(string))
-    return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
-
-def vowel_consonant_ratio (x):
-    # Calculate vowel to consonant ratio
-    x = x.lower()
-    vowels_pattern = re.compile('([aeiou])')
-    consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
-    vowels = re.findall(vowels_pattern, x)
-    consonants = re.findall(consonants_pattern, x)
-    try:
-        ratio = len(vowels) / len(consonants)
-    except: # catch zero devision exception 
-        ratio = 0  
-    return ratio
-
 import tldextract
 
 def domain_extract(uri):
@@ -128,6 +110,25 @@ def subdomain_extract(uri):
         return np.nan
     else:
         return ext.subdomain 
+    
+def entropy(string):
+    """Compute entropy on the string"""
+    p, lns = Counter(string), float(len(string))
+    return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
+
+def vowel_consonant_ratio (x):
+    # Calculate vowel to consonant ratio
+    x = x.lower()
+    vowels_pattern = re.compile('([aeiou])')
+    consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
+    vowels = re.findall(vowels_pattern, x)
+    consonants = re.findall(consonants_pattern, x)
+    try:
+        ratio = len(vowels) / len(consonants)
+    except: # catch zero devision exception 
+        ratio = 0  
+    return ratio
+
 def compute_ngrams(word_list, S=3, T=3):
     """Compute NGrams in the word_list from [S-T)
         Args:

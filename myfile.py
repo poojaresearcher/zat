@@ -178,8 +178,6 @@ if log_type == 'dns':
 print(zeek_df['domain'])
 print(zeek_df['ngrams'])
 
-
-
 print(zeek_df.head(50))
 
 

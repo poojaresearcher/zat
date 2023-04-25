@@ -40,6 +40,7 @@ from keras.layers import LSTM
 # Local imports
 from zat import log_to_dataframe
 from zat import dataframe_to_matrix
+from zat.utils import ngrams
 
 
 def entropy(string):
@@ -129,28 +130,7 @@ def vowel_consonant_ratio(x):
     except: # catch zero devision exception 
         ratio = 0  
     return ratio
-
-def compute_ngrams(word_list, S=3, T=3):
-    """Compute NGrams in the word_list from [S-T)
-        Args:
-            word_list (list): A list of words to compute ngram set from
-            S (int): The smallest NGram (default=3)
-            T (int): The biggest NGram (default=3)
-    """
-    _ngrams = []
-    if isinstance(word_list, str):
-        word_list = [word_list]
-    for word in word_list:
-        for n in range(S, T+1):
-            _ngrams += zip(*(word[i:] for i in range(n))
-    return [''.join(_ngram) for _ngram in _ngrams]
-                           
-def ngram_count(word, ngrams):
-    """Compute the number of matching NGrams in the given word"""
-    return len(set(ngrams).intersection(compute_ngrams([word])))
-
-
-                           
+                       
          if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
@@ -161,7 +141,7 @@ def ngram_count(word, ngrams):
             zeek_df['subdomain'] = zeek_df['uri'].apply(subdomain_extract)
             zeek_df['vowel-cons'] = zeek_df['domain'].apply(vowel_consonant_ratio)
             zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
-            zeek_df['ngrams'] = zeek_df['domain'].apply(compute_ngrams)
+            zeek_df['ngrams'] = zeek_df['domain'].apply(ngrams)
                         
             
             

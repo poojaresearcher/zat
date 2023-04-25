@@ -75,7 +75,7 @@ def subdomain_extract(query):
     
 def vowel_consonant_ratio (x):
     # Calculate vowel to consonant ratio
-    x = x.lower()
+    x = x.astype(str)
     vowels_pattern = re.compile('([aeiou])')
     consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
     vowels = re.findall(vowels_pattern, x)

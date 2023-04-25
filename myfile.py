@@ -87,7 +87,25 @@ def vowel_consonant_ratio (x):
     return ratio
    
 
+def compute_ngrams(word_list, S=3, T=3):
+    """Compute NGrams in the word_list from [S-T)
+        Args:
+            word_list (list): A list of words to compute ngram set from
+            S (int): The smallest NGram (default=3)
+            T (int): The biggest NGram (default=3)
+    """
+    _ngrams = []
+    if isinstance(word_list, str):
+        word_list = [word_list]
+    for word in word_list:
+        for n in range(S, T+1):
+            _ngrams += zip(*(word[i:] for i in range(n)))
+    return [''.join(_ngram) for _ngram in _ngrams]
 
+
+def ngram_count(word, ngrams):
+    """Compute the number of matching NGrams in the given word"""
+    return len(set(ngrams).intersection(compute_ngrams([word])))
 
 
 if __name__ == '__main__':

@@ -90,6 +90,13 @@ if __name__ == '__main__':
             sys.exit(1)
         print('Read in {:d} Rows...'.format(len(zeek_df)))
 
+
+    
+def entropy(string):
+    """Compute entropy on the string"""
+    p, lns = Counter(string), float(len(string)
+    return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
+                                    
 def domain_extract(uri):
     ext = tldextract.extract(uri)
     if (not ext.suffix):
@@ -108,11 +115,6 @@ def subdomain_extract(uri):
         return np.nan
     else:
         return ext.subdomain 
-    
-def entropy(string):
-    """Compute entropy on the string"""
-    p, lns = Counter(string), float(len(string)
-    return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
 
 
 def vowel_consonant_ratio(x):

@@ -49,10 +49,9 @@ from sklearn.cluster import KMeans
 from zat import log_to_dataframe
 from zat import dataframe_to_matrix
 
-
 def entropy(string):
     """Compute entropy on the string"""
-    p, lns = Counter(string), float(len(string)
+    p, lns = Counter(string), float(len(string))
     return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
                                     
 def domain_extract(uri):

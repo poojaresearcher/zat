@@ -115,6 +115,8 @@ if __name__ == '__main__':
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
+            
+            print(zeek_df.head(50))
 
         # Use the zat DataframeToMatrix class
         to_matrix = dataframe_to_matrix.DataFrameToMatrix()

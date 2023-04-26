@@ -153,7 +153,7 @@ def compute_ngrams(word_list, S=3, T=3):
     """
     _ngrams = []
     if isinstance(word_list, str):
-        word_list = [word_list]
+        word_list = [domain]
     for word in word_list:
         for n in range(S, T+1):
             _ngrams += zip(*(word[i:] for i in range(n)))

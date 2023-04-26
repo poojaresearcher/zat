@@ -175,7 +175,7 @@ print(zeek_df['domain'])
 test_data = zeek_df
 
 X_test = zeek_df['query']
-y_test = zeek_df['label']
+
 
 clf_model.predict(X_test)
 

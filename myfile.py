@@ -128,7 +128,7 @@ print(zeek_df.head(50))
 
 
 def vowel_consonant_ratio (x):
-    if (not ext.suffix):
+    if np.nan:
         return np.nan
     # Calculate vowel to consonant ratio
     else:

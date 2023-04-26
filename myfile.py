@@ -176,6 +176,8 @@ if log_type == 'dns':
             zeek_df['vowel-cons'] = zeek_df['query'].apply(vowel_consonant_ratio)
                            
                              
-print(zeek_df['domain'])
+print(zeek_df['ngrams'])
+print(zeek_df['digits'])
+print(zeek_df['vowel-cons'])
 print(zeek_df.head(50))
 

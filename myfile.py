@@ -128,6 +128,8 @@ print(zeek_df.head(50))
 
 
 def vowel_consonant_ratio (x):
+    if (not ext.suffix):
+    return np.nan
     # Calculate vowel to consonant ratio
     x = x.lower()
     vowels_pattern = re.compile('([aeiou])')

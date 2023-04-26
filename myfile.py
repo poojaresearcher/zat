@@ -129,18 +129,19 @@ print(zeek_df.head(50))
 
 def vowel_consonant_ratio (x):
     if (not ext.suffix):
-    return np.nan
+        return np.nan
     # Calculate vowel to consonant ratio
-    x = x.lower()
-    vowels_pattern = re.compile('([aeiou])')
-    consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
-    vowels = re.findall(vowels_pattern, x)
-    consonants = re.findall(consonants_pattern, x)
-    try:
-        ratio = len(vowels) / len(consonants)
-    except: # catch zero devision exception 
-        ratio = 0  
-    return ratio    
+    else:
+        x = x.lower()
+        vowels_pattern = re.compile('([aeiou])')
+        consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
+        vowels = re.findall(vowels_pattern, x)
+        consonants = re.findall(consonants_pattern, x)
+        try:
+            ratio = len(vowels) / len(consonants)
+        except: # catch zero devision exception 
+            ratio = 0  
+        return ratio    
 
 def compute_ngrams(word_list, S=3, T=3):
     """Compute NGrams in the word_list from [S-T)

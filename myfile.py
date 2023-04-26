@@ -150,7 +150,7 @@ def vowel_consonant_ratio (x):
         return np.nan
     # Calculate vowel to consonant ratio
     else:
-        x = x.lower()
+        x = x
         vowels_pattern = re.compile('([aeiou])')
         consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
         vowels = re.findall(vowels_pattern, x)

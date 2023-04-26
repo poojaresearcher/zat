@@ -24,6 +24,7 @@ from yellowbrick.features import ParallelCoordinates
 
 import sklearn.ensemble
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.cluster import MiniBatchKMeans
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import train_test_split

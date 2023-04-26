@@ -29,7 +29,7 @@ from yellowbrick.features import RadViz
 from yellowbrick.features import ParallelCoordinates
 
 import sklearn.ensemble
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier as clf
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_validate
@@ -60,8 +60,8 @@ from zat import dataframe_to_matrix, dataframe_cache
 from zat.utils import ngrams
 
 
-pickled_model = pickle.load(open('dga_detection.pickle', 'rb'))
-pickled_model.predict(X_test)
+clf_model = pickle.load(open('dga_detection.pickle', 'rb'))
+
 
 
 def entropy(string):
@@ -177,7 +177,7 @@ test_data = zeek_df
 X_test = zeek_df['query']
 y_test = zeek_df['label']
 
-pickled_model.predict(X_test)
+clf_model.predict(X_test)
 
 
             

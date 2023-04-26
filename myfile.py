@@ -84,8 +84,7 @@ def vowel_consonant_ratio (x):
         ratio = len(vowels) / len(consonants)
     except: # catch zero devision exception 
         ratio = 0  
-    return ratio
-   
+    return ratio    
 
 def compute_ngrams(word_list, S=3, T=3):
     """Compute NGrams in the word_list from [S-T)
@@ -154,7 +153,7 @@ if log_type == 'dns':
             zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract) 
             zeek_df['subdomain'] = zeek_df['query'].apply(subdomain_extract) 
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
-            zeek_df['vowel-cons'] = zeek_df['domain'].map(vowel_consonant_ratio)
+            zeek_df['vowel-cons'] = zeek_df.domain.apply(vowel_consonant_ratio)
             zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
             zeek_df['ngrams'] = zeek_df['domain'].apply(compute_ngrams)
                            

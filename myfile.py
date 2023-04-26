@@ -160,9 +160,9 @@ def compute_ngrams(word_list, S=3, T=3):
     return [''.join(_ngram) for _ngram in _ngrams]
 
 
-def ngram_count(word, ngrams):
+def ngram_count(domain, ngrams):
     """Compute the number of matching NGrams in the given word"""
-    return len(set(ngrams).intersection(compute_ngrams([word])))\
+    return len(set(ngrams).intersection(compute_ngrams([domain])))\
 
 
 
@@ -173,7 +173,7 @@ zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract)
 zeek_df['subdomain'] = zeek_df['query'].apply(subdomain_extract) 
 zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
 zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
-zeek_df['ngrams'] = zeek_df['domain'].map(lambda x: compute_ngrams(x))
+zeek_df['word_ngrams'] = zeek_df['domain'].map(lambda x: str(x).isalpha())]
 
 
 print(zeek_df.head(50))

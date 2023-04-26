@@ -129,28 +129,7 @@ if __name__ == '__main__':
         print('Opening Data File: {:s}'.format(args.zeek_log))
         reader = live_simulator.LiveSimulator(args.zeek_log, eps=10)  # 10 events per second
 
-        # Create a Dataframe Cache
-        df_cache = dataframe_cache.DataFrameCache(max_cache_time=600)  # 10 minute cache
-
-        # Streaming Clustering Class
-        batch_kmeans = MiniBatchKMeans(n_clusters=5, verbose=True)
-
-        # Use the ZeekThon DataframeToMatrix class
-        to_matrix = dataframe_to_matrix.DataFrameToMatrix()
-
-        # Add each new row into the cache
-        time_delta = 10
-        timer = time.time() + time_delta
-        FIRST_TIME = True
-        for row in reader.rows():
-            df_cache.add_row(row)
-
-            # Every 30 seconds grab the dataframe from the cache
-            if time.time() > timer:
-                timer = time.time() + time_delta
-
-                # Get the windowed dataframe (10 minute window)
-                zeek_df = df_cache.dataframe()
+       
 
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()

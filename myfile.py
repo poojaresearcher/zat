@@ -77,12 +77,7 @@ def TLD_extract(query):
         return np.nan
     else:
         return ext.suffix    
-def subdomain_extract(query):
-    ext = tldextract.extract(query)
-    if (not ext.suffix):
-        return np.nan
-    else:
-        return ext.subdomain
+
     
 
 if __name__ == '__main__':
@@ -138,7 +133,6 @@ if log_type == 'dns':
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['domain'] = zeek_df['query'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract) 
-            zeek_df['subdomain'] = zeek_df['query'].apply(subdomain_extract) 
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             
                            

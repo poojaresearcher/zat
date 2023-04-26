@@ -203,18 +203,17 @@ def ngram_count(word, ngrams):
     return len(set(ngrams).intersection(compute_ngrams([word])))
 
 
+zeek_df['query_length'] = zeek_df['query'].str.len()
+zeek_df['answer_length'] = zeek_df['answers'].str.len()
+zeek_df['domain'] = zeek_df['query'].apply(domain_extract)           
+zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract) 
+zeek_df['subdomain'] = zeek_df['query'].apply(subdomain_extract) 
+zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
+zeek_df['vowel-cons'] = zeek_df.domain.apply(vowel_consonant_ratio)
+zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
+zeek_df['ngrams'] = zeek_df['domain'].apply(compute_ngrams)
 
-            zeek_df['query_length'] = zeek_df['query'].str.len()
-            zeek_df['answer_length'] = zeek_df['answers'].str.len()
-            zeek_df['domain'] = zeek_df['query'].apply(domain_extract)           
-            zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract) 
-            zeek_df['subdomain'] = zeek_df['query'].apply(subdomain_extract) 
-            zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
-            zeek_df['vowel-cons'] = zeek_df.domain.apply(vowel_consonant_ratio)
-            zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
-            zeek_df['ngrams'] = zeek_df['domain'].apply(compute_ngrams)
-
-       print(zeek_df.head())
+print(zeek_df.head(50))
 
 
 

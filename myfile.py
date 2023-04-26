@@ -147,7 +147,7 @@ print(zeek_df['domain'])
 print(zeek_df.head(50))
 
 def f(x):
-    ngrams = utils.ngrams(x)
+    ngrams = zat.utils.ngrams(x)
    
     return pd.Series([ngrams])
 

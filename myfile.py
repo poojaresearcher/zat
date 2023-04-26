@@ -146,9 +146,10 @@ if log_type == 'dns':
 print(zeek_df['domain'])
 print(zeek_df.head(50))
 
-def(f):
-    DF = utils.ngrams(x)
-    return pd.Series([DF])
+def f(x):
+    ngrams = utils.ngrams(x)
+   
+    return pd.Series([ngrams])
 
 
 

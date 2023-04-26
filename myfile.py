@@ -173,7 +173,7 @@ zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract)
 zeek_df['subdomain'] = zeek_df['query'].apply(subdomain_extract) 
 zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
 zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
-zeek_df['ngrams'] = zeek_df['domain'].apply(ngram_count)
+zeek_df['ngrams'] = zeek_df['domain'].apply(compute_ngrams)
 
 
 print(zeek_df.head(50))

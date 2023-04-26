@@ -172,6 +172,8 @@ if log_type == 'dns':
 print(zeek_df.head(50))
 print(zeek_df['domain'])
 
+print(X_train)
+print(y_train)
 test_data = zeek_df
 
 X_test = zeek_df['query']

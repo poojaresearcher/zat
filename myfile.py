@@ -181,7 +181,7 @@ print(zeek_df.head(50))
 
 test_data = zeek_df
 
-X_test = zeek_df['domain']'
+X_test = zeek_df['domain']
 y_test = zeek_df['label']
 
 pickled_model.predict(X_test)

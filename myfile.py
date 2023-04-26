@@ -167,7 +167,7 @@ if log_type == 'dns':
             zeek_df['domain'] = zeek_df['query'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract) 
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
-            
+            zeek_df['query'] = zeek_df['uri']
                      
 print(zeek_df.head(50))
 print(zeek_df['domain'])

@@ -145,41 +145,7 @@ print(zeek_df['domain'])
 print(zeek_df.head(50))
 
 
-def vowel_consonant_ratio (x):
-    if np.nan:
-        return np.nan
-    # Calculate vowel to consonant ratio
-    else:
-        x = x
-        vowels_pattern = re.compile('([aeiou])')
-        consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
-        vowels = re.findall(vowels_pattern, x)
-        consonants = re.findall(consonants_pattern, x)
-        try:
-            ratio = len(vowels) / len(consonants)
-        except: # catch zero devision exception 
-            ratio = 0  
-        return ratio    
 
-def compute_ngrams(word_list, S=3, T=3):
-    """Compute NGrams in the word_list from [S-T)
-        Args:
-            word_list (list): A list of words to compute ngram set from
-            S (int): The smallest NGram (default=3)
-            T (int): The biggest NGram (default=3)
-    """
-    _ngrams = []
-    if isinstance(word_list, str):
-        word_list = [word_list]
-    for word in word_list:
-        for n in range(S, T+1):
-            _ngrams += zip(*(word[i:] for i in range(n)))
-    return [''.join(_ngram) for _ngram in _ngrams]
-
-
-def ngram_count(word, ngrams):
-    """Compute the number of matching NGrams in the given word"""
-    return len(set(ngrams).intersection(compute_ngrams([word])))
 
 
 zeek_df['query_length'] = zeek_df['query'].str.len()
@@ -188,9 +154,8 @@ zeek_df['domain'] = zeek_df['query'].apply(domain_extract)
 zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract) 
 zeek_df['subdomain'] = zeek_df['query'].apply(subdomain_extract) 
 zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
-zeek_df['vowel-cons'] = zeek_df.domain.apply(vowel_consonant_ratio)
 zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
-zeek_df['ngrams'] = zeek_df['domain'].apply(compute_ngrams)
+
 
 print(zeek_df.head(50))
 

@@ -48,6 +48,8 @@ from sklearn.cluster import KMeans
 # Local imports
 from zat import log_to_dataframe
 from zat import dataframe_to_matrix
+from zat import zeek_log_reader, live_simulator
+from zat import dataframe_to_matrix, dataframe_cache
 
 def entropy(string):
     """Compute entropy on the string"""

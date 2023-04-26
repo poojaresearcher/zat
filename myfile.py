@@ -160,9 +160,9 @@ def compute_ngrams(word_list, S=3, T=3):
     return [''.join(_ngram) for _ngram in _ngrams]
 
 
-def ngram_count(domain, ngrams):
+def ngram_count(word, ngrams):
     """Compute the number of matching NGrams in the given word"""
-    return len(set(ngrams).intersection(compute_ngrams([domain])))\
+    return len(set(ngrams).intersection(compute_ngrams([word])))\
 
 
 

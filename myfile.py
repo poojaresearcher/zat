@@ -158,15 +158,7 @@ if __name__ == '__main__':
             print('Could not open or parse the specified logfile: %s' % args.zeek_log)
             sys.exit(1)
         print('Read in {:d} Rows...'.format(len(zeek_df)))
-        
-
-        print('Opening Data File: {:s}'.format(args.zeek_log))
-        reader = zeek_log_reader.ZeekLogReader(args.zeek_log, tail=True)
-
-        # Create a Zeek IDS log live simulator
-        print('Opening Data File: {:s}'.format(args.zeek_log))
-        reader = live_simulator.LiveSimulator(args.zeek_log, eps=10)  # 10 events per second
-
+       
        
 
 if log_type == 'dns':

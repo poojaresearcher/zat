@@ -193,7 +193,7 @@ def ngram_count(word, ngrams):
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
-            zeek_df['entropy'] = zeek_df['domain'].apply(lambda x: entropy(x))
+            zeek_df['entropy'] = zeek_df['domain'].applymap(lambda x: entropy(x))
             zeek_df['vowel-cons'] = zeek_df['domain'].map(lambda x: vowel_consonant_ratio(x))
             zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
             zeek_df['ngrams'] = zeek_df['domain'].apply(ngrams)

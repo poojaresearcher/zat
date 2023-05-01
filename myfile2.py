@@ -13,7 +13,7 @@ import argparse
 import time
 import math
 from collections import Counter
-import b2z
+import bz2
 
 import numpy as np
 import pandas as pd
@@ -59,6 +59,9 @@ from zat import dataframe_to_matrix
 from zat import zeek_log_reader, live_simulator
 from zat import dataframe_to_matrix, dataframe_cache
 from zat.utils import ngrams
+
+ifile = bz2.BZ2File("dga_detection (2).pickle",'rb')
+newdata = pickle.load(ifile)
 
 
 clf = pickle.load(open('dga_detection (2).pickle', 'rb'))

@@ -59,8 +59,7 @@ from zat import zeek_log_reader, live_simulator
 from zat import dataframe_to_matrix, dataframe_cache
 from zat.utils import ngrams
 
-
-clf_model = pickle.load(open('dga_detection.pickle', 'rb'))
+new_model = tf.keras.models.load_model('dgadetection.h5')
 
 
 
@@ -172,15 +171,14 @@ if log_type == 'dns':
 print(zeek_df.head(50))
 print(zeek_df['domain'])
 
-scores = cross_val_score(clf_model, clf_model(X_train),clf_model(y_train), cv=5)
-scores
+X_test = zeek_df['domain']
 
+x_test = np.asarray(X_test).astype(np.str)
 
-test_data = zeek_df
-X_test = zeek_df['query']
+new_model.predict(x_test)
 
+probs = new_model.predict(x_test)
 
-clf_model.predict(X_test)
-
+print(probs)
 
             

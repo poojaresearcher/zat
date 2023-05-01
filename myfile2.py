@@ -189,7 +189,7 @@ def ngram_count(word, ngrams):
     return len(set(ngrams).intersection(compute_ngrams([word])))\
 
 zeek_df['entropy'] = [entropy(x) for x in zeek_df['domain']]
-print(zeek_df['domain']
+print(zeek_df['domain'])
 
 
 if log_type == 'dns':

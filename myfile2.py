@@ -59,8 +59,16 @@ from zat import zeek_log_reader, live_simulator
 from zat import dataframe_to_matrix, dataframe_cache
 from zat.utils import ngrams
 
+# Load any compressed pickle file
+def decompress_pickle(file):
+ data = bz2.BZ2File(file, ‘rb’)
+ data = cPickle.load(data)
+ return data
 
 
+data = decompress_pickle('dga_detection (2).pickle')
+
+clf = pickle.load(open('dga_detection (2).pickle', 'rb'))
 
 
 def entropy(string):
@@ -171,12 +179,12 @@ if log_type == 'dns':
 print(zeek_df.head(50))
 print(zeek_df['domain'])
 
-X_test = zeek_df['domain']
+test_data = zeek_df('domain')
 
-x_test = np.asarray(X_test).astype(np.str)
+X_test = test_data['domain'].to_numpy()
 
-new_model.predict(x_test)
+X_test 
 
-probs = new_model.predict(x_test)
+y_pred = clf.predict(X_test)
 
-print(probs)
+

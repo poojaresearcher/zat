@@ -171,6 +171,17 @@ if log_type == 'dns':
 print(zeek_df.head(50))
 print(zeek_df['domain'])
 
+if log_type == 'dns':
+            zeek_df['query_length'] = zeek_df['query'].str.len()
+            zeek_df['answer_length'] = zeek_df['answers'].str.len()
+            zeek_df['entropy'] = zeek_df['domain'].map(lambda x: entropy(x))
+            zeek_df['vowel-cons'] = zeek_df['domain'].map(lambda x: vowel_consonant_ratio(x))
+            zeek_df['digits'] = zeek_df['domain'].str.count('[0-9]')
+            zeek_df['ngrams'] = zeek_df['domain'].apply(ngrams)
+        
+print(zeek_df.head(50))
+
+
 test_data = zeek_df['domain']
 
 print(test_data)

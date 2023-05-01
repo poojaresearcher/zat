@@ -59,14 +59,8 @@ from zat import zeek_log_reader, live_simulator
 from zat import dataframe_to_matrix, dataframe_cache
 from zat.utils import ngrams
 
-# Load any compressed pickle file
-def decompress_pickle(file):
- data = bz2.BZ2File(file, ‘rb’)
- data = cPickle.load(data)
- return data
-
-
-data = decompress_pickle('dga_detection (2).pickle')
+ifile = bz2.BZ2File("dga_detection (2).pickle",'rb')
+newdata = pickle.load(ifile)
 
 clf = pickle.load(open('dga_detection (2).pickle', 'rb'))
 

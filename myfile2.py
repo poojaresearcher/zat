@@ -190,10 +190,6 @@ def ngram_count(word, ngrams):
 
 
 
-
- = np.asarray(X_test).astype(np.str)
-
-
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()

@@ -60,8 +60,6 @@ from zat import zeek_log_reader, live_simulator
 from zat import dataframe_to_matrix, dataframe_cache
 from zat.utils import ngrams
 
-ifile = bz2.BZ2File("dga_detection (2).pickle",'rb')
-newdata = pickle.load(ifile)
 
 clf = pickle.load(open('dga_detection (2).pickle', 'rb'))
 

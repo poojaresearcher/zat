@@ -173,6 +173,8 @@ print(zeek_df['domain'])
 
 test_data = zeek_df['domain']
 
+print(test_data)
+
 X_test = test_data['domain'].to_numpy()
 
 X_test 

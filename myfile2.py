@@ -13,6 +13,7 @@ import argparse
 import time
 import math
 from collections import Counter
+import b2z
 
 import numpy as np
 import pandas as pd

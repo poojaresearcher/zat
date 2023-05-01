@@ -46,9 +46,6 @@ from sklearn.cluster import KMeans
 from zat import log_to_dataframe
 from zat import dataframe_to_matrix
 
-filename = "dga_detection.pickle"
-loaded_model = pickle.load(open(filename, "rb"))
-
 def entropy(string):
     """Compute entropy on the string"""
     p, lns = Counter(string), float(len(string))

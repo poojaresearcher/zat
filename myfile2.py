@@ -196,8 +196,8 @@ for ngram, count in _sorted_ngrams[:10]:
 
 
 
-zeek_df['alexa_grams']= td_counts * test_data_vc.transform(zeek_df['domain']).T 
-zeek_df['word_grams']= dict_counts * dict_vc.transform(zeek_df['domain']).T 
+zeek_df['alexa_grams']= td_counts * test_data_vc.transform(zeek_df['query']).T 
+zeek_df['word_grams']= dict_counts * dict_vc.transform(zeek_df['query']).T 
 zeek_df.head()
 
 

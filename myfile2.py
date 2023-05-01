@@ -61,7 +61,7 @@ from zat import dataframe_to_matrix, dataframe_cache
 from zat.utils import ngrams
 
 
-clf = pickle.load(open('dga_detection (2).pickle', 'rb'))
+clf = pickle.load(open('dga_detection.pickle', 'rb'))
 
 
 def entropy(string):

@@ -80,43 +80,6 @@ def TLD_extract(query):
         return np.nan
     else:
         return ext.suffix
-    
-def vowel_consonant_ratio (x):
-    if np.nan:
-        return np.nan
-    # Calculate vowel to consonant ratio
-    else:
-        x = x
-        vowels_pattern = re.compile('([aeiou])')
-        consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
-        vowels = re.findall(vowels_pattern, x)
-        consonants = re.findall(consonants_pattern, x)
-        try:
-            ratio = len(vowels) / len(consonants)
-        except: # catch zero devision exception 
-            ratio = 0  
-        return ratio
-    
-def compute_ngrams(word_list, S=3, T=3):
-    """Compute NGrams in the word_list from [S-T)
-        Args:
-            word_list (list): A list of words to compute ngram set from
-            S (int): The smallest NGram (default=3)
-            T (int): The biggest NGram (default=3)
-    """
-    _ngrams = []
-    if isinstance(word_list, str):
-        word_list = [word_list]
-    for word in word_list:
-        for n in range(S, T+1):
-            _ngrams += zip(*(word[i:] for i in range(n)))
-    return [''.join(_ngram) for _ngram in _ngrams]
-
-
-def ngram_count(word, ngrams):
-    """Compute the number of matching NGrams in the given word"""
-    return len(set(ngrams).intersection(compute_ngrams([word])))\
-
 
     
 
@@ -170,6 +133,61 @@ if log_type == 'dns':
                      
 print(zeek_df.head(50))
 print(zeek_df['domain'])
+
+def entropy(string):
+    """Compute entropy on the string"""
+    p, lns = Counter(string), float(len(string))
+    return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
+                                    
+def domain_extract(query):
+    ext = tldextract.extract(query)
+    if (not ext.suffix):
+        return np.nan
+    else:
+        return ext.domain
+def TLD_extract(query):
+    ext = tldextract.extract(query)
+    if (not ext.suffix):
+        return np.nan
+    else:
+        return ext.suffix
+    
+def vowel_consonant_ratio (x):
+    if np.nan:
+        return np.nan
+    # Calculate vowel to consonant ratio
+    else:
+        x = x
+        vowels_pattern = re.compile('([aeiou])')
+        consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
+        vowels = re.findall(vowels_pattern, x)
+        consonants = re.findall(consonants_pattern, x)
+        try:
+            ratio = len(vowels) / len(consonants)
+        except: # catch zero devision exception 
+            ratio = 0  
+        return ratio
+    
+def compute_ngrams(word_list, S=3, T=3):
+    """Compute NGrams in the word_list from [S-T)
+        Args:
+            word_list (list): A list of words to compute ngram set from
+            S (int): The smallest NGram (default=3)
+            T (int): The biggest NGram (default=3)
+    """
+    _ngrams = []
+    if isinstance(word_list, str):
+        word_list = [word_list]
+    for word in word_list:
+        for n in range(S, T+1):
+            _ngrams += zip(*(word[i:] for i in range(n)))
+    return [''.join(_ngram) for _ngram in _ngrams]
+
+
+def ngram_count(word, ngrams):
+    """Compute the number of matching NGrams in the given word"""
+    return len(set(ngrams).intersection(compute_ngrams([word])))\
+
 
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()

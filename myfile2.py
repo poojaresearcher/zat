@@ -134,10 +134,9 @@ if log_type == 'dns':
 print(zeek_df.head(50))
 print(zeek_df['domain'])
 
-def entropy(string):
-    """Compute entropy on the string"""
-    p, lns = Counter(string), float(len(string))
-    return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
+def entropy_(s):
+    l = float(len(s))
+    return -sum(map(lambda a: (a/l)*math.log2(a/l), Counter(s).values()))
                                     
 def domain_extract(query):
     ext = tldextract.extract(query)
@@ -188,7 +187,7 @@ def ngram_count(word, ngrams):
     """Compute the number of matching NGrams in the given word"""
     return len(set(ngrams).intersection(compute_ngrams([word])))\
 
-zeek_df['entropy'] = [entropy(x) for x in zeek_df['domain']]
+zeek_df['entropy'] = [entropy_(x) for x in zeek_df['domain']]
 print(zeek_df['domain'])
 
 

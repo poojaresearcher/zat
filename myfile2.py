@@ -134,22 +134,11 @@ if log_type == 'dns':
 print(zeek_df.head(50))
 print(zeek_df['domain'])
 
-def entropy_(s):
-    l = float(len(s))
-    return -sum(map(lambda a: (a/l)*math.log2(a/l), Counter(s).values()))
-                                    
-def domain_extract(query):
-    ext = tldextract.extract(query)
-    if (not ext.suffix):
-        return np.nan
-    else:
-        return ext.domain
-def TLD_extract(query):
-    ext = tldextract.extract(query)
-    if (not ext.suffix):
-        return np.nan
-    else:
-        return ext.suffix
+def entropy(string):
+    """Compute entropy on the string"""
+    p, lns = Counter(string), float(len(string))
+    return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
+                              
     
 def vowel_consonant_ratio (x):
     if np.nan:

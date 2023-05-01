@@ -60,8 +60,7 @@ from zat import zeek_log_reader, live_simulator
 from zat import dataframe_to_matrix, dataframe_cache
 from zat.utils import ngrams
 
-
-clf = pickle.load(open('dga_detection.pickle', 'rb'))
+clf= joblib.load('dga_detection.joblib')
 
 
 def entropy(string):

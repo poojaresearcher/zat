@@ -94,7 +94,7 @@ def vowel_consonant_ratio (x):
         ratio = 0  
     return ratio
 
- def compute_ngrams(word_list, S=3, T=3):
+def compute_ngrams(word_list, S=3, T=3):
     """Compute NGrams in the word_list from [S-T)
         Args:
             word_list (list): A list of words to compute ngram set from
@@ -113,6 +113,16 @@ def vowel_consonant_ratio (x):
 def ngram_count(word, ngrams):
     """Compute the number of matching NGrams in the given word"""
     return len(set(ngrams).intersection(compute_ngrams([word])))
+
+
+def test():
+    """Test the ngram methods"""
+    domains = ['google', 'facebook', 'apple']
+    compute_ngrams(domains, 2, 5)
+    ngrams = compute_ngrams(domains)
+    print('NGrams: {:s}'.format(str(list(ngrams))))
+    print(ngram_count('foogle', ngrams))
+    print(ngram_count('mybook', ngrams))
   
 clf= joblib.load('dga_detection.joblib')
   

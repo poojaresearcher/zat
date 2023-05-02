@@ -120,9 +120,7 @@ if __name__ == '__main__':
             sys.exit(1)
         print('Read in {:d} Rows...'.format(len(zeek_df)))
        
-       
-
-if log_type == 'dns':
+       if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
             zeek_df['domain'] = zeek_df['query'].apply(domain_extract)           
@@ -198,10 +196,6 @@ for ngram, count in _sorted_ngrams[:10]:
 zeek_df['alexa_grams']= td_counts * test_data_vc.transform(zeek_df['query']).T 
 zeek_df['word_grams']= dict_counts * dict_vc.transform(zeek_df['query']).T 
 zeek_df.head()
-
-
-
-
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()

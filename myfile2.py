@@ -36,20 +36,16 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
+import warnings
+warnings.filterwarnings('ignore')
 
 import tldextract
 import tensorflow as tf
-
-print(f'\nTensorflow version = {tf.__version__}\n')
-print(f'\n{tf.config.list_physical_devices("GPU")}\n')
 from tensorflow import keras
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential, load_model
 from keras.layers.core import Dense, Dropout, Activation,Embedding
 from keras.layers import LSTM
-
-import warnings
-warnings.filterwarnings('ignore')
 
 # Third Party Imports
 import pandas as pd

@@ -189,7 +189,7 @@ ngrams_list = dict_vc.get_feature_names_out()
 
 import operator
 _sorted_ngrams = sorted(zip(ngrams_list, dict_counts), key=operator.itemgetter(1), reverse=True)
-print = ('Word NGrams: %d') % len(_sorted_ngrams)
+print('Word NGrams: %d') % len(_sorted_ngrams)
 for ngram, count in _sorted_ngrams[:10]:
     print = ('ngrams, count')
 
@@ -218,7 +218,7 @@ test_data = zeek_df['domain']
 
 print(test_data)
 
-X_test = test_data['domain'].to_numpy()
+X_test = test_data.to_numpy()
 
 X_test 
 

@@ -174,12 +174,18 @@ if __name__ == '__main__':
             zeek_df['ngrams'] = zeek_df['query'].map(lambda x: compute_ngrams(x))
             zeek_df['ngram_count'] =  zeek_df['query'].map(lambda x: ngram_count(x))
 
-       
-
-
-            
-            
 print(zeek_df.head(50))
+
+test_data = zeek_df['domain']
+
+print(test_data)
+
+X_test = test_data.to_numpy()
+
+X_test 
+
+y_pred = clf.predict(X_test)
+
             
                      
 

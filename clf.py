@@ -126,7 +126,6 @@ def test():
   
 clf= joblib.load('dga_detection.joblib')
   
-  
 if __name__ == '__main__':
     # Example to show the dataframe cache functionality on streaming data
     pd.set_option('display.width', 1000)
@@ -151,11 +150,12 @@ if __name__ == '__main__':
             features = ['id.resp_p', 'method', 'resp_mime_types', 'request_body_len']
         elif 'dns' in args.zeek_log:
             log_type = 'dns'
-            features = ['Z','query', 'proto', 'qtype_name', 'query_length', 'answer_length', 'entropy']
+            features = ['Z', 'proto', 'qtype_name', 'query_length', 'answer_length', 'entropy']
         else:
             print('This example only works with Zeek with http.log or dns.log files..')
             sys.exit(1)
-            
+
+        # Create a Pandas dataframe from a Zeek log
         try:
             log_to_df = log_to_dataframe.LogToDataFrame()
             zeek_df = log_to_df.create_dataframe(args.zeek_log)
@@ -164,12 +164,14 @@ if __name__ == '__main__':
             print('Could not open or parse the specified logfile: %s' % args.zeek_log)
             sys.exit(1)
         print('Read in {:d} Rows...'.format(len(zeek_df)))
-       
-       
 
-if log_type == 'dns':
+        # Using Pandas we can easily and efficiently compute additional data metrics
+        # Here we use the vectorized operations of Pandas/Numpy to compute query length
+        # We'll also compute entropy of the query
+        if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()
+            zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
             zeek_df['domain'] = zeek_df['query'].apply(domain_extract)           
             zeek_df['suffix'] = zeek_df['query'].apply(TLD_extract) 
             zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x)) 
@@ -177,8 +179,13 @@ if log_type == 'dns':
             zeek_df['digits'] = zeek_df['query'].str.count('[0-9]')
             zeek_df['ngrams'] = zeek_df['query'].map(lambda x: compute_ngrams(x))
             zeek_df['ngram_count'] =  zeek_df['query'].map(lambda x: ngram_count(x))
+
+       
+
+
             
-print(zeek_df.head())
+            
+print(zeek_df.head(50))
             
                      
 

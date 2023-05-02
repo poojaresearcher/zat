@@ -107,16 +107,6 @@ def ngram_count(word, ngrams):
     """Compute the number of matching NGrams in the given word"""
     return len(set(ngrams).intersection(compute_ngrams([word])))
 
-
-def test():
-    """Test the ngram methods"""
-    domains = ['google', 'facebook', 'apple']
-    compute_ngrams(domains, 2, 5)
-    ngrams = compute_ngrams(domains)
-    print('NGrams: {:s}'.format(str(list(ngrams))))
-    print(ngram_count('foogle', ngrams))
-    print(ngram_count('mybook', ngrams))
-  
 clf= joblib.load('dga_detection.joblib')
   
 if __name__ == '__main__':

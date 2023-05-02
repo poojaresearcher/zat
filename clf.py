@@ -7,12 +7,7 @@ import pickle
 import re
 import joblib
 import tldextract
-import os
-import sys
-import argparse
 import time
-import math
-from collections import Counter
 import bz2
 
 import numpy as np
@@ -23,7 +18,6 @@ from sklearn.metrics import confusion_matrix, roc_auc_score
 import sklearn.feature_extraction
 import matplotlib.pyplot as plt
 import seaborn as sns
-import re
 from sklearn import feature_extraction, tree, model_selection, metrics
 from yellowbrick.features import Rank2D
 from yellowbrick.features import RadViz
@@ -37,7 +31,7 @@ from sklearn.model_selection import cross_validate
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 
-import tldextract
+
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -48,8 +42,7 @@ from keras.layers import LSTM
 import warnings
 warnings.filterwarnings('ignore')
 
-# Third Party Imports
-import pandas as pd
+
 
 from sklearn.cluster import KMeans
 

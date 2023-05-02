@@ -158,6 +158,7 @@ if __name__ == '__main__':
             sys.exit(1)
         print('Read in {:d} Rows...'.format(len(zeek_df)))
 
+
         # Using Pandas we can easily and efficiently compute additional data metrics
         # Here we use the vectorized operations of Pandas/Numpy to compute query length
         # We'll also compute entropy of the query

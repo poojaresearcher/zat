@@ -53,10 +53,10 @@ import pandas as pd
 from sklearn.cluster import KMeans
 
 # Local imports
-from zat.zat import log_to_dataframe
-from zat.zat import dataframe_to_matrix
-from zat.zat import zeek_log_reader, live_simulator
-from zat.zat import dataframe_to_matrix, dataframe_cache
+from zat import log_to_dataframe
+from zat import dataframe_to_matrix
+from zat import zeek_log_reader, live_simulator
+from zat import dataframe_to_matrix, dataframe_cache
 from zat.utils import ngrams
 
 new_model = tf.keras.models.load_model('dgadetection.h5')

@@ -117,12 +117,8 @@ def ngram_count(word, ngrams):
     """Compute the number of matching NGrams in the given word"""
     return len(set(ngrams).intersection(compute_ngrams([word])))\
 
-
-    
-
 if __name__ == '__main__':
-    # Example to show the dataframe cache functionality on streaming data
-    pd.set_option('display.width', 1000)
+    # Example that demonstrates going from Zeek data to scikit-learn models
 
     # Collect args from the command line
     parser = argparse.ArgumentParser()
@@ -134,32 +130,20 @@ if __name__ == '__main__':
         print('Unrecognized args: %s' % commands)
         sys.exit(1)
 
+    # Sanity check that this is a dns log
+    if 'dns' not in args.zeek_log:
+        print('This example only works with Zeek dns.log files..')
+        sys.exit(1)
+
     # File may have a tilde in it
     if args.zeek_log:
         args.zeek_log = os.path.expanduser(args.zeek_log)
 
-        # Sanity check either http or dns log
-        if 'http' in args.zeek_log:
-            log_type = 'http'
-            features = ['id.resp_p', 'method', 'resp_mime_types', 'request_body_len']
-        elif 'dns' in args.zeek_log:
-            log_type = 'dns'
-            features = ['Z','query', 'proto', 'qtype_name', 'query_length', 'answer_length', 'entropy']
-        else:
-            print('This example only works with Zeek with http.log or dns.log files..')
-            sys.exit(1)
-            
-        try:
-            log_to_df = log_to_dataframe.LogToDataFrame()
-            zeek_df = log_to_df.create_dataframe(args.zeek_log)
-            print(zeek_df.head())
-        except IOError:
-            print('Could not open or parse the specified logfile: %s' % args.zeek_log)
-            sys.exit(1)
-        print('Read in {:d} Rows...'.format(len(zeek_df)))
-       
-       
+        # Create a Pandas dataframe from the Zeek log
+        log_to_df = log_to_dataframe.LogToDataFrame()
+        zeek_df = log_to_df.create_dataframe(args.zeek_log)
 
+       
 if log_type == 'dns':
             zeek_df['query_length'] = zeek_df['query'].str.len()
             zeek_df['answer_length'] = zeek_df['answers'].str.len()

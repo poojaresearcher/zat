@@ -102,7 +102,7 @@ def ngram_count(word, ngrams):
     """Compute the number of matching NGrams in the given word"""
     return len(set(ngrams).intersection(compute_ngrams([word])))
 
-clf= joblib.load('dga_detection.joblib')
+clf = joblib.load('dga_detection.joblib')
   
 if __name__ == '__main__':
     # Example to show the dataframe cache functionality on streaming data
@@ -142,6 +142,11 @@ if __name__ == '__main__':
             print('Could not open or parse the specified logfile: %s' % args.zeek_log)
             sys.exit(1)
         print('Read in {:d} Rows...'.format(len(zeek_df)))
+        
+        if log_type == 'dns':
+            zeek_df['query_length'] = zeek_df['query'].str.len()
+            zeek_df['answer_length'] = zeek_df['answers'].str.len()
+            zeek_df['entropy'] = zeek_df['query'].map(lambda x: entropy(x))
 
         # Using Pandas we can easily and efficiently compute additional data metrics
         # Here we use the vectorized operations of Pandas/Numpy to compute query length

@@ -42,8 +42,6 @@ from keras.layers import LSTM
 import warnings
 warnings.filterwarnings('ignore')
 
-
-
 from sklearn.cluster import KMeans
 
 # Local imports
@@ -51,9 +49,6 @@ from zat import log_to_dataframe
 from zat import dataframe_to_matrix
 from zat import zeek_log_reader, live_simulator
 from zat import dataframe_to_matrix, dataframe_cache
-
-
-
 
 def entropy(string):
     """Compute entropy on the string"""
@@ -139,7 +134,14 @@ if __name__ == '__main__':
             sys.exit(1)
 
         # Create a Pandas dataframe from a Zeek log
-        
+        try:
+            log_to_df = log_to_dataframe.LogToDataFrame()
+            zeek_df = log_to_df.create_dataframe(args.zeek_log)
+            print(zeek_df.head())
+        except IOError:
+            print('Could not open or parse the specified logfile: %s' % args.zeek_log)
+            sys.exit(1)
+        print('Read in {:d} Rows...'.format(len(zeek_df)))
 
         # Using Pandas we can easily and efficiently compute additional data metrics
         # Here we use the vectorized operations of Pandas/Numpy to compute query length

@@ -8,7 +8,7 @@ bootstrap_servers = 'localhost:9092'
 topic = 'zeek_predictions'
 
 # Path to Zeek log files
-log_files_path = '/path/to/zeek/logs'
+log_files_path = '/opt/zeek/logs/current/dns.log'
 
 # Create Kafka producer instance
 producer = KafkaProducer(bootstrap_servers=bootstrap_servers)

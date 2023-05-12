@@ -6,6 +6,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import joblib
 from zat import zeek_log_reader
+import io
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 

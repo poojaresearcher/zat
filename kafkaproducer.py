@@ -26,7 +26,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     # Preprocess the DNS logs
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
     print(df.head(10))
-    df.columns = ['query','answers']
+    df.columns = ['query']
     df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
     df['query_length'] = zeek_df['query'].str.len()
     df['answer_length'] = zeek_df['answers'].str.len()

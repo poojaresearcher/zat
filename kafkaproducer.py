@@ -1,0 +1,35 @@
+from kafka import KafkaProducer
+from kafka.consumer import KafkaConsumer
+import time
+import subprocess
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+import joblib
+
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+
+zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
+
+for line in iter(zeek_proc.stdout.readline, b''):
+    # Preprocess the DNS logs
+    df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
+    df = df.dropna(axis=1, how='all')
+    df.columns = ['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected']
+    df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected'], axis=1)
+    df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
+    df['label'] = label_encoder.transform(model.predict(df['query']))
+    preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
+
+    # Send the preprocessed DNS logs to Kafka
+    producer.send('dnslogs', preprocessed_line.encode('utf-8'))
+    time.sleep(0.1)
+
+consumer = KafkaConsumer('preprocessed_dns_logs', bootstrap_servers=['localhost:9092'])
+model = joblib.load('dga_detection.joblib')
+
+for msg in consumer:
+    preprocessed_line = msg.value.decode('utf-8')
+    df = pd.read_csv(io.StringIO(preprocessed_line), delimiter
+
+
+

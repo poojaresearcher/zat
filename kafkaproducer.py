@@ -32,10 +32,8 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
     df['query_length'] = df['query'].str.len()
     df['entropy'] = df['query'].map(lambda x: entropy(x))
-    
-    
-    df['label'] = label_encoder.transform(model.predict(df['query']))
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
+    print(df['query'])
 
     # Send the preprocessed DNS logs to Kafka
     producer.send('dnslogs', preprocessed_line.encode('utf-8'))

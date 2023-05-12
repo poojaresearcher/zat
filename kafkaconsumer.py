@@ -6,10 +6,9 @@ from sklearn.externals import joblib
 from sklearn.preprocessing import StandardScaler
 
 # Load the trained ML model and scaler
-model = joblib.load('model.pkl')
-scaler = joblib.load('scaler.pkl')
+model = joblib.load('')
 
-consumer = KafkaConsumer('dns_logs', bootstrap_servers=['localhost:9092'])
+consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'])
 
 for message in consumer:
     # Convert the log entry to a pandas DataFrame
@@ -17,7 +16,7 @@ for message in consumer:
     df = pd.read_csv(pd.compat.StringIO(log_entry), delimiter='\t', header=None, names=['ts', 'uid', 'id.orig_h', 'id.resp_h', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected'])
     
     # Preprocess the data using the scaler
-    features = df[['qclass', 'qtype', 'AA', 'TC', 'RD', 'RA']].values
+    features = df[['query', 'AA', 'TC', 'RD', 'RA']].values
     features = scaler.transform(features)
     
     # Make a prediction using the ML model

@@ -21,7 +21,6 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
     df = df.dropna(axis=1, how='all')
     df.columns = ['query']
-    df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected'], axis=1)
     df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
     df['label'] = label_encoder.transform(model.predict(df['query']))
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')

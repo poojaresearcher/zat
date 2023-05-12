@@ -14,6 +14,7 @@ zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], s
 
 consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'])
 model = joblib.load('dga_detection.joblib')
+label_encoder = LabelEncoder()
 
 
 for line in iter(zeek_proc.stdout.readline, b''):

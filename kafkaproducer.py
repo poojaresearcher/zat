@@ -11,6 +11,19 @@ import math
 from collections import Counter
 import re
 import numpy as np
+from pandas import read_csv, concat
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, roc_auc_score 
+import sklearn.feature_extraction
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pickle
+from sklearn import feature_extraction, tree, model_selection, metrics
+from yellowbrick.features import Rank2D
+from yellowbrick.features import RadViz
+from yellowbrick.features import ParallelCoordinates
+
+
  
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 

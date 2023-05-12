@@ -50,8 +50,20 @@ def vowel_consonant_ratio (x):
     except: # catch zero devision exception 
         ratio = 0  
     return ratio
-   
 
+
+for line in iter(zeek_proc.stdout.readline, b''):
+    # Preprocess the DNS logs
+    df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
+    df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
+    df['query_length'] = df['query'].str.len()
+    df['entropy'] = df['query'].map(lambda x: entropy(x))
+    df['digits'] = df['query'].str.count('[0-9]')
+    df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
+    
+    
+    
+    
 # Well our Mom told us we were still cool.. so with that encouragement we're
 # going to compute NGrams for every Alexa domain and see if we can use the
 # NGrams to help us better differentiate and mark DGA domains...
@@ -97,25 +109,6 @@ print = ('Word NGrams: %d') % len(_sorted_ngrams)
 for ngram, count in _sorted_ngrams[:10]:
     print = ('ngrams, count')
 
-
-
-
-
-test_data['alexa_grams']= td_counts * test_data_vc.transform(test_data['domain']).T 
-test_data['word_grams']= dict_counts * dict_vc.transform(test_data['domain']).T 
-test_data.head()
-
-test_data['diff'] = test_data['alexa_grams'] - test_data['word_grams']
-
-
-for line in iter(zeek_proc.stdout.readline, b''):
-    # Preprocess the DNS logs
-    df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
-    df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
-    df['query_length'] = df['query'].str.len()
-    df['entropy'] = df['query'].map(lambda x: entropy(x))
-    df['digits'] = df['query'].str.count('[0-9]')
-    df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
     df['alexa_grams']= td_counts * test_data_vc.transform(df['query']).T 
     df['word_grams']= dict_counts * dict_vc.transform(df['query']).T
     df['diff'] = df['alexa_grams'] - df['word_grams']

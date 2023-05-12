@@ -7,7 +7,9 @@ from sklearn.preprocessing import LabelEncoder
 import joblib
 from zat import zeek_log_reader
 import io
-
+import math
+from collections import Counter
+ 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)

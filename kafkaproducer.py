@@ -10,6 +10,10 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
 
+consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'])
+model = joblib.load('dga_detection.joblib')
+
+
 for line in iter(zeek_proc.stdout.readline, b''):
     # Preprocess the DNS logs
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
@@ -24,8 +28,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     producer.send('dnslogs', preprocessed_line.encode('utf-8'))
     time.sleep(0.1)
 
-consumer = KafkaConsumer('preprocessed_dns_logs', bootstrap_servers=['localhost:9092'])
-model = joblib.load('dga_detection.joblib')
+
 
 for msg in consumer:
     preprocessed_line = msg.value.decode('utf-8')

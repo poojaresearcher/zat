@@ -33,7 +33,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['query_length'] = df['query'].str.len()
     df['entropy'] = df['query'].map(lambda x: entropy(x))
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
-    print(df['query_length'])
+    print(df['entropy'])
     
 
     # Send the preprocessed DNS logs to Kafka

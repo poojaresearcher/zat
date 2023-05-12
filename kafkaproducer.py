@@ -32,7 +32,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
     df['query_length'] = df['query'].str.len()
     df['entropy'] = df['query'].map(lambda x: entropy(x))
-    df['digits'] = df.domain.str.count('[0-9]')
+    df['digits'] = df['query'].str.count('[0-9]')
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     print(df['digits'])
     

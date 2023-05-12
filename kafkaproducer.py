@@ -9,6 +9,7 @@ from zat import zeek_log_reader
 import io
 import math
 from collections import Counter
+import re
  
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 

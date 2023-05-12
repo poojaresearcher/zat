@@ -22,6 +22,19 @@ def entropy(string):
     """Compute entropy on the string"""
     p, lns = Counter(string), float(len(string))
     return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
+   
+def vowel_consonant_ratio (x):
+    # Calculate vowel to consonant ratio
+    x = x.lower()
+    vowels_pattern = re.compile('([aeiou])')
+    consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
+    vowels = re.findall(vowels_pattern, x)
+    consonants = re.findall(consonants_pattern, x)
+    try:
+        ratio = len(vowels) / len(consonants)
+    except: # catch zero devision exception 
+        ratio = 0  
+    return ratio
 
 
 for line in iter(zeek_proc.stdout.readline, b''):
@@ -33,8 +46,9 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['query_length'] = df['query'].str.len()
     df['entropy'] = df['query'].map(lambda x: entropy(x))
     df['digits'] = df['query'].str.count('[0-9]')
+    df['vowel-cons'] = zeek_df['query'].map(lambda x: vowel_consonant_ratio(x))
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
-    print(df['digits'])
+    print(df['vowel-cons'])
     
 
     # Send the preprocessed DNS logs to Kafka

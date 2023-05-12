@@ -5,6 +5,7 @@ import subprocess
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import joblib
+from zat import zeek_log_reader
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
@@ -32,7 +33,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
 
 for msg in consumer:
     preprocessed_line = msg.value.decode('utf-8')
-    df = pd.read_csv(io.StringIO(preprocessed_line), delimiter
+    df = pd.read_csv(io.StringIO(preprocessed_line), delimiter='\t')
 
 
 

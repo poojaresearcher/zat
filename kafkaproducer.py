@@ -76,7 +76,7 @@ def ngram_count(word, ngrams):
 for line in iter(zeek_proc.stdout.readline, b''):
     # Preprocess the DNS logs
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
-    df = df.drop(columns = ["ts"])
+    df = pd.DataFrame([df])
     print(df.head())
     
     

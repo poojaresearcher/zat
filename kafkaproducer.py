@@ -79,7 +79,8 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.DataFrame(df)
     df = pd.DataFrame(columns=['ts', 'uid', 'id.orig_h','id.orig_p','id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'])
     df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'], axis=1)
-    print(df)
+    df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
+    print(df['query'])
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     # Send the preprocessed DNS logs to Kafka
     producer.send('dnslogs', preprocessed_line.encode('utf-8'))

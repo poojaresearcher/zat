@@ -79,7 +79,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.DataFrame(df)
     df = pd.DataFrame(columns=['ts', 'uid', 'id.orig_h','id.orig_p','id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'])
     df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'], axis=1)
-    print(df.head(10))
+    print(df)
   
   
  

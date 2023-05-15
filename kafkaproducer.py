@@ -78,6 +78,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = df.dropna(axis=0, how='all')
     df.columns = ['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected']
     df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected'], axis=0)
+    print(df['query'])
     df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
     df['query_length'] = df['query'].str.len()
     df['entropy'] = df['query'].map(lambda x: entropy(x))

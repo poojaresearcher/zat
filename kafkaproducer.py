@@ -82,6 +82,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
     df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
     df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
+    print(df['query'])
    
     print(df.head(20))
   

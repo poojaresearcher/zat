@@ -87,7 +87,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     
   
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
-    print(df)
+   
     
 
     # Send the preprocessed DNS logs to Kafka

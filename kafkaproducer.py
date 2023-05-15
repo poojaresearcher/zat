@@ -31,7 +31,7 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
 
 consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'])
-model = pickle.load(open('dga_detection.pickle', 'rb'))
+model = joblib.load('dga_detection.pickle')
 label_encoder = LabelEncoder()
 
 def entropy(string):

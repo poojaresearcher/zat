@@ -87,6 +87,9 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
     df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
     print(df)
+    X_test = df[['query_length','entropy','n_grams','vowel-cons','digits']].to_numpy()
+    predictions = model.predict(X_test)
+    print(predictions)
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     # Send the preprocessed DNS logs to Kafka
     producer.send('dnslogs', preprocessed_line.encode('utf-8'))

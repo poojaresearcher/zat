@@ -84,7 +84,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
     print(df['query'])
    
-    print(df.head(20))
+    
   
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     print(df)

@@ -87,7 +87,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
     df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
     new_df = df[['query', 'length', 'entropy', 'digits', 'vowel-cons', 'ngrams', 'ngram_count']]
-    print(new_df.head(10))
+    new_df.shape()   
     X_test = df[['length', 'entropy', 'digits', 'vowel-cons', 'ngrams', 'ngram_count']].to_numpy()
     y_Pred = model.predict(X_test)
     print(predictions)

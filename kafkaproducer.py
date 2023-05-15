@@ -85,8 +85,8 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
     df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
     df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
-    X_test = df[['length','entropy','vowel-cons','digits']
-    y_pred = clf.predict(X_test)
+    X_test = df[['length','entropy','vowel-cons','digits']].to_numpy()
+    y_Pred = clf.predict(X_test)
     print(y_pred)
     
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')

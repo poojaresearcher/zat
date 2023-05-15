@@ -78,18 +78,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
     print(len(df))
    
-    df = df.dropna(axis=1, how='all')
-    df.columns = ['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected']
-    print(df.columns)
-    df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected'], axis=1)
-    df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
-    df['query_length'] = df['query'].str.len()
-    df['entropy'] = df['query'].map(lambda x: entropy(x))
-    df['digits'] = df['query'].str.count('[0-9]')
-    df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
-    df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
-    df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
-    print(df['query'])
+    
    
     
   

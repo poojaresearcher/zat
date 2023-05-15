@@ -76,12 +76,12 @@ def ngram_count(word, ngrams):
 for line in iter(zeek_proc.stdout.readline, b''):
     # Preprocess the DNS logs
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
-    df = pd.DataFrame(df)
-    df = pd.DataFrame(columns=['ts', 'uid', 'id.orig_h','id.orig_p','id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'])
-    df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'], axis=1)
-    df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
-    print(df['query'])
-    preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
+    new_df = pd.DataFrame(df)
+    new_df = pd.DataFrame(columns=['ts', 'uid', 'id.orig_h','id.orig_p','id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'])
+    new_df = new_df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'], axis=1)
+    new_df['query'] = new_df['query'].str.split('.').str[::-1].str.join('.')
+    print(new_df['query'])
+    preprocessed_line = new_df.to_csv(header=False, index=False, sep='\t')
     # Send the preprocessed DNS logs to Kafka
     producer.send('dnslogs', preprocessed_line.encode('utf-8'))
     time.sleep(0.1)
@@ -90,7 +90,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
 
 for msg in consumer:
     preprocessed_line = msg.value.decode('utf-8')
-    df = pd.read_csv(io.StringIO(preprocessed_line), delimiter='\t')
+    new_df = pd.read_csv(io.StringIO(preprocessed_line), delimiter='\t')
 
 
 

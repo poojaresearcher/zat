@@ -77,9 +77,8 @@ for line in iter(zeek_proc.stdout.readline, b''):
     # Preprocess the DNS logs
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
     df = pd.DataFrame(df)
-    df.isnull().sum()
-    print(df.head(20))
-    
+    columns_to_remove = ['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected']
+    df = df.drop(columns_to_remove, axis=1)
    
     
   

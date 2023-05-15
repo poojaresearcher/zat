@@ -6,6 +6,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import joblib
 from zat import zeek_log_reader
+from zat import log_to_dataframe
 import io
 import math
 from collections import Counter

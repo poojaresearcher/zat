@@ -79,6 +79,13 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.DataFrame(columns=['ts', 'uid', 'id.orig_h','id.orig_p','id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'])
     df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'], axis=1)
     df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
+    df['query'] = df['query'].str.split('.').str[::-1].str.join('.')
+    df['query_length'] = df['query'].str.len()
+    df['entropy'] = df['query'].map(lambda x: entropy(x))
+    df['digits'] = df['query'].str.count('[0-9]')
+    df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
+    df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
+    df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
     print(df['query'])
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     # Send the preprocessed DNS logs to Kafka

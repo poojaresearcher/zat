@@ -31,7 +31,7 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
 
 consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'])
-model = joblib.load('dga_detection.pickle')
+clf = joblib.load('dga_detection.pickle')
 label_encoder = LabelEncoder()
 
 def entropy(string):
@@ -86,8 +86,8 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
     df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
     X_test = df[['length','entropy','vowel-cons','digits']
-    predictions = model.predict(X_test)
-    print(predictions)
+    y_pred = clf.predict(X_test)
+    print(y_pred)
     
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     # Send the preprocessed DNS logs to Kafka

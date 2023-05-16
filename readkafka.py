@@ -34,6 +34,53 @@ model = joblib.load('dga_detection.joblib')
 # Set up Kafka producer
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
+
+zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
+
+consumer = KafkaConsumer('domainpred', bootstrap_servers=['localhost:9092'])
+model = joblib.load('dga_detection.joblib')
+label_encoder = LabelEncoder()
+
+
+def entropy(string):
+    """Compute entropy on the string"""
+    p, lns = Counter(string), float(len(string))
+    return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
+   
+def vowel_consonant_ratio (x):
+    # Calculate vowel to consonant ratio
+    x = x.lower()
+    vowels_pattern = re.compile('([aeiou])')
+    consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
+    vowels = re.findall(vowels_pattern, x)
+    consonants = re.findall(consonants_pattern, x)
+    try:
+        ratio = len(vowels) / len(consonants)
+    except: # catch zero devision exception 
+        ratio = 0  
+    return ratio
+   
+def compute_ngrams(word_list, S=3, T=3):
+    """Compute NGrams in the word_list from [S-T)
+        Args:
+            word_list (list): A list of words to compute ngram set from
+            S (int): The smallest NGram (default=3)
+            T (int): The biggest NGram (default=3)
+    """
+    _ngrams = []
+    if isinstance(word_list, str):
+        word_list = [word_list]
+    for word in word_list:
+        for n in range(S, T+1):
+            _ngrams += zip(*(word[i:] for i in range(n)))
+    return [''.join(_ngram) for _ngram in _ngrams]
+
+
+def ngram_count(word, ngrams):
+    """Compute the number of matching NGrams in the given word"""
+    return len(set(ngrams).intersection(compute_ngrams([word])))
+
+
 # Read DNS log from standard input
 for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
     # Preprocess query column to extract features

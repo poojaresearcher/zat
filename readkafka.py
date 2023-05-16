@@ -3,7 +3,6 @@ import numpy as np
 import io
 from datetime import datetime
 from kafka import KafkaProducer
-from sklearn.externals import joblib
 from dns_entropy import entropy
 from feature_extraction import extract_features
 import time

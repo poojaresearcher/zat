@@ -85,7 +85,8 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
     df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
     df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
-    df = pd.concat([df,(df['query'])], axis=1)
+    df = pd.concat(df[['entropy', 'length', 'domain', 'digits', 'vowel-cons', 'ngrams', 'ngram_count']], axis=1)
+    print(df.head(10))
     X_test = df[['entropy', 'length', 'domain', 'digits', 'vowel-cons', 'ngrams', 'ngram_count']]
     y_pred = model.predict(X_test)
     print(y_Pred)

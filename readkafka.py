@@ -1,36 +1,31 @@
-import os
+import pandas as pd
+import numpy as np
+import io
+from datetime import datetime
 from kafka import KafkaProducer
-from kafka.errors import NoBrokersAvailable
+from sklearn.externals import joblib
+from dns_entropy import entropy
+from feature_extraction import extract_features
 
+# Load trained classifier model
+model = joblib.load('classifier_model.pkl')
 
-# Kafka broker address
-bootstrap_servers = 'localhost:9092'
+# Set up Kafka producer
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
-# Kafka topic to produce messages
-topic = 'zeek_predictions'
+# Read DNS log from standard input
+for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
+    # Preprocess query column to extract features
+    df = pd.read_csv(io.StringIO(line), delimiter='\t', header=None)
+    df.columns = ['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected']
+    df['entropy'] = df['query'].apply(entropy)
+    df = pd.concat([df, extract_features(df['query'])], axis=1)
+    X_test = df[['entropy', 'length', 'num_digits', 'num_dots', 'num_hyphens', 'num_alpha']]
+    
+    # Make prediction using trained classifier model
+    y_pred = model.predict(X_test)
+    
+    # Stream log data and prediction to Kafka topic
+    for index, row in df.iterrows():
+        producer.send('dns_log_predictions', str(row.to_dict()) + ' predicted class: ' + str(y_pred[index]))
 
-# Path to Zeek log files
-log_files_path = 'home/logs/current/dns.log'
-
-# Create Kafka producer instance
-producer = KafkaProducer(bootstrap_servers=bootstrap_servers)
-
-# Read Zeek log files
-for file_name in os.listdir(log_files_path):
-    if file_name.endswith('.log'):
-        file_path = os.path.join(log_files_path, file_name)
-        with open(file_path, 'r') as file:
-            # Process each line of the log file
-            for line in file:
-                # Preprocess and extract relevant features from the log line
-                # Replace the following preprocessing and feature extraction steps with your own implementation
-                processed_data = preprocess_and_extract_features(line)
-
-                # Convert processed data to bytes
-                message = str(processed_data).encode('utf-8')
-
-                # Produce the message to the Kafka topic
-                producer.send(topic, message)
-
-# Close the Kafka producer
-producer.close()

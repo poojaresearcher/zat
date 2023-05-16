@@ -60,29 +60,6 @@ def vowel_consonant_ratio (x):
         ratio = 0  
     return ratio
    
-def compute_ngrams(word_list, S=3, T=3):
-    """Compute NGrams in the word_list from [S-T)
-        Args:
-            word_list (list): A list of words to compute ngram set from
-            S (int): The smallest NGram (default=3)
-            T (int): The biggest NGram (default=3)
-    """
-    _ngrams = []
-    if isinstance(word_list, str):
-        word_list = [word_list]
-    for word in word_list:
-        for n in range(S, T+1):
-            _ngrams += zip(*(word[i:] for i in range(n)))
-    return [''.join(_ngram) for _ngram in _ngrams]
-
-
-def ngram_count(word, ngrams):
-    """Compute the number of matching NGrams in the given word"""
-    return len(set(ngrams).intersection(compute_ngrams([word])))
-
-
-# Read DNS log from standard input
-for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
     # Preprocess query column to extract features
     df = pd.read_csv(io.StringIO(line), delimiter='\t', header=None)
     df.columns = ['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected']

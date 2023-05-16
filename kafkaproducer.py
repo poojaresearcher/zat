@@ -121,7 +121,7 @@ for ngram, count in _sorted_ngrams[:10]:
     y_pred = model.predict(X_test)
     print(y_Pred)
     
-    preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
+    preprocessed_line = df(header=False, index=False, sep='\t')
     # Send the preprocessed DNS logs to Kafka
     producer.send('dnslogs', preprocessed_line.encode('utf-8'))
     time.sleep(0.1)

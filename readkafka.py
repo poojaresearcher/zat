@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import io
+import sys
 from datetime import datetime
 from kafka import KafkaProducer
 import time

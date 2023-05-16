@@ -4,6 +4,7 @@ import io
 import sys
 from datetime import datetime
 from kafka import KafkaProducer
+from kafka import KafkaConsumer
 import time
 import subprocess
 import pandas as pd

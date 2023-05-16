@@ -117,6 +117,7 @@ for ngram, count in _sorted_ngrams[:10]:
     df['diff'] = df['alexa_grams'] - df['word_grams']
     df = pd.concat([df[['entropy', 'length', 'domain', 'digits', 'vowel-cons', 'alexa_grams', 'word_grams']]], axis=1)
     print(df.head(10))
+    print('df is ready')
     X_test = df
     y_pred = model.predict(X_test)
     print(y_Pred)

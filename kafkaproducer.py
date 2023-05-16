@@ -52,25 +52,18 @@ def vowel_consonant_ratio (x):
         ratio = 0  
     return ratio
    
-def compute_ngrams(word_list, S=3, T=3):
-    """Compute NGrams in the word_list from [S-T)
-        Args:
-            word_list (list): A list of words to compute ngram set from
-            S (int): The smallest NGram (default=3)
-            T (int): The biggest NGram (default=3)
-    """
-    _ngrams = []
-    if isinstance(word_list, str):
-        word_list = [word_list]
-    for word in word_list:
-        for n in range(S, T+1):
-            _ngrams += zip(*(word[i:] for i in range(n)))
-    return [''.join(_ngram) for _ngram in _ngrams]
-
-
-def ngram_count(word, ngrams):
-    """Compute the number of matching NGrams in the given word"""
-    return len(set(ngrams).intersection(compute_ngrams([word])))
+def vowel_consonant_ratio (x):
+    # Calculate vowel to consonant ratio
+    x = x.lower()
+    vowels_pattern = re.compile('([aeiou])')
+    consonants_pattern = re.compile('([b-df-hj-np-tv-z])')
+    vowels = re.findall(vowels_pattern, x)
+    consonants = re.findall(consonants_pattern, x)
+    try:
+        ratio = len(vowels) / len(consonants)
+    except: # catch zero devision exception 
+        ratio = 0  
+    return ratio
 
 
 for line in iter(zeek_proc.stdout.readline, b''):
@@ -83,11 +76,48 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['entropy'] = df['query'].map(lambda x: entropy(x))
     df['digits'] = df['query'].str.count('[0-9]')
     df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
-    df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
-    df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
-    df = pd.concat([df[['entropy', 'length', 'domain', 'digits', 'vowel-cons', 'ngrams', 'ngram_count']]], axis=1)
+    
+    
+test_data_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-4, max_df=1.0)
+
+counts_matrix = test_data_vc.fit_transform(df['domain'])
+td_counts = np.log10(counts_matrix.sum(axis=0).getA1())
+ngrams_list = test_data_vc.get_feature_names_out()
+
+import operator
+_sorted_ngrams = sorted(zip(ngrams_list, td_counts), key=operator.itemgetter(1), reverse=True)
+print = ('Alexa NGrams: %d') % len(_sorted_ngrams)
+for ngram, count in _sorted_ngrams[:10]:
+    print = (ngram, count)
+
+
+word_dataframe = pd.read_csv('words.txt', names=['word'], header=None, dtype={'word': np.str}, encoding='utf-8')
+
+
+word_dataframe = word_dataframe[word_dataframe['word'].map(lambda x: str(x).isalpha())]
+word_dataframe = word_dataframe.applymap(lambda x: str(x).strip().lower())
+word_dataframe = word_dataframe.dropna()
+word_dataframe = word_dataframe.drop_duplicates()
+word_dataframe.head(10)
+
+dict_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3,5), min_df=1e-5, max_df=1.0)
+counts_matrix = dict_vc.fit_transform(word_dataframe['word'])
+dict_counts = np.log10(counts_matrix.sum(axis=0).getA1())
+ngrams_list = dict_vc.get_feature_names_out()
+
+import operator
+_sorted_ngrams = sorted(zip(ngrams_list, dict_counts), key=operator.itemgetter(1), reverse=True)
+print = ('Word NGrams: %d') % len(_sorted_ngrams)
+for ngram, count in _sorted_ngrams[:10]:
+    print = ('ngrams, count')
+
+
+    df['alexa_grams']= td_counts * test_data_vc.transform(df['domain']).T
+    df['word_grams']= dict_counts * dict_vc.transform(df['domain']).T
+    df['diff'] = df['alexa_grams'] - df['word_grams']
+    df = pd.concat([df[['entropy', 'length', 'domain', 'digits', 'vowel-cons', 'alexa_grams', 'word_grams']]], axis=1)
     print(df.head(10))
-    X_test = df[['entropy', 'length', 'domain', 'digits', 'vowel-cons', 'ngrams', 'ngram_count']]
+    X_test = df
     y_pred = model.predict(X_test)
     print(y_Pred)
     

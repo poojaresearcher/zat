@@ -48,6 +48,8 @@ for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
     df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
     df = pd.concat([df, extract_features(df['query'])], axis=1)
     X_test = df[['entropy', 'length', 'domain', 'digits', 'vowel-cons', 'ngrams', 'ngram_count']]
+    y_pred = model.predict(X_test)
+    print(y_Pred)
     
     # Make prediction using trained classifier model
     y_pred = model.predict(X_test)

@@ -38,7 +38,7 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
 
-consumer = KafkaConsumer('dns', bootstrap_servers=['localhost:9092'])
+consumer = KafkaConsumer('pred', bootstrap_servers=['localhost:9092'])
 model = joblib.load('dga_detection.joblib')
 label_encoder = LabelEncoder()
 
@@ -71,15 +71,14 @@ def vowel_consonant_ratio (x):
     df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
     df['ngrams'] = df['query'].map(lambda x: compute_ngrams(x))
     df['ngram_count'] = df['query'].map(lambda x: ngram_count(x))
-    df = pd.concat([df, extract_features(df['query'])], axis=1)
-    feature_names = df[['domain','entropy','length', 'domain', 'digits', 'vowel-cons']]                    
-    X_test = feature_names
-
-    
+    df = pd.concat([df, feature_extraction(df['query'])], axis=1)
+    X_test = df
+    print('df is ready')
+  
     # Make prediction using trained classifier model
     y_pred = model.predict(X_test)
     
     # Stream log data and prediction to Kafka topic
     for index, row in df.iterrows():
-        producer.send('domainpred', str(row.to_dict()) + ' predicted class: ' + str(y_pred[index]))
+        producer.send('pred', str(row.to_dict()) + ' predicted class: ' + str(y_pred[index]))
 

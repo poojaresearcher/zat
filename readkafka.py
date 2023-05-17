@@ -38,7 +38,7 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
 
-consumer = KafkaConsumer('domainpred', bootstrap_servers=['localhost:9092'])
+consumer = KafkaConsumer('dns', bootstrap_servers=['localhost:9092'])
 model = joblib.load('dga_detection.joblib')
 label_encoder = LabelEncoder()
 

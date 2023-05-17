@@ -64,7 +64,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     print('df is ready')
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     
-    producer.send('domainpred', preprocessed_line.decode('utf-8)
+    producer.send('domainpred', preprocessed_line.decode('utf-8'))
     time.sleep(0.1)
 
 producer.close()

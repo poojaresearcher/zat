@@ -1,4 +1,4 @@
-from kafka import KafkaProducer
+from kafka import KafkaProducer,KafkaConsumer
 import time
 import subprocess
 from collections import Counter

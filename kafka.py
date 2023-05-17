@@ -1,5 +1,5 @@
 from kafka import KafkaProducer
-from kafka.consumer import KafkaConsumer
+from kafka import KafkaConsumer
 import time
 import subprocess
 import pandas as pd

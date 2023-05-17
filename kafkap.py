@@ -7,7 +7,7 @@ import joblib
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
-consumer = KafkaConsumer('predictions', bootstrap_servers=['localhost:9092'])
+consumer = KafkaConsumer('dns1', bootstrap_servers=['localhost:9092'])
 model = joblib.load('dga_detection.joblib')
 
 
@@ -42,7 +42,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = preprocess(df)
     print(df.head(20))
     y_pred = predict(df)
-    producer.send('dns1',y_pred.encode())
+    producer.send('predictions',y_pred.encode())
     time.sleep(0.1)
 
 producer.close()

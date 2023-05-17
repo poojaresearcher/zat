@@ -29,7 +29,7 @@ def preprocess(df):
 
 # Prediction function
 def predict(df):
-    X = df[['domain', 'length', 'entropy', 'digits']].to_numpy()  # Use relevant features for prediction
+    X = df[['domain', 'length', 'entropy', 'digits']]  # Use relevant features for prediction
     y_pred = model.predict(X)
     return y_pred
 

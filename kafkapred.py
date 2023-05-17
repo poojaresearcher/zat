@@ -45,4 +45,5 @@ for line in iter(zeek_proc.stdout.readline, b''):
     time.sleep(0.1)
 
 producer.close()
+consumer.close()
 

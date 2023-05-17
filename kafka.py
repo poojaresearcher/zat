@@ -61,9 +61,9 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
     print(df.head(10))
     print('df is ready')
+    preprocessed_line = df(header=False, index=False, sep='\t')
     
-    
-    producer.send('domainpred', line.rstrip())
+    producer.send('domainpred', preprocessed_line.rstrip())
     time.sleep(0.1)
 
 producer.close()

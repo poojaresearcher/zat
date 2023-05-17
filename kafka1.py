@@ -9,6 +9,7 @@ model = joblib.load('dga_detection.joblib')
 
 # Define Kafka producer and consumer
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
 consumer = KafkaConsumer('dns1', bootstrap_servers=['localhost:9092'])
 
 def entropy(string):
@@ -16,6 +17,7 @@ def entropy(string):
     p, lns = Counter(string), float(len(string))
     return -sum(count/lns * math.log(count/lns, 2) for count in p.values())
 
+for line in iter(zeek_proc.stdout.readline, b''):
 # Preprocessing function to extract features from query column
 def preprocess(df):
     # Feature: entropy

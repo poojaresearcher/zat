@@ -9,7 +9,7 @@ model = joblib.load('dga_detection.joblib')
 
 # Define Kafka producer and consumer
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
-consumer = KafkaConsumer('dns1', bootstrap_servers=['localhost:9092'])
+consumer = KafkaConsumer('predictions', bootstrap_servers=['localhost:9092'])
 
 def entropy(string):
     """Compute entropy on the string"""

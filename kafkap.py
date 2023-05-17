@@ -42,7 +42,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = preprocess(df)
     print(df.head(20))
     y_pred = predict(df)
-    producer.send('predictions',y_pred.encode())
+    producer.send('pred',y_pred.encode())
     time.sleep(0.1)
 
 producer.close()

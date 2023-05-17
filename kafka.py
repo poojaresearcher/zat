@@ -1,4 +1,4 @@
-from kafka import KafkaProducer
+from kafka.producer import KafkaProducer
 from kafka.consumer import KafkaConsumer
 import time
 import subprocess

@@ -41,8 +41,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id','qclass', 'qclass_name', 'qtype', 'qtype_name', 'rcode', 'rcode_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'answers', 'TTLs', 'rejected'], axis=1)
     df = preprocess(df)
     y_pred = predict(df)
-    for p in y_pred:
-        producer.send('dns1', str(p).encode())
+    producer.send('dns1',y_pred.encode())
     time.sleep(0)
 
 producer.close()

@@ -27,7 +27,7 @@ from yellowbrick.features import ParallelCoordinates
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
 
-consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'])
+consumer = KafkaConsumer('pred', bootstrap_servers=['localhost:9092'])
 model = joblib.load('dga_detection.joblib')
 label_encoder = LabelEncoder()
 
@@ -62,10 +62,14 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.concat([df[['entropy', 'length', 'domain', 'digits', 'vowel-cons']]], axis=1)
     print(df.head(10))
     print('df is ready')
-    preprocessed_line = df(header=False, index=False, sep='\t')
+    preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     
-    producer.send('domainpred', preprocessed_line.rstrip())
+    producer.send('domainpred', preprocessed_line.decode('utf-8))
     time.sleep(0.1)
 
 producer.close()
+
+for msg in consumer:
+    preprocessed_line = msg.value.decode('utf-8')
+    df = pd.read_csv(io.StringIO(preprocessed_line), delimiter='\t')
 

@@ -3,6 +3,7 @@ import time
 import subprocess
 from collections import Counter
 import math
+import joblib
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)

@@ -59,6 +59,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df['entropy'] = df['query'].map(lambda x: entropy(x))
     df['digits'] = df['query'].str.count('[0-9]')
     df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
+    df = pd.concat([df[['entropy', 'length', 'domain', 'digits', 'vowel-cons']]], axis=1)
     print(df.head(10))
     print('df is ready')
     preprocessed_line = df(header=False, index=False, sep='\t')

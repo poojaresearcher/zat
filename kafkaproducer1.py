@@ -51,8 +51,8 @@ def vowel_consonant_ratio (x):
 
 for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
-    df = pd.DataFrame(columns=['ts', 'uid', 'id.orig_h','id.orig_p','id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'q>
-    df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qc>
+    df = pd.DataFrame(columns=['ts', 'uid', 'id.orig_h','id.orig_p','id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'])
+    
     df['domain'] = df['query'].str.split('.').str[::-1].str.join('.')
     df['length'] = df['query'].str.len()
     df['entropy'] = df['query'].map(lambda x: entropy(x))

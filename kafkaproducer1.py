@@ -50,7 +50,7 @@ def vowel_consonant_ratio (x):
     return ratio
 
 for line in iter(zeek_proc.stdout.readline, b''):
-    df = pd.read_csv(io.StringIO(line.decode('utf-8')), ts_col=0, delimiter='\t', header=None)
+    df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
     print(df.head(20))
     print('df is ready')
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')

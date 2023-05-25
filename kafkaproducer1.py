@@ -59,6 +59,8 @@ for line in iter(zeek_proc.stdout.readline, b''):
 for msg in consumer:
     preprocessed_line = msg.value.decode('utf-8')
     df = pd.read_csv(io.StringIO(preprocessed_line), delimiter='\t')
+    dns_message = df
+    print(dns_message)
 
     
 

@@ -50,20 +50,9 @@ def vowel_consonant_ratio (x):
     return ratio
 
 for line in iter(zeek_proc.stdout.readline, b''):
-    df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
+    df = pd.read_csv(io.StringIO(line.decode('utf-8')), ts_col=0, delimiter='\t', header=None)
     print(df.head(20))
-    df = pd.DataFrame(columns=['ts', 'uid', 'id.orig_h','id.orig_p','id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'query', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'])
-    df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'], axis=1)
-    df['domain'] = df['query'].str.split('.').str[::-1].str.join('.')
-    df['length'] = df['query'].str.len()
-    df['entropy'] = df['query'].map(lambda x: entropy(x))
-    df['digits'] = df['query'].str.count('[0-9]')
-    df['vowel-cons'] = df['query'].map(lambda x: vowel_consonant_ratio(x))
-    df = pd.concat([df[['entropy', 'length', 'domain', 'digits', 'vowel-cons']]], axis=1)
-    print(df.head(10))
     print('df is ready')
-     
-
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     producer.send('dnslogs',  preprocessed_line.encode('utf-8'))
     time.sleep(0.1)

@@ -51,14 +51,26 @@ def vowel_consonant_ratio (x):
 
 for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
-    df = pd.DataFrame(df, index=[0])
-    columns_to_drop = ['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id']
-    df = df.drop(columns_to_drop, axis=1, errors='ignore')
-    print(df.head(20))
-    # Check the modified DataFrame after dropping columns
-    preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
-    producer.send('dnslogs', preprocessed_line.encode('utf-8'))
+    if len(df) > 0:
+        # Extract the query column
+        df_json = pd.json_normalize(df[0].apply(json.loads))
+        query_column = df_json['query']
+        print(query_column.head(10))  # Check the extracted query column
+        
+        preprocessed_line = query_column.to_csv(header=False, index=False, sep='\t')
+        producer.send('dnslogs', preprocessed_line.encode('utf-8'))
+    
     time.sleep(0.1)
+In this updated code, json.loads is used to convert each JSON string into a Python dictionary, and then pd.json_normalize() is used to convert the dictionaries into a DataFrame. From the resulting DataFrame, the "query" column is selected and stored in the query_column variable.
+
+You can then proceed to further process or send the query_column as needed.
+
+
+
+
+
+
+
    
     
 

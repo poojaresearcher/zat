@@ -50,6 +50,7 @@ def vowel_consonant_ratio (x):
     return ratio
 
 for line in iter(zeek_proc.stdout.readline, b''):
+    line_str = line.decode('utf-8')
     df = pd.read_json(line, lines=True)
     if len(df) > 0:
         # Extract the query column

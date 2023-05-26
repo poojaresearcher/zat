@@ -61,18 +61,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
         producer.send('dnslogs', preprocessed_line.encode('utf-8'))
     
     time.sleep(0.1)
-In this updated code, json.loads is used to convert each JSON string into a Python dictionary, and then pd.json_normalize() is used to convert the dictionaries into a DataFrame. From the resulting DataFrame, the "query" column is selected and stored in the query_column variable.
 
-You can then proceed to further process or send the query_column as needed.
-
-
-
-
-
-
-
-   
-    
 
 for msg in consumer:
     preprocessed_line = msg.value.decode('utf-8')

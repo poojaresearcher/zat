@@ -6,13 +6,11 @@ import joblib
 from collections import Counter
 import math
 
-# Load trained model
-model = joblib.load('dga_detection.joblib')
 
 # Define Kafka producer and consumer
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 zeek_proc = subprocess.Popen(['tail', '-f', '/opt/zeek/logs/current/dns.log'], stdout=subprocess.PIPE)
-consumer = KafkaConsumer('predictions', bootstrap_servers=['localhost:9092'])
+consumer = KafkaConsumer('dns1', bootstrap_servers=['localhost:9092'])
 model = joblib.load('dga_detection.joblib')
 
 

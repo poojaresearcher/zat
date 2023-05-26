@@ -51,9 +51,8 @@ def vowel_consonant_ratio (x):
 
 for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
-    df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'], axis=1, inplace=True)
-    print(df.head(20))
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
+    print(peprocessed_line)
     producer.send('dnslogs',  preprocessed_line.encode('utf-8'))
     time.sleep(0.1)
 for msg in consumer:

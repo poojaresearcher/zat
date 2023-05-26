@@ -51,10 +51,14 @@ def vowel_consonant_ratio (x):
 
 for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
-    df = df.drop(df.columns[[0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]], axis=1, errors='ignore')
     print(df.head(20))
-    preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
-    producer.send('dnslogs', preprocessed_line.encode('utf-8'))
+    if len(df) > 1:
+        df = df.drop(df.columns[[0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]], axis=1, errors='ignore')
+        print(df.head(10))  # Check the modified DataFrame after dropping columns
+        
+        preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
+        producer.send('dnslogs', preprocessed_line.encode('utf-8'))
+    
     time.sleep(0.1)
     
 

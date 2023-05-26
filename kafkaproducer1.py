@@ -53,6 +53,9 @@ for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
     print(preprocessed_line)
+    df = pd.read_csv(io.StringIO(preprocessed_line), delimiter='\t')
+    df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z', 'rejected'], axis=1)
+    print(df)
     producer.send('dnslogs',  preprocessed_line.encode('utf-8'))
     time.sleep(0.1)
 for msg in consumer:

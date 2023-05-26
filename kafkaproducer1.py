@@ -51,25 +51,21 @@ def vowel_consonant_ratio (x):
 
 for line in iter(zeek_proc.stdout.readline, b''):
     df = pd.read_csv(io.StringIO(line.decode('utf-8')), delimiter='\t', header=None)
-    df = df.drop(df.columns[[8]], axis=0)
+    df = df.drop([0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], axis=1)
     print(df.head(20))
     preprocessed_line = df.to_csv(header=False, index=False, sep='\t')
-    print(preprocessed_line)
-    df = pd.read_csv(io.StringIO(preprocessed_line), delimiter='\t')
-    
-    df = pd.DataFrame(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id','query','rcode', 'rcode_name', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z','answers','TTLs', 'rejected'])
-    df = df.drop(['ts', 'uid', 'id.orig_h', 'id.orig_p', 'id.resp_h', 'id.resp_p', 'proto', 'trans_id', 'rcode', 'rcode_name', 'qclass', 'qclass_name', 'qtype', 'qtype_name', 'AA', 'TC', 'RD', 'RA', 'Z','answers','TTLs', 'rejected',], axis=1, inplace=True)
-    print(df.head(10))
-    df_line = df
-    producer.send('dnslogs',  df_line.encode('utf-8'))
+    producer.send('dnslogs', preprocessed_line.encode('utf-8'))
     time.sleep(0.1)
+    
+
 for msg in consumer:
     preprocessed_line = msg.value.decode('utf-8')
-    print(peprocessed_line)
+    print(preprocessed_line)
     df = pd.read_csv(io.StringIO(preprocessed_line), delimiter='\t')
+    df = df.drop([0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], axis=1)
+    print(df.head(10))
     dns_message = df['query']
     print(dns_message)
-
     
 
 producer.close()

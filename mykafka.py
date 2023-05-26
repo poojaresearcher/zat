@@ -48,3 +48,7 @@ for line in iter(zeek_proc.stdout.readline, b''):
     y_pred = predict(df)
     for p in y_pred:
         producer.send('dns1', str(p).encode())
+        
+producer.close()
+consumer.close()
+

@@ -62,7 +62,7 @@ for msg in consumer:
     preprocessed_line = msg.value.decode('utf-8')
     print(preprocessed_line)
     df = pd.read_csv(io.StringIO(preprocessed_line), delimiter='\t')
-    df = df.drop([0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], axis=1)
+    df = df.drop([0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], axis=1, errors='ignore')
     print(df.head(10))
     dns_message = df['query']
     print(dns_message)

@@ -33,9 +33,7 @@ for message in consumer:
      query = dns_message['query']
      domain = dns_message['query'].str.split('.').str[::-1].str.join('.')
      print(domain)
-
-     
- consumer.close()
+consumer.close()
      
     
 

@@ -40,7 +40,38 @@ def extract_features(query):
     features['digits'] = bool(re.search(r'\d', query))
     return features
   
-classifier = joblib.load('')
+classifier = joblib.load('dga_detection.joblib')
+
+input_topic = 'dnslogs'
+output_topic = 'prediction_output'
+
+
+consumer = KafkaConsumer(
+    input_topic,
+    bootstrap_servers=['localhost:9092'],
+    value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+)
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+
+for message in consumer:
+    dns_message = message.value
+    query = dns_message['query']
+
+    # Preprocess and extract features
+    features = extract_features(query)
+
+    # Predict with the classifier model
+    prediction = classifier.predict([list(features.values())])[0]
+
+    # Prepare prediction output message
+    prediction_message = {
+        'query': query,
+        'prediction': prediction
+    }
+
+    # Publish prediction output to Kafka topic
+    producer.send(output_topic, json.dumps(prediction_message).encode('utf-8'))
+
 
 
 

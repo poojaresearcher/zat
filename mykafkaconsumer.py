@@ -13,10 +13,9 @@ consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'],
 for message in consumer:
      dns_message = message.value
      query = dns_message['query']
-     parsed_url = urlparse(query)
-     domain = parsed_url.netloc
-     print(dns_message['query'])
-
+     print(query)
+     tld = tldextract.extract(query).suffix
+    
 
 
 

@@ -13,8 +13,8 @@ consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'],
 for message in consumer:
     dns_message = message.value
 
-     query = dns_message['query']
-     print(query)
+    query = dns_message['query']
+    print(query)
 
 
 

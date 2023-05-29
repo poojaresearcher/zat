@@ -15,8 +15,7 @@ for message in consumer:
      query = dns_message['query']
      parsed_url = urlparse(query)
      domain = parsed_url.netloc
-     print(domain)
-     print(query)
+     print(dns_message['query'])
 
 
 

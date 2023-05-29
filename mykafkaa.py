@@ -56,6 +56,7 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 for message in consumer:
     dns_message = message.value
     query = dns_message['query']
+    print(query)
 
     # Preprocess and extract features
     features = extract_features(query)
@@ -74,7 +75,7 @@ for message in consumer:
     producer.send(output_topic, json.dumps(prediction_message).encode('utf-8'))
     
 
-producer.close()
+producer.flush()
 consumer.close()
 
 

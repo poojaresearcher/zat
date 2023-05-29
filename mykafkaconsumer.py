@@ -27,13 +27,20 @@ def vowel_consonant_ratio (x):
         ratio = 0  
     return ratio
 
-def extract_features(query):
-    features = {}
+def extract_domain(query):
+    domain_features = {}
     extracted = tldextract.extract(query)
     domain = extracted.domain
     subdomain = extracted.subdomain
     features['domain'] = domain
     features['subdomain'] = subdomain
+    
+    return domain_features
+    
+
+def extract_features(query):
+    features = {}
+  
     features['length'] = len(domain)
     features['entropy'] = entropy(domain)
     features['vowel_consonant_ratio'] = vowel_consonant_ratio(domain)

@@ -77,6 +77,7 @@ for message in consumer:
 
 producer.flush()
 consumer.close()
+producer.close()
 
 
 

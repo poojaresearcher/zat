@@ -6,6 +6,8 @@ import math
 import joblib
 import pickle
 import json
+import re 
+import tldextract
 
 def entropy(string):
     """Compute entropy on the string"""

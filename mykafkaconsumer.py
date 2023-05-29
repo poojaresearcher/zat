@@ -29,9 +29,14 @@ def vowel_consonant_ratio (x):
 
 def extract_features(query):
     features = {}
+    extracted = tldextract.extract(query)
+    domain = extracted.domain
+    subdomain = extracted.subdomain
     features['length'] = len(query)
     features['entropy'] = entropy(query)
     features['vowel_consonant_ratio'] = vowel_consonant_ratio(query)
+    features['domain'] = domain
+    features['subdomain'] = subdomain
     return features
 
 classifier = joblib.load('dga_detection.joblib')

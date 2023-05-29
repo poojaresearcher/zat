@@ -32,11 +32,12 @@ def extract_features(query):
     extracted = tldextract.extract(query)
     domain = extracted.domain
     subdomain = extracted.subdomain
-    features['length'] = len(query)
-    features['entropy'] = entropy(query)
-    features['vowel_consonant_ratio'] = vowel_consonant_ratio(query)
     features['domain'] = domain
     features['subdomain'] = subdomain
+    features['length'] = len(domain)
+    features['entropy'] = entropy(domain)
+    features['vowel_consonant_ratio'] = vowel_consonant_ratio(domain)
+    
     return features
 
 classifier = joblib.load('dga_detection.joblib')
@@ -52,7 +53,7 @@ for message in consumer:
     print(query)
 
     # Preprocess and extract features
-    features = extract_features(query)
+    features = extract_features(domain)
     print(features)
 
     # Predict with the classifier model
@@ -60,7 +61,7 @@ for message in consumer:
 
     # Prepare prediction output message
     prediction_message = {
-        'query': query,
+        'query': domain,
         'prediction': prediction
     }
 

@@ -71,9 +71,10 @@ for message in consumer:
 
     # Publish prediction output to Kafka topic
     producer.send(output_topic, json.dumps(prediction_message).encode('utf-8'))
+    
 
 producer.close()
-
+consumer.close()
 
 
 

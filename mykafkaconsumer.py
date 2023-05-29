@@ -14,7 +14,7 @@ for message in consumer:
     dns_message = message.value
 
      query = dns_message['query']
-     print('query')
+     print(query)
 
 
 

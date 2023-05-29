@@ -24,16 +24,48 @@ def vowel_consonant_ratio (x):
     except: # catch zero devision exception 
         ratio = 0  
     return ratio
-  
+
+def extract_features(query):
+    features = {}
+    features['length'] = len(query)
+    features['entropy'] = entropy(query)
+    features['vowel_consonant_ratio'] = vowel_consonant_ratio(query)
+    return features
+
+classifier = joblib.load('dga_detection.joblib')
+
 consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'],
-     value_deserializer=lambda x: json.loads(x.decode('utf-8')))
+                         value_deserializer=lambda x: json.loads(x.decode('utf-8')))
+
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 for message in consumer:
-     dns_message = message.value
-     query = dns_message['query']
-     domain = dns_message['query'].str.split('.').str[::-1].str.join('.')
-     print(domain)
+    dns_message = message.value
+    query = dns_message['query']
+    print(query)
+
+    # Preprocess and extract features
+    features = extract_features(query)
+    print(features)
+
+    # Predict with the classifier model
+    prediction = classifier.predict([list(features.values())])[0]
+
+    # Prepare prediction output message
+    prediction_message = {
+        'query': query,
+        'prediction': prediction
+    }
+
+    # Publish prediction output to Kafka topic
+    producer.send(prediction_output, json.dumps(prediction_message).encode('utf-8'))
+    
+
+producer.flush()
 consumer.close()
+producer.close()
+    
+
      
     
 

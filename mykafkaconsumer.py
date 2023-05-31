@@ -32,10 +32,9 @@ def extract_domain(query):
     extracted = tldextract.extract(query)
     domain = extracted.domain
     subdomain = extracted.subdomain
-    domain_features['domain'] = domain
-    domain_features['subdomain'] = subdomain
+    modified_query = '.'.join([subdomain, domain])
     
-    return domain_features
+    return modified_query
     
 
 def extract_features(query):
@@ -62,7 +61,7 @@ for message in consumer:
     # Preprocess and extract features
     domain_features = extract_domain(query)
     features = extract_features(domain)
-    print(domain_features)
+    print(modified_query)
     print(features)
 
     # Predict with the classifier model

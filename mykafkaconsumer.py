@@ -60,8 +60,8 @@ for message in consumer:
     print(query)
 
     # Preprocess and extract features
-    features = extract_features(query)
-    print(features)
+    domain_features = extract_domain(query)
+    print(domain_features)
 
     # Predict with the classifier model
     prediction = classifier.predict([list(features.values())])[0]

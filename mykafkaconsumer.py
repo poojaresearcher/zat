@@ -52,7 +52,7 @@ def extract_features(query):
     features['length'] = len(modified_query)
     features['entropy'] = entropy(modified_query)
     features['vowel_consonant_ratio'] = vowel_consonant_ratio(modified_query)
-    
+    features['digits'] = sum(char.isdigit() for char in modified_query)
     return features
 
 classifier = joblib.load('dga_detection.joblib')

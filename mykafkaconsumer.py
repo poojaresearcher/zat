@@ -32,8 +32,8 @@ def extract_domain(query):
     extracted = tldextract.extract(query)
     domain = extracted.domain
     subdomain = extracted.subdomain
-    features['domain'] = domain
-    features['subdomain'] = subdomain
+    domain_features['domain'] = domain
+    domain_features['subdomain'] = subdomain
     
     return domain_features
     

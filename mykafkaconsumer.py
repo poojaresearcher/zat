@@ -68,7 +68,9 @@ for message in consumer:
     print(query)
 
     # Preprocess and extract feature
-    domain_features =  extract_domain(query)
+    modified_query = query.replace(f".{suffix}", "")
+    print("Modified Query:", modified_query)
+    domain_features = extract_domain(modified_query)
     features = extract_features(modified_query)
     print(domain_features)
     print(features)

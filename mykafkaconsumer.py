@@ -56,7 +56,7 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 for message in consumer:
     dns_message = message.value
-    query = dns_message['query']
+    query = dns_message.get('query', 'default_value')
     print(query)
 
     # Preprocess and extract features

@@ -130,6 +130,7 @@ for message in consumer:
         'prediction': prediction
     }
 
+    prediction_output = 'output_topic'
     # Publish prediction output to Kafka topic
     producer.send(prediction_output, json.dumps(prediction_message).encode('utf-8'))
     

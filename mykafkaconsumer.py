@@ -122,6 +122,7 @@ for message in consumer:
 
     # Predict with the classifier model
     prediction = classifier.predict([list(features.values())])[0]
+    print(prediction)
 
     # Prepare prediction output message
     prediction_message = {

@@ -28,14 +28,23 @@ def vowel_consonant_ratio (x):
     return ratio
 
 def extract_domain(query):
+    
     domain_features = {}
     extracted = tldextract.extract(query)
     domain = extracted.domain
     subdomain = extracted.subdomain
-    modified_query = '.'.join([subdomain, domain])
-    
-    return modified_query
-    
+    suffix = extracted.suffix
+
+    modified_query = query.replace(f".{suffix}", "")
+    print("Modified Query:", modified_query)
+
+    merged_domain = f"{subdomain}.{domain}.{suffix}"
+    print("Merged Domain:", merged_domain)
+
+    domain_features['domain'] = domain
+    domain_features['subdomain'] = subdomain
+
+    return domain_features
 
 def extract_features(query):
     features = {}
@@ -61,7 +70,7 @@ for message in consumer:
     # Preprocess and extract features
     domain_features = extract_domain(query)
     features = extract_features(domain)
-    print(modified_query)
+    print(domain_features)
     print(features)
 
     # Predict with the classifier model

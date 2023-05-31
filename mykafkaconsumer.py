@@ -104,7 +104,7 @@ classifier = joblib.load('dga_detection.joblib')
 
 consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'],
                          value_deserializer=lambda x: json.loads(x.decode('utf-8')))
-
+merged_domain
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
 suffix = None
@@ -115,7 +115,7 @@ for message in consumer:
     print(query)
 
     # Preprocess and extract feature
-    domain_features, modified_query = extract_domain(query)
+    domain_features, modified_query = extract_domain(query), merged_domain = extract_domain(query)
     features = extract_features(modified_query)
     print(domain_features)
     print(features)
@@ -125,7 +125,7 @@ for message in consumer:
 
     # Prepare prediction output message
     prediction_message = {
-        'query': domain,
+        'query': merged_domain,
         'prediction': prediction
     }
 

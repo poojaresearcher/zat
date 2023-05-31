@@ -31,24 +31,6 @@ def vowel_consonant_ratio (x):
         ratio = 0  
     return ratio
 
-alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
-
-
-alexa_counts_matrix = alexa_vc.fit_transform(test_data['domain'])
-alexa_counts = np.log10(alexa_counts_matrix.sum(axis=0).A1)
-alexa_ngrams_list = alexa_vc.get_feature_names_out()
-
-
-word_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-5, max_df=1.0)
-
-word_counts_matrix = word_vc.fit_transform(word_dataframe['word'])
-word_counts = np.log10(word_counts_matrix.sum(axis=0).A1)
-word_ngrams_list = word_vc.get_feature_names_out()
-
-def ngram_count(google):
-    alexa_match = alexa_counts * alexa_vc.transform([google]).T
-    dict_match = word_counts * word_vc.transform([google]).T
-    print(f'{google} Alexa match: {alexa_match}, Dict match: {dict_match}')
 
 def extract_domain(query):
     
@@ -68,6 +50,25 @@ def extract_domain(query):
     domain_features['subdomain'] = subdomain
     
     return domain_features, modified_query
+
+alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
+
+
+alexa_counts_matrix = alexa_vc.fit_transform(modified_query)
+alexa_counts = np.log10(alexa_counts_matrix.sum(axis=0).A1)
+alexa_ngrams_list = alexa_vc.get_feature_names_out()
+
+
+word_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-5, max_df=1.0)
+
+word_counts_matrix = word_vc.fit_transform(word_dataframe['word'])
+word_counts = np.log10(word_counts_matrix.sum(axis=0).A1)
+word_ngrams_list = word_vc.get_feature_names_out()
+
+def ngram_count(google):
+    alexa_match = alexa_counts * alexa_vc.transform([google]).T
+    dict_match = word_counts * word_vc.transform([google]).T
+    print(f'{google} Alexa match: {alexa_match}, Dict match: {dict_match}')
 
 def extract_features(query):
     features = {}

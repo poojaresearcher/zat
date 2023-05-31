@@ -43,7 +43,7 @@ def extract_domain(query):
 
     domain_features['domain'] = domain
     domain_features['subdomain'] = subdomain
-    domain_features['suffix'] = suffix 
+    
 
     return domain_features
 
@@ -63,15 +63,15 @@ consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'],
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
 
+suffix = None
+
 for message in consumer:
     dns_message = message.value
     query = dns_message.get('query', 'default_value')
     print(query)
 
     # Preprocess and extract feature
-    modified_query = query.replace(f".{suffix}", "")
-    print("Modified Query:", modified_query)
-    domain_features = extract_domain(modified_query)
+    domain_features, modified_query, suffix = extract_domain(query)
     features = extract_features(modified_query)
     print(domain_features)
     print(features)

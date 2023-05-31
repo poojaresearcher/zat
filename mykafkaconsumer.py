@@ -63,9 +63,18 @@ def extract_features(query):
     alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
 
 
-    alexa_counts_matrix = alexa_vc.fit_transform([modified_query])
+    alexa_counts_matrix = alexa_vc.fit_transform(modified_query)
     alexa_counts = np.log10(alexa_counts_matrix.sum(axis=0).A1)
     alexa_ngrams_list = alexa_vc.get_feature_names_out()
+    
+    word_dataframe = pd.read_csv('words.txt', names=['word'], header=None, dtype={'word': np.str}, encoding='utf-8')
+
+# Cleanup words from dictionary
+    word_dataframe = word_dataframe[word_dataframe['word'].map(lambda x: str(x).isalpha())]
+    word_dataframe = word_dataframe.applymap(lambda x: str(x).strip().lower())
+    word_dataframe = word_dataframe.dropna()
+    word_dataframe = word_dataframe.drop_duplicates()
+    
 
 
     word_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-5, max_df=1.0)

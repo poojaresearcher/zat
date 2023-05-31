@@ -67,9 +67,9 @@ for message in consumer:
     query = dns_message.get('query', 'default_value')
     print(query)
 
-    # Preprocess and extract features
-    domain_features = extract_domain(query)
-    features = extract_features(domain)
+    # Preprocess and extract feature
+    domain_features =  extract_domain(modified_query)
+    features = extract_features(modified_query)
     print(domain_features)
     print(features)
 

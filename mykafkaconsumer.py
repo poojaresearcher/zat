@@ -44,8 +44,7 @@ def extract_domain(query):
     domain_features['domain'] = domain
     domain_features['subdomain'] = subdomain
     
-
-    return domain_features
+    return domain_features, modified_query
 
 def extract_features(query):
     features = {}
@@ -71,7 +70,7 @@ for message in consumer:
     print(query)
 
     # Preprocess and extract feature
-    domain_features, modified_query, suffix = extract_domain(query)
+    domain_features, modified_query = extract_domain(query)
     features = extract_features(modified_query)
     print(domain_features)
     print(features)

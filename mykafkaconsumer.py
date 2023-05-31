@@ -126,7 +126,7 @@ for message in consumer:
 
     # Prepare prediction output message
     prediction_message = {
-        'query': merged_domain,
+        'query': query,
         'prediction': prediction
     }
 

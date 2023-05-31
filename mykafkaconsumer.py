@@ -43,6 +43,7 @@ def extract_domain(query):
 
     domain_features['domain'] = domain
     domain_features['subdomain'] = subdomain
+    domain_features['suffix'] = suffix 
 
     return domain_features
 

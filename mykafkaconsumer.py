@@ -49,9 +49,9 @@ def extract_domain(query):
 def extract_features(query):
     features = {}
   
-    features['length'] = len(domain)
-    features['entropy'] = entropy(domain)
-    features['vowel_consonant_ratio'] = vowel_consonant_ratio(domain)
+    features['length'] = len(modified_query)
+    features['entropy'] = entropy(modified_query)
+    features['vowel_consonant_ratio'] = vowel_consonant_ratio(modified_query)
     
     return features
 

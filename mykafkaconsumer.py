@@ -159,6 +159,8 @@ for message in consumer:
     domain_features = extract_domain(query) 
     print(domain_features)
     features = extract_features(domain_features)
+    domain = features['domain']
+    subdomain = features['subdomain']
     print(features)
 
     # Predict with the classifier model

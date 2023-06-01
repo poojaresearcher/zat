@@ -156,8 +156,7 @@ for message in consumer:
     # Preprocess and extract feature
     domain_features = extract_domain(query) 
     print(domain_features)
-    features = extract_features(domain_feature)
-    features = extract_features(subdomain_features)
+    features = extract_features(domain_features)
     domain = domain_features['domain']
     subdomain = domain_features['subdomain']
     print(features)

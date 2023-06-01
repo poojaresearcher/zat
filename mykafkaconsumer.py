@@ -116,7 +116,7 @@ for message in consumer:
 
     # Preprocess and extract feature
     domain_features, modified_query = extract_domain(query) 
-    features = extract_features(modified_query)
+    features = extract_features(domain)
     print(domain_features)
     print(features)
 

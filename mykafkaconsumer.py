@@ -50,7 +50,6 @@ def extract_domain(query):
 def extract_features(query):
     features = {}
   
-    domain = domain_features['domain']
     domain_features = {}
     domain_features['length'] = len(domain)
     domain_features['entropy'] = entropy(domain)

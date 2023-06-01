@@ -45,8 +45,7 @@ def extract_domain(query):
     print(domain)
     print(subdomain)
     
-    return domain_features, modified_query
-
+    return domain_features
 
 def extract_features(query):
     features = {}

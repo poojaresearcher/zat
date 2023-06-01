@@ -166,9 +166,9 @@ for message in consumer:
 
     # Prepare prediction output message
     prediction_message = {
-        'query': domain,subdomain
-        'prediction': prediction
-    }
+    'query': query,
+    'prediction': prediction
+}
 
     prediction_output = 'output_topic'
     # Publish prediction output to Kafka topic

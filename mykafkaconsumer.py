@@ -157,8 +157,8 @@ for message in consumer:
 
     # Preprocess and extract feature
     domain_features = extract_domain(query) 
-    features = extract_features(domain_features, subdomain_features)
     print(domain_features)
+    features = extract_features(domain_features, subdomain_features)
     print(features)
 
     # Predict with the classifier model

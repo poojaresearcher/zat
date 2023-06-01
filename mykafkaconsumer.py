@@ -67,7 +67,7 @@ def extract_features(query):
     alexa_counts = np.log10(alexa_counts_matrix.sum(axis=0).A1)
     alexa_ngrams_list = alexa_vc.get_feature_names_out()
     
-    word_dataframe = pd.read_csv('words.txt', names=['word'], header=None, dtype={'word': np.str}, encoding='utf-8')
+    word_dataframe = pd.read_csv('words.txt', names=['word'], header=None, dtype={'word': str}, encoding='utf-8')
 
 # Cleanup words from dictionary
     word_dataframe = word_dataframe[word_dataframe['word'].map(lambda x: str(x).isalpha())]

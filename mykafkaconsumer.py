@@ -50,6 +50,7 @@ def extract_domain(query):
 def extract_features(query):
     features = {}
   
+    domain = domain_features['domain']
     domain_features = {}
     domain_features['length'] = len(domain)
     domain_features['entropy'] = entropy(domain)
@@ -94,6 +95,7 @@ def extract_features(query):
     features['diff'] = features['alexa_grams'] - features['word_grams']
     features['domain'] = domain_features
     
+    subdomain = subdomain_features['subdomain']
     subdomain_features = {}
     subdomain_features['length'] = len(subdomain)
     subdomain_features['entropy'] = entropy(subdomain)
@@ -155,8 +157,7 @@ for message in consumer:
 
     # Preprocess and extract feature
     domain_features = extract_domain(query) 
-    features = extract_features(domain_features['domain'])
-    features = extract_features(domain_features['subdomain'])
+    features = extract_features(domain_features, subdomain_features)
     print(domain_features)
     print(features)
 

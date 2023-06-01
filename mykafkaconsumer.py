@@ -49,6 +49,10 @@ def extract_domain(query):
 
 def extract_features(query):
     features = {}
+    
+    domain_features = query['domain']
+    domain = domain_features['domain']
+    subdomain = domain_features['subdomain']
   
     domain_feature = {}
     domain_feature['length'] = len(domain)
@@ -92,7 +96,7 @@ def extract_features(query):
     
     # Compute the difference between Alexa NGrams and word NGrams
     features['diff'] = features['alexa_grams'] - features['word_grams']
-    features['domain'] = domain_features
+    features['domain'] = domain_feature
     
     subdomain_features = {}
     subdomain_features['length'] = len(subdomain)

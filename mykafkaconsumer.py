@@ -50,12 +50,12 @@ def extract_domain(query):
 def extract_features(query):
     features = {}
   
-    domain_features = {}
-    domain_features['length'] = len(domain)
-    domain_features['entropy'] = entropy(domain)
-    domain_features['vowel_consonant_ratio'] = vowel_consonant_ratio(domain)
-    domain_features['digits'] = sum(char.isdigit() for char in domain)
-    features['domain'] = domain_features
+    domain_feature = {}
+    domain_feature['length'] = len(domain)
+    domain_feature['entropy'] = entropy(domain)
+    domain_feature['vowel_consonant_ratio'] = vowel_consonant_ratio(domain)
+    domain_feature['digits'] = sum(char.isdigit() for char in domain)
+    features['domain'] = domain_feature
     
     alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
 

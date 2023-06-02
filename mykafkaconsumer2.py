@@ -79,9 +79,7 @@ def extract_features(query):
     
     # Compute the difference between Alexa NGrams and word NGrams
     features['diff'] = features['alexa_grams'] - features['word_grams']
-    features.update(domain_feature)
    
-    
     return features
 
 classifier = joblib.load('dga_detection.joblib')

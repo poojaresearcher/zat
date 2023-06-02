@@ -59,7 +59,7 @@ def extract_features(domai_features):
 
 classifier = joblib.load('dga_detection.joblib')
 
-consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'],
+consumer = KafkaConsumer('dnslog', bootstrap_servers=['localhost:9092'],
                          value_deserializer=lambda x: json.loads(x.decode('utf-8')))
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
@@ -83,9 +83,9 @@ for message in consumer:
         'prediction': prediction
     }
 
-    prediction_output = 'output_topic'
+    predictions = 'output_topic'
     # Publish prediction output to Kafka topic
-    producer.send(prediction_output, json.dumps(prediction_message).encode('utf-8'))
+    producer.send(predictions, json.dumps(prediction_message).encode('utf-8'))
     
     producer.flush()
     consumer.commit()

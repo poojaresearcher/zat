@@ -47,7 +47,7 @@ def extract_features(domai_features):
     alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
 
 
-    alexa_counts_matrix = alexa_vc.fit_transform([domain])
+    alexa_counts_matrix = alexa_vc.fit_transform(domain)
     alexa_counts = np.log10(alexa_counts_matrix.sum(axis=0).A1)
     alexa_ngrams_list = alexa_vc.get_feature_names_out()
     
@@ -70,11 +70,11 @@ def extract_features(domai_features):
         dict_match = word_counts * word_vc.transform([google]).T
         print(f'{google} Alexa match: {alexa_match}, Dict match: {dict_match}')
     
-    alexa_match = alexa_counts * alexa_vc.transform([domain]).T
+    alexa_match = alexa_counts * alexa_vc.transform(domain).T
     features['alexa_grams'] = alexa_match.item() if alexa_match.size > 0 else 0
     
     # Compute word NGrams for the query
-    dict_match = word_counts * word_vc.transform([domain]).T
+    dict_match = word_counts * word_vc.transform(domain).T
     features['word_grams'] = dict_match.item() if dict_match.size > 0 else 0
     
     # Compute the difference between Alexa NGrams and word NGrams

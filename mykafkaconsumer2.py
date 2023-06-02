@@ -39,11 +39,11 @@ def extract_features(query):
     print(domain)
     print(subdomain)
     
-    domain_feature = {}
-    domain_feature['length'] = len(domain)
-    domain_feature['entropy'] = entropy(domain)
-    domain_feature['vowel_consonant_ratio'] = vowel_consonant_ratio(domain)
-    domain_feature['digits'] = sum(char.isdigit() for char in domain)
+    
+    features['length'] = len(domain)
+    features['entropy'] = entropy(domain)
+    features['vowel_consonant_ratio'] = vowel_consonant_ratio(domain)
+    features['digits'] = sum(char.isdigit() for char in domain)
     alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
 
 
@@ -101,7 +101,7 @@ for message in consumer:
     print(features)
    
         # Convert domain feature to a numeric array
-    domain_feature_values = list(features['domain'].values())
+    domain_feature_values = list(features.values())
     domain_feature_array = np.array(domain_feature_values).reshape(1, -1)
 
         # Predict with the classifier model

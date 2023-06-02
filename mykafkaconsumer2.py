@@ -99,20 +99,16 @@ for message in consumer:
     # Preprocess and extract features
     features = extract_features(query)
     print(features)
-    
-    if features['domain']['length'] > 0:
+   
         # Convert domain feature to a numeric array
-        domain_feature_values = list(features['domain'].values())
-        domain_feature_array = np.array(domain_feature_values).reshape(1, -1)
+    domain_feature_values = list(features['domain'].values())
+    domain_feature_array = np.array(domain_feature_values).reshape(1, -1)
 
         # Predict with the classifier model
-        domain_prediction = classifier.predict(domain_feature_array)[0]
-        print("Domain Prediction:", domain_prediction)
-    else:
-        domain_prediction = None
-
-
-
+    domain_prediction = classifier.predict(domain_feature_array)[0]
+    print("Domain Prediction:", domain_prediction)
+    
+    
     # Prepare prediction output message
     prediction_message = {
         'query': query,

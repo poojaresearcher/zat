@@ -32,21 +32,6 @@ def vowel_consonant_ratio (x):
     return ratio
 
 
-def extract_domain(query):
-    
-    domain_features = {}
-    extracted = tldextract.extract(query)
-    domain = extracted.domain
-    subdomain = extracted.subdomain
-    suffix = extracted.suffix
-
-    domain_features['domain'] = domain
-    domain_features['subdomain'] = subdomain
-    print(domain)
-    print(subdomain)
-    
-    return domain_features
-
 def extract_features(query):
     features = {}
     
@@ -158,13 +143,16 @@ for message in consumer:
     print(query)
 
     # Preprocess and extract feature
-    domain_features = extract_domain(query) 
-    print(domain_features)
-    features = extract_features(domain_features)
+   
+    features = extract_features(query)
     print(features)
 
     # Predict with the classifier model
-    prediction = classifier.predict([list(features.values())])[0]
+    feature_values = list(features['domain'].values()) + list(features['subdomain'].values())
+    feature_array = np.array(feature_values).reshape(1, -1)
+
+    # Predict with the classifier model
+    prediction = classifier.predict(feature_array)[0]
     print(prediction)
 
     # Prepare prediction output message

@@ -77,8 +77,9 @@ for message in consumer:
     feature_array = np.array(feature_values).reshape(1, -1)
 
     # Predict with the classifier model
-    prediction = classifier.predict([list(features.values())])[0]
+    prediction = classifier.predict(feature_array)[0]
     print(prediction)
+
 
     # Prepare prediction output message
     prediction_message = {

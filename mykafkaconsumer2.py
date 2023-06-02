@@ -118,7 +118,7 @@ for message in consumer:
     producer.send(predictions, json.dumps(prediction_message).encode('utf-8'))
     
     producer.flush()
-    consumer.commit()
+    
 
 consumer.close()
 producer.close()

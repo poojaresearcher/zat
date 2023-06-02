@@ -30,7 +30,7 @@ def vowel_consonant_ratio(x):
         ratio = 0
     return ratio
 
-def extract_features(domai_features):
+def extract_features(query):
     features = {}
     
     extracted = tldextract.extract(query)
@@ -47,7 +47,7 @@ def extract_features(domai_features):
     alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
 
 
-    alexa_counts_matrix = alexa_vc.fit_transform(domain)
+    alexa_counts_matrix = alexa_vc.fit_transform([domain])
     alexa_counts = np.log10(alexa_counts_matrix.sum(axis=0).A1)
     alexa_ngrams_list = alexa_vc.get_feature_names_out()
     
@@ -111,23 +111,12 @@ for message in consumer:
     else:
         domain_prediction = None
 
-    # Check if the subdomain is not empty
-    if features['subdomain']['length'] > 0:
-        # Convert subdomain feature to a numeric array
-        subdomain_feature_values = list(features['subdomain'].values())
-        subdomain_feature_array = np.array(subdomain_feature_values).reshape(1, -1)
-
-        # Predict with the classifier model
-        subdomain_prediction = classifier.predict(subdomain_feature_array)[0]
-        print("Subdomain Prediction:", subdomain_prediction)
-    else:
-        subdomain_prediction = None
 
 
     # Prepare prediction output message
     prediction_message = {
         'query': query,
-        'prediction': prediction
+        'prediction': domain_prediction
     }
 
     predictions = 'output_topic'

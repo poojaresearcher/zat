@@ -72,6 +72,9 @@ for message in consumer:
     # Preprocess and extract features
     features = extract_features(query)
     print(features)
+    
+    feature_values = list(features['domain'].values()) + list(features['subdomain'].values())
+    feature_array = np.array(feature_values).reshape(1, -1)
 
     # Predict with the classifier model
     prediction = classifier.predict([list(features.values())])[0]

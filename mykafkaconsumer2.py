@@ -36,8 +36,6 @@ def extract_features(domai_features):
     extracted = tldextract.extract(query)
     domain = extracted.domain
     subdomain = extracted.subdomain
-    domain = domain_features['domain']
-    subdomain = domain_features['subdomain']
     
     domain_feature = {}
     domain_feature['length'] = len(domain)

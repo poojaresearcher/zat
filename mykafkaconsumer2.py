@@ -9,6 +9,7 @@ import json
 import re 
 import tldextract
 import sklearn.feature_extraction.text
+from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 import pandas as pd
 

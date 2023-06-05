@@ -115,7 +115,7 @@ for message in consumer:
     # Prepare prediction output message
     prediction_message = {
     'query': query,
-    'prediction': prediction
+    'prediction': subdomain_prediction
 }
 
     prediction_output = 'output_topic'

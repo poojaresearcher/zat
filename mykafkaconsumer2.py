@@ -83,13 +83,11 @@ def extract_features(query):
         dict_match = word_counts * word_vc.transform([google]).T
         print(f'{google} Alexa match: {alexa_match}, Dict match: {dict_match}')
 
-    
-    alexa_match = alexa_counts * alexa_vc.transform([domain]).T
-    features['alexa_grams'] = alexa_match.item() 
+    features['alexa_grams'] = alexa_counts * alexa_vc.transform([domain]).T
     
     # Compute word NGrams for the query
-    dict_match = word_counts * word_vc.transform([domain]).T
-    features['word_grams'] = dict_match.item() 
+  
+    features['word_grams'] =  word_counts * word_vc.transform([domain]).T
     
     # Compute the difference between Alexa NGrams and word NGrams
     features['diff'] = features['alexa_grams'] - features['word_grams']

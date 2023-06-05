@@ -106,13 +106,12 @@ for message in consumer:
     features = extract_features(query)
     print(features)
 
-    # Predict with the classifier model
-    feature_values = list(features['domain'].values()) + list(features['subdomain'].values())
-    feature_array = np.array(feature_values).reshape(1, -1)
+    subdomain_feature_values = list(features.values())
+    subdomain_feature_array = np.array(subdomain_feature_values).reshape(1, -1)
 
-    # Predict with the classifier model
-    prediction = classifier.predict(feature_array)[0]
-    print(prediction)
+        # Predict with the classifier model
+    subdomain_prediction = classifier.predict(subdomain_feature_array)[0]
+    print("Subdomain Prediction:", subdomain_prediction)
 
     # Prepare prediction output message
     prediction_message = {

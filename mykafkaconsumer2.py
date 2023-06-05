@@ -57,7 +57,7 @@ def extract_features(query):
     _sorted_ngrams = sorted(zip(alexa_ngrams_list, alexa_counts), key=operator.itemgetter(1), reverse=True)
     print = ('Alexa NGrams: %d') % len(_sorted_ngrams)
     for ngram, count in _sorted_ngrams[:10]:
-    print = (ngram, count)
+        print = (ngram, count)
     
     word_dataframe = pd.read_csv('words.txt', names=['word'], header=None, dtype={'word': str}, encoding='utf-8')
 
@@ -77,7 +77,7 @@ def extract_features(query):
     _sorted_ngrams = sorted(zip(word_ngrams_list, word_counts), key=operator.itemgetter(1), reverse=True)
     print = ('Word NGrams: %d') % len(_sorted_ngrams)
     for ngram, count in _sorted_ngrams[:10]:
-    print = ('ngrams, count')
+        print = ('ngrams, count')
 
     def ngram_count(google):
         alexa_match = alexa_counts * alexa_vc.transform([google]).T

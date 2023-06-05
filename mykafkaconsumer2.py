@@ -110,6 +110,9 @@ for message in consumer:
     domain_prediction = classifier.predict(domain_feature_array)[0]
     print("Domain Prediction:", domain_prediction)
     
+    if domain_prediction == 'DGA':
+        print("DGA Domain Prediction:", domain_prediction)
+    
     
     # Prepare prediction output message
     prediction_message = {

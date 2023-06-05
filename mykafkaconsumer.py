@@ -83,7 +83,6 @@ def extract_features(query):
     
     # Compute the difference between Alexa NGrams and word NGrams
     features['diff'] = features['alexa_grams'] - features['word_grams']
-    features['subdomain'] = subdomain_feature
     
     return features
 

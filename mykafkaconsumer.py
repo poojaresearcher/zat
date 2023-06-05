@@ -41,7 +41,7 @@ def extract_features(query):
     print(domain)
     print(subdomain)
     
-    domain_feature = {}
+ 
     domain_feature['length'] = len(subdomain)
     domain_feature['entropy'] = entropy(subdomain)
     domain_feature['vowel_consonant_ratio'] = vowel_consonant_ratio(subdomain)

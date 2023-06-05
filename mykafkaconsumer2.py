@@ -53,18 +53,12 @@ def extract_features(query):
     alexa_counts = np.log10(alexa_counts_matrix.sum(axis=0).A1)
     alexa_ngrams_list = alexa_vc.get_feature_names_out()
     
-    import operator
-    _sorted_ngrams = sorted(zip(alexa_ngrams_list, alexa_counts), key=operator.itemgetter(1), reverse=True)
-    print('Alexa NGrams:', len(_sorted_ngrams))
-    for ngram, count in _sorted_ngrams[:10]:
-        print(ngram, count)
-    
 
     word_dataframe = pd.read_csv('words.txt', names=['word'], header=None, dtype={'word': str}, encoding='utf-8')
 
 # Cleanup words from dictionary
-    word_dataframe = word_dataframe[word_dataframe['word'].str.isalpha()]
-    word_dataframe = word_dataframe.applymap(str.strip().lower)
+    word_dataframe = word_dataframe[word_dataframe['word'].map(lambda x: str(x).isalpha())]
+    word_dataframe = word_dataframe.applymap(lambda x: str(x).strip().lower())
     word_dataframe = word_dataframe.dropna()
     word_dataframe = word_dataframe.drop_duplicates()
     
@@ -73,22 +67,21 @@ def extract_features(query):
     word_counts_matrix = word_vc.fit_transform(word_dataframe['word'])
     word_counts = np.log10(word_counts_matrix.sum(axis=0).A1)
     word_ngrams_list = word_vc.get_feature_names_out()
-    
-    
-    _sorted_ngrams = sorted(zip(word_ngrams_list, word_counts), key=operator.itemgetter(1), reverse=True)
-    print('Word NGrams:', len(_sorted_ngrams))
-    for ngram, count in _sorted_ngrams[:10]:
-        print(ngram, count)
-   
-
 
     def ngram_count(google):
         alexa_match = alexa_counts * alexa_vc.transform([google]).T
         dict_match = word_counts * word_vc.transform([google]).T
         print(f'{google} Alexa match: {alexa_match}, Dict match: {dict_match}')
 
-    features['alexa_grams'] = np.dot(alexa_counts, alexa_vc.transform([domain]).T)
-    features['word_grams'] = np.dot(word_counts, word_vc.transform([domain]).T)
+    
+    alexa_match = alexa_counts * alexa_vc.transform([domain]).T
+    features['alexa_grams'] = alexa_match.item() if alexa_match.size > 0 else 0
+    
+    # Compute word NGrams for the query
+    dict_match = word_counts * word_vc.transform([domain]).T
+    features['word_grams'] = dict_match.item() if dict_match.size > 0 else 0
+    
+    # Compute the difference between Alexa NGrams and word NGrams
     features['diff'] = features['alexa_grams'] - features['word_grams']
    
     return features
@@ -133,6 +126,7 @@ for message in consumer:
 
 consumer.close()
 producer.close()
+
 
     
 

@@ -63,8 +63,8 @@ def extract_features(query):
     word_dataframe = pd.read_csv('words.txt', names=['word'], header=None, dtype={'word': str}, encoding='utf-8')
 
 # Cleanup words from dictionary
-    word_dataframe = word_dataframe[word_dataframe['word'].map(lambda x: str(x).isalpha())]
-    word_dataframe = word_dataframe.applymap(lambda x: str(x).strip().lower())
+    word_dataframe = word_dataframe[word_dataframe['word'].str.isalpha()]
+    word_dataframe = word_dataframe.applymap(str.strip().lower)
     word_dataframe = word_dataframe.dropna()
     word_dataframe = word_dataframe.drop_duplicates()
     
@@ -87,13 +87,8 @@ def extract_features(query):
         dict_match = word_counts * word_vc.transform([google]).T
         print(f'{google} Alexa match: {alexa_match}, Dict match: {dict_match}')
 
-    features['alexa_grams'] = alexa_counts * alexa_vc.transform([domain]).T
-    
-    # Compute word NGrams for the query
-  
-    features['word_grams'] =  word_counts * word_vc.transform([domain]).T
-    
-    # Compute the difference between Alexa NGrams and word NGrams
+    features['alexa_grams'] = np.dot(alexa_counts, alexa_vc.transform([domain]).T)
+    features['word_grams'] = np.dot(word_counts, word_vc.transform([domain]).T)
     features['diff'] = features['alexa_grams'] - features['word_grams']
    
     return features

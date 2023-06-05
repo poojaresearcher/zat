@@ -86,11 +86,11 @@ def extract_features(query):
 
     
     alexa_match = alexa_counts * alexa_vc.transform([domain]).T
-    features['alexa_grams'] = alexa_match.item() if alexa_match.size > 0 else 0
+    features['alexa_grams'] = alexa_match.item() 
     
     # Compute word NGrams for the query
     dict_match = word_counts * word_vc.transform([domain]).T
-    features['word_grams'] = dict_match.item() if dict_match.size > 0 else 0
+    features['word_grams'] = dict_match.item() 
     
     # Compute the difference between Alexa NGrams and word NGrams
     features['diff'] = features['alexa_grams'] - features['word_grams']

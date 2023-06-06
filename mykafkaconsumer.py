@@ -118,13 +118,14 @@ for message in consumer:
     'query': query,
     'prediction': subdomain_prediction
     }
-    
+try:
     prediction_output = 'output_topic'
     # Publish prediction output to Kafka topic
     producer.send(prediction_output, json.dumps(prediction_message).encode('utf-8'))
+    producer.flush()
+except Exception as e:
+    print("Exception occurred while publishing to Kafka:", e)
     
-
-producer.flush()
 consumer.close()
 producer.close()
     

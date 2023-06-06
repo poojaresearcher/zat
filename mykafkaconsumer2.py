@@ -114,7 +114,7 @@ if domain_prediction == 'DGA':
     # Prepare prediction output message
     prediction_message = {
         'query': query,
-        'prediction': domain_prediction
+        'DGA domain prediction': domain_prediction
     }
 
     predictions = 'output_topic'

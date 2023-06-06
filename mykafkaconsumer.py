@@ -48,7 +48,7 @@ def extract_features(query):
     features['digits'] = sum(char.isdigit() for char in domain)
     
     
-    alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
+    alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0,stop_words=stop_words.ENGLISH_STOP_WORDS)
 
 
     alexa_counts_matrix = alexa_vc.fit_transform([subdomain])

@@ -91,7 +91,8 @@ classifier = joblib.load('test_data/dga_detection3.joblib')
 consumer = KafkaConsumer('dnslog', bootstrap_servers=['localhost:9092'],
                          value_deserializer=lambda x: json.loads(x.decode('utf-8')))
 
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                        value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
 for message in consumer:
     dns_message = message.value

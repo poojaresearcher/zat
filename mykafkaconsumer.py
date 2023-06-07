@@ -86,13 +86,14 @@ def extract_features(query):
     
     return features
 
-classifier = joblib.load('test_data/dga_detection3.joblib')
+classifier = joblib.load('test_data/dga_detction3.joblib')
 
 consumer = KafkaConsumer('dnslogs', bootstrap_servers=['localhost:9092'],
                          value_deserializer=lambda x: json.loads(x.decode('utf-8')),
                          enable_auto_commit=True)
 
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'])
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                        value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
 suffix = None
 
@@ -118,13 +119,8 @@ for message in consumer:
     'query': query,
     'prediction': subdomain_prediction
     }
-try:
-    prediction_output = 'output_topic'
-    # Publish prediction output to Kafka topic
-    producer.send(prediction_output, json.dumps(prediction_message).encode('utf-8'))
+    producer.send('predictions', value=prediction_message)
     producer.flush()
-except Exception as e:
-    print("Exception occurred while publishing to Kafka:", e)
     
 consumer.close()
 producer.close()

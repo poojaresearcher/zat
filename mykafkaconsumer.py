@@ -8,7 +8,7 @@ import pickle
 import json
 import re 
 import tldextract
-import sklearn.feature_extraction.text
+import sklearn.feature_extraction.text import countvectorizer
 import numpy as np
 import pandas as pd
 

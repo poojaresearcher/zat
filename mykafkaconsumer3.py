@@ -43,9 +43,9 @@ def extract_features(query):
     print(subdomain)
     
  
-    features['length'] = len(subdomain)
-    features['entropy'] = entropy(subdomain)
-    features['vowel_consonant_ratio'] = vowel_consonant_ratio(subdomain)
+    features['length'] = len(domain)
+    features['entropy'] = entropy(domain)
+    features['vowel_consonant_ratio'] = vowel_consonant_ratio(domain)
     features['digits'] = sum(char.isdigit() for char in domain)
     
     
@@ -53,7 +53,7 @@ def extract_features(query):
     alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
 
     alexa_vc = CountVectorizer(stop_words=None)
-    alexa_counts_matrix = alexa_vc.fit_transform([subdomain])
+    alexa_counts_matrix = alexa_vc.fit_transform([domain])
     alexa_counts = np.log10(alexa_counts_matrix.sum(axis=0).A1)
     alexa_ngrams_list = alexa_vc.get_feature_names_out()
     
@@ -76,11 +76,11 @@ def extract_features(query):
         dict_match = word_counts * word_vc.transform([google]).T
         print(f'{google} Alexa match: {alexa_match}, Dict match: {dict_match}')
     
-    alexa_match = alexa_counts * alexa_vc.transform([subdomain]).T
+    alexa_match = alexa_counts * alexa_vc.transform([domain]).T
     features['alexa_grams'] = alexa_match.item() if alexa_match.size > 0 else 0
     
     # Compute word NGrams for the query
-    dict_match = word_counts * word_vc.transform([subdomain]).T
+    dict_match = word_counts * word_vc.transform([domain]).T
     features['word_grams'] = dict_match.item() if dict_match.size > 0 else 0
     
     # Compute the difference between Alexa NGrams and word NGrams
@@ -109,17 +109,17 @@ for message in consumer:
     features = extract_features(query)
     print(features)
 
-    subdomain_feature_values = list(features.values())
-    subdomain_feature_array = np.array(subdomain_feature_values).reshape(1, -1)
+    domain_feature_values = list(features.values())
+    domain_feature_array = np.array(domain_feature_values).reshape(1, -1)
 
         # Predict with the classifier model
-    subdomain_prediction = classifier.predict(subdomain_feature_array)[0]
-    print("Subdomain Prediction:", subdomain_prediction)
+    domain_prediction = classifier.predict(domain_feature_array)[0]
+    print("domain Prediction:", domain_prediction)
 
     # Prepare prediction output message
     prediction_message = {
     'query': query,
-    'prediction': subdomain_prediction
+    'prediction': domain_prediction
     }
     producer.send('pred', value=prediction_message)
     producer.flush()

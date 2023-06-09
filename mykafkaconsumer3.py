@@ -51,8 +51,6 @@ def extract_features(query):
     
   
     alexa_vc = sklearn.feature_extraction.text.CountVectorizer(analyzer='char', ngram_range=(3, 5), min_df=1e-4, max_df=1.0)
-
-    alexa_vc = CountVectorizer(stop_words=None)
     alexa_counts_matrix = alexa_vc.fit_transform([domain])
     alexa_counts = np.log10(alexa_counts_matrix.sum(axis=0).A1)
     alexa_ngrams_list = alexa_vc.get_feature_names_out()

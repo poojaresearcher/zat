@@ -13,33 +13,6 @@ consumer = KafkaConsumer('dns1', bootstrap_servers=['localhost:9092'],
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
-predictions_topic = 'prediction'
-
-for message in consumer:
-    dns_message = message.value
-    query = dns_message.get('query', 'default_value')
-    print("Query:", query)
-
-    # Convert query to sequence
-    sequence = [c for c in query]
-
-    from kafka import KafkaConsumer, KafkaProducer
-import json
-import pandas as pd
-import numpy as np
-from keras.models import load_model
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-
-model = load_model('my_model.h5')
-
-consumer = KafkaConsumer('dns1', bootstrap_servers=['localhost:9092'],
-                         value_deserializer=lambda x: json.loads(x.decode('utf-8')))
-
-producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
-                         value_serializer=lambda x: json.dumps(x).encode('utf-8'))
-
-predictions_topic = 'prediction'
-
 for message in consumer:
     dns_message = message.value
     query = dns_message.get('query', 'default_value')

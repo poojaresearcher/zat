@@ -16,16 +16,9 @@ for message in consumer:
     query = dns_message.get('query', 'default_value')
     print(query)
 
-    # Preprocess and extract features
-    features = extract_features(query)
-    print(features)
-   
-        # Convert domain feature to a numeric array
-    domain_feature_values = list(features.values())
-    domain_feature_array = np.array(domain_feature_values).reshape(1, -1)
-
+    
         # Predict with the classifier model
-    domain_prediction = classifier.predict(domain_feature_array)[0]
+    domain_prediction = model.predict(domain_feature_array)[0]
     print("Domain Prediction:", domain_prediction)
     
 if domain_prediction == 'DGA':

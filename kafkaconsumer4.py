@@ -3,9 +3,9 @@ import numpy as np
 from keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-model = load_model(
+model = load_model('my_model.h5')
 
-consumer = KafkaConsumer('dnslog', bootstrap_servers=['localhost:9092'],
+consumer = KafkaConsumer('dns1', bootstrap_servers=['localhost:9092'],
                          value_deserializer=lambda x: json.loads(x.decode('utf-8')))
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],

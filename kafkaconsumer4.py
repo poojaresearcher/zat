@@ -37,7 +37,7 @@ if domain_prediction == 'DGA':
 
     predictions = 'output_topic'
     # Publish prediction output to Kafka topic
-    producer.send('predictions', value=prediction_message)
+    producer.send('prediction', value=prediction_message)
     producer.flush()
     
     

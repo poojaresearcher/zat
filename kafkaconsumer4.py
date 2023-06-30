@@ -21,6 +21,12 @@ for message in consumer:
     # Convert query to sequence
     sequence = [c for c in query]
 
+    max_sequence_length_new = max(data['int_sequence'].apply(len))
+
+    vocabulary = set()
+    for seq in data['sequence']:
+      vocabulary.update(seq)
+
     char_to_int = {c: i + 1 for i, c in enumerate(vocabulary)}
 
     # Convert sequence to integer sequence

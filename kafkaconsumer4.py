@@ -57,7 +57,7 @@ for message in consumer:
     padded_sequence = pad_sequences([int_sequence], maxlen=max_sequence_length)
 
     # Predict with the classifier model
-    domain_prediction = model.predict(padded_sequence)[0]
+    domain_prediction = model.predict(padded_sequence)
     print("Domain Prediction:", domain_prediction)
 
     # Prepare prediction output message

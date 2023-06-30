@@ -21,7 +21,7 @@ for message in consumer:
 
     
         # Predict with the classifier model
-    domain_prediction = model.predict(domain_feature_array)[0]
+    domain_prediction = model.predict(query)[0]
     print("Domain Prediction:", domain_prediction)
     
 if domain_prediction == 'DGA':

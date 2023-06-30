@@ -67,7 +67,7 @@ for message in consumer:
     }
 
     # Publish prediction output to Kafka topic
-    producer.send(predictions_topic, value=prediction_message)
+    producer.send(prediction, value=prediction_message)
     producer.flush()
 
 consumer.close()
